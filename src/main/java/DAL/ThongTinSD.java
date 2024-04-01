@@ -7,7 +7,6 @@ package DAL;
 import java.time.LocalDateTime;
 
 import javax.persistence.*;
-import javax.persistence.TemporalType;
 
 import lombok.Data;
 
