@@ -4,7 +4,6 @@
  */
 package DAL;
 
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -119,6 +118,28 @@ public class ThanhVienDAL {
         }
     }
 
+    // Xóa thành viên theo điều kiện năm kích hoạt thành viên
+    public void deleteByActiveYear(int Year) {
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            List<ThanhVien> thanhViens = session.createQuery("FROM ThanhVien WHERE SUBSTRING(MaTV, 3, 2) = :Year")
+                    .setParameter("Year", String.valueOf(Year))
+                    .list();
+            for (ThanhVien tv : thanhViens) 
+                session.delete(tv);
+            transaction.commit();
+    
+        } catch (HibernateException e) {
+            if (transaction != null)
+                transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+    
+
     public List<ThanhVien> searchThanhVien(int MaTV) {
         Transaction transaction = null;
         List<ThanhVien> list = null;
@@ -198,6 +219,7 @@ public class ThanhVienDAL {
         }
         return list;
     }
+
     private static String chooseExcelFile() {
         JFileChooser fileChooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel files", "xlsx");
@@ -209,7 +231,8 @@ public class ThanhVienDAL {
         }
         return null;
     }
-    public List<ThanhVien> readDataFromExcel(String filePath)throws IOException {
+
+    public List<ThanhVien> readDataFromExcel(String filePath) throws IOException {
         List<ThanhVien> thanhVienList = new ArrayList<>();
         FileInputStream inputStream = new FileInputStream(new File(filePath));
 
