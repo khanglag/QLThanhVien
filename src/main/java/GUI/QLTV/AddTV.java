@@ -195,44 +195,19 @@ public class AddTV extends javax.swing.JDialog {
         
         int i = jcbbNganh.getSelectedIndex();
         switch (i) {
-            case 1:
-                khoa = 11;
-                break;
-            case 2:
-                khoa = 30;
-                break;
-            case 3:
-                khoa = 10;
-                break;
-            case 4:
-                khoa = 38;
-                break; 
-            case 5:
-                khoa = 53;
-                break;
-            case 6:
-                khoa = 01;
-                break;
-            case 7:
-                khoa = 55;
-                break;
-            case 8:
-                khoa = 02;
-                break;    
-            case 9:
-                khoa = 9;
-                break;
-            case 10:
-                khoa = 15;
-                break;    
-            case 11:
-                khoa = 53;
-                break;    
-            case 12:
-                khoa = 48;
-                break;    
-            default:
-                throw new AssertionError();
+            case 1 -> khoa = 11;
+            case 2 -> khoa = 30;
+            case 3 -> khoa = 10;
+            case 4 -> khoa = 38;
+            case 5 -> khoa = 53;
+            case 6 -> khoa = 01;
+            case 7 -> khoa = 55;
+            case 8 -> khoa = 02;
+            case 9 -> khoa = 9;
+            case 10 -> khoa = 15;
+            case 11 -> khoa = 53;
+            case 12 -> khoa = 48;
+            default -> throw new AssertionError();
         }
     }//GEN-LAST:event_jcbbNganhActionPerformed
 
