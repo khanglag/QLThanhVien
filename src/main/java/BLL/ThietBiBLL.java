@@ -42,6 +42,10 @@ public class ThietBiBLL {
     public void addThietBi(ThietBi tb) {
         thietBiDAL.addThietBi(tb);
     }
+    //Thêm thiết bị với mã theo quy định
+    public void addThietBi(ThietBi tb, int loaiTB) {
+        thietBiDAL.addThietBi(tb, loaiTB);
+    }
 
     public void updateThietBi(ThietBi tb) {
         thietBiDAL.updateThietBi(tb);
@@ -49,6 +53,11 @@ public class ThietBiBLL {
 
     public void deleteThietBi(int MaTB) {
         thietBiDAL.deleteThietBi(MaTB);
+    }
+
+    //Xóa nhiều thiết bị theo mã quy định
+    public void deleteByRegula(int MaQD) {
+        thietBiDAL.deleteByRegula(MaQD);
     }
 
     public List<ThietBi> search(int MaTB) {

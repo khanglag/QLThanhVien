@@ -4,20 +4,10 @@
  */
 package DAL;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import java.util.List;
 
 /**
  *
@@ -34,6 +24,7 @@ public class ThanhVienDAL {
         List<ThanhVien> l = null;
         Transaction transaction = null;
         try {
+            openSession();
             transaction = session.beginTransaction();
             l = session.createQuery("FROM ThanhVien", ThanhVien.class).list();
         } catch (HibernateException e) {
@@ -52,6 +43,7 @@ public class ThanhVienDAL {
         Transaction transaction = null;
         ThanhVien tv = null;
         try {
+            openSession();
             transaction = session.beginTransaction();
             tv = session.get(ThanhVien.class, MaTV);
             transaction.commit();
@@ -92,6 +84,7 @@ public class ThanhVienDAL {
     public void addThanhVien(ThanhVien tv) {
         Transaction transaction = null;
         try {
+            openSession();
             transaction = session.beginTransaction();
             session.save(tv);
             transaction.commit();
@@ -110,6 +103,7 @@ public class ThanhVienDAL {
     public void addThanhVien(ThanhVien tv, int nam, int khoa) {
         Transaction transaction = null;
         try {
+            openSession();
             int maTV = generateMaTV(nam, khoa);
             tv.setMaTV(maTV);
 
@@ -129,6 +123,7 @@ public class ThanhVienDAL {
     public void updateThanhVien(ThanhVien tv) {
         Transaction transaction = null;
         try {
+            openSession();
             transaction = session.beginTransaction();
             session.update(tv);
             transaction.commit();
@@ -146,6 +141,7 @@ public class ThanhVienDAL {
     public void deleteThanhVien(int MaTV) {
         Transaction transaction = null;
         try {
+            openSession();
             transaction = session.beginTransaction();
             ThanhVien del = session.get(ThanhVien.class, MaTV);
             session.delete(del);
@@ -165,6 +161,7 @@ public class ThanhVienDAL {
     public void deleteByActiveYear(int Year) {
         Transaction transaction = null;
         try {
+            openSession();
             transaction = session.beginTransaction();
             @SuppressWarnings("unchecked")
             List<ThanhVien> thanhViens = session.createQuery("FROM ThanhVien WHERE SUBSTRING(MaTV, 3, 2) = :Year")
@@ -187,6 +184,7 @@ public class ThanhVienDAL {
         Transaction transaction = null;
         List<ThanhVien> list = null;
         try {
+            openSession();
             transaction = session.beginTransaction();
             String hql = "FROM ThanhVien WHERE MaTV = :MaTV";
             list = session.createQuery(hql, ThanhVien.class)
@@ -207,6 +205,7 @@ public class ThanhVienDAL {
         Transaction transaction = null;
         List<ThanhVien> list = null;
         try {
+            openSession();
             transaction = session.beginTransaction();
             String hql = "FROM ThanhVien WHERE HoTen LIKE:hoTen ";
             list = session.createQuery(hql, ThanhVien.class)
@@ -227,6 +226,7 @@ public class ThanhVienDAL {
         Transaction transaction = null;
         List<ThanhVien> list = null;
         try {
+            openSession();
             transaction = session.beginTransaction();
             String hql = "FROM ThanhVien WHERE Khoa LIKE:khoa ";
             list = session.createQuery(hql, ThanhVien.class)
@@ -247,6 +247,7 @@ public class ThanhVienDAL {
         Transaction transaction = null;
         List<ThanhVien> list = null;
         try {
+            openSession();
             transaction = session.beginTransaction();
             String hql = "FROM ThanhVien WHERE Nganh LIKE:nganh ";
             list = session.createQuery(hql, ThanhVien.class)
@@ -263,46 +264,9 @@ public class ThanhVienDAL {
         return list;
     }
 
-    private static String chooseExcelFile() {
-        JFileChooser fileChooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel files", "xlsx");
-        fileChooser.setFileFilter(filter);
-
-        int returnValue = fileChooser.showOpenDialog(null);
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            return fileChooser.getSelectedFile().getPath();
-        }
-        return null;
-    }
-
-    public List<ThanhVien> readDataFromExcel(String filePath) throws IOException {
-        List<ThanhVien> thanhVienList = new ArrayList<>();
-        FileInputStream inputStream = new FileInputStream(new File(filePath));
-
-        Workbook workbook = new XSSFWorkbook(inputStream);
-        Sheet sheet = workbook.getSheetAt(0);
-        Iterator<Row> iterator = sheet.iterator();
-
-        // Skip header row
-        iterator.next();
-
-        while (iterator.hasNext()) {
-            Row currentRow = iterator.next();
-            Iterator<Cell> cellIterator = currentRow.iterator();
-
-            int maTV = (int) cellIterator.next().getNumericCellValue();
-            String hoTen = cellIterator.next().getStringCellValue();
-            String khoa = cellIterator.next().getStringCellValue();
-            String nganh = cellIterator.next().getStringCellValue();
-            int sdt = (int) cellIterator.next().getNumericCellValue();
-
-            ThanhVien thanhVien = new ThanhVien(maTV, hoTen, khoa, nganh, sdt);
-            thanhVienList.add(thanhVien);
-        }
-
-        workbook.close();
-        inputStream.close();
-
-        return thanhVienList;
+    
+    private void openSession() {
+        if (!session.isOpen())
+            session = HibernateUtils.getSessionFactory().openSession();
     }
 }

@@ -25,10 +25,10 @@ public class ThongTinSdDAL {
         List<ThongTinSD> list = null;
         Transaction transaction = null;
         try {
+            openSession();
             transaction = session.beginTransaction();
             list = session.createQuery("FROM ThongTinSD", ThongTinSD.class).list();
             transaction.commit();
-
 
         } catch (HibernateException e) {
             if (transaction != null)
@@ -44,6 +44,7 @@ public class ThongTinSdDAL {
         Transaction transaction = null;
         ThongTinSD tt = null;
         try {
+            openSession();
             transaction = session.beginTransaction();
             tt = session.get(ThongTinSD.class, MaTT);
             transaction.commit();
@@ -56,11 +57,22 @@ public class ThongTinSdDAL {
         }
         return tt;
     }
-
-    public void addThongTin(ThongTinSD tt){
+    //Tạo mã thông tin tự động
+    public int generateMaTT() {
+        int newMaXL = 0;
+        Integer maXL = (Integer) session.createQuery("SELECT MAX(MaTT) FROM ThongTinSD").uniqueResult();
+        if(maXL == null)
+            newMaXL = 1;
+        else
+             newMaXL = maXL + 1;
+        return newMaXL;
+    }
+    public void addThongTin(ThongTinSD tt) {
         Transaction transaction = null;
         try {
+            openSession();
             transaction = session.beginTransaction();
+            tt.MaTT(generateMaTT());
             session.save(tt);
             transaction.commit();
         } catch (HibernateException e) {
@@ -75,6 +87,7 @@ public class ThongTinSdDAL {
     public void updateThongTin(ThongTinSD tt) {
         Transaction transaction = null;
         try {
+            openSession();
             transaction = session.beginTransaction();
             session.update(tt);
             transaction.commit();
@@ -90,6 +103,7 @@ public class ThongTinSdDAL {
     public void deleteThongTIn(int MaTT) {
         Transaction transaction = null;
         try {
+            openSession();
             transaction = session.beginTransaction();
             ThongTinSD del = session.get(ThongTinSD.class, MaTT);
             session.delete(del);
@@ -103,8 +117,9 @@ public class ThongTinSdDAL {
         }
     }
 
-
-
-
+    private void openSession() {
+        if (!session.isOpen())
+            session = HibernateUtils.getSessionFactory().openSession();
+    }
 
 }
