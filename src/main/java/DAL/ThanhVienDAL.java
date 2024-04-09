@@ -4,20 +4,10 @@
  */
 package DAL;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import java.util.List;
 
 /**
  *
@@ -274,49 +264,7 @@ public class ThanhVienDAL {
         return list;
     }
 
-    private static String chooseExcelFile() {
-        JFileChooser fileChooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel files", "xlsx");
-        fileChooser.setFileFilter(filter);
-
-        int returnValue = fileChooser.showOpenDialog(null);
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            return fileChooser.getSelectedFile().getPath();
-        }
-        return null;
-    }
-
-    public List<ThanhVien> readDataFromExcel(String filePath) throws IOException {
-        List<ThanhVien> thanhVienList = new ArrayList<>();
-        FileInputStream inputStream = new FileInputStream(new File(filePath));
-
-        Workbook workbook = new XSSFWorkbook(inputStream);
-        Sheet sheet = workbook.getSheetAt(0);
-        Iterator<Row> iterator = sheet.iterator();
-
-        // Skip header row
-        iterator.next();
-
-        while (iterator.hasNext()) {
-            Row currentRow = iterator.next();
-            Iterator<Cell> cellIterator = currentRow.iterator();
-
-            int maTV = (int) cellIterator.next().getNumericCellValue();
-            String hoTen = cellIterator.next().getStringCellValue();
-            String khoa = cellIterator.next().getStringCellValue();
-            String nganh = cellIterator.next().getStringCellValue();
-            int sdt = (int) cellIterator.next().getNumericCellValue();
-
-            ThanhVien thanhVien = new ThanhVien(maTV, hoTen, khoa, nganh, sdt);
-            thanhVienList.add(thanhVien);
-        }
-
-        workbook.close();
-        inputStream.close();
-
-        return thanhVienList;
-    }
-
+    
     private void openSession() {
         if (!session.isOpen())
             session = HibernateUtils.getSessionFactory().openSession();

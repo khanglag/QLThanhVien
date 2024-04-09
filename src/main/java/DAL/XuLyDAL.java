@@ -57,11 +57,22 @@ public class XuLyDAL {
         return xuLy;
     }
 
+    //Tạo mã tự động
+    public int generateMaXXL() {
+        int newMaXL = 0;
+        Integer maXL = (Integer) session.createQuery("SELECT MAX(MaXL) FROM XuLy").uniqueResult();
+        if(maXL == null)
+            newMaXL = 1;
+        else
+             newMaXL = maXL + 1;
+        return newMaXL;
+    }
     public void addXuLy(XuLy xuLy) {
         Transaction transaction = null;
         try {
             openSession();
             transaction = session.beginTransaction();
+            xuLy.setMaXL(generateMaXXL());
             session.save(xuLy);
             transaction.commit();
         } catch (HibernateException e) {
@@ -153,24 +164,6 @@ public class XuLyDAL {
             session = HibernateUtils.getSessionFactory().openSession();
     }
 
-    // public List<XuLy> searchXuLy(LocalDateTime ngayXL) {
-    // Transaction transaction = null;
-    // List<XuLy> list = null;
-    // try {
-    // transaction = session.beginTransaction();
-    // String hql = "FROM XuLy WHERE NgayXL LIKE :ngayXL";
-    // list = session.createQuery(hql, XuLy.class)
-    // .setParameter("ngayXL", "%" + ngayXL + "%")
-    // .list();
-    // transaction.commit();
-    // } catch (HibernateException e) {
-    // if (transaction != null)
-    // transaction.rollback();
-    // e.printStackTrace();
-    // } finally {
-    // session.close();
-    // }
-    // return list;
-    // }
+    
 
 }

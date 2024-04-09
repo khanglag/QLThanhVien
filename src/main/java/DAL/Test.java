@@ -9,23 +9,24 @@ public class Test {
     public static void main(String[] args) {
         try (Session session = HibernateUtils.getSessionFactory().openSession()) {
             session.beginTransaction();
-            XuLy xuLy = new XuLy();
-        
-            // Thiết lập thông tin cho đối tượng XuLy
             ThanhVienDAL thanhVienDAL = new ThanhVienDAL();
-            ThanhVien thanhVien = thanhVienDAL.getThanhVien(1121530087); // Giả sử có một thành viên có mã là 1 trong cơ sở dữ liệu
-            xuLy.setMaTV(thanhVien);
-            xuLy.setHinhThucXL("Xử lý hình thức 1");
-            xuLy.setSoTien(1000);
-            xuLy.setNgayXL(LocalDateTime.now());
-            xuLy.setTrangThaiXL(1);
-    
-            // Tạo một đối tượng XuLyDAL
+            
+            // int maTV = thanhVienDAL.getMaTV(2147483647);
+            
+            // Khởi tạo đối tượng XuLyDAL
             XuLyDAL xuLyDAL = new XuLyDAL();
-    
+            
+            // Tạo một đối tượng XuLy mới
+            XuLy xuLy = new XuLy();
+            xuLy.setMaTV(new ThanhVien(2147483647)); 
+            xuLy.setHinhThucXL("Bồi thường mất tài sản");
+            xuLy.setSoTien(500000);
+            xuLy.setNgayXL(LocalDateTime.now());
+            xuLy.setTrangThaiXL(0); 
+
             // Thêm đối tượng XuLy vào cơ sở dữ liệu
             xuLyDAL.addXuLy(xuLy);
-    
+
 
 
             session.getTransaction().commit();

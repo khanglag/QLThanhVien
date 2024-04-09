@@ -57,12 +57,22 @@ public class ThongTinSdDAL {
         }
         return tt;
     }
-
+    //Tạo mã thông tin tự động
+    public int generateMaTT() {
+        int newMaXL = 0;
+        Integer maXL = (Integer) session.createQuery("SELECT MAX(MaTT) FROM ThongTinSD").uniqueResult();
+        if(maXL == null)
+            newMaXL = 1;
+        else
+             newMaXL = maXL + 1;
+        return newMaXL;
+    }
     public void addThongTin(ThongTinSD tt) {
         Transaction transaction = null;
         try {
             openSession();
             transaction = session.beginTransaction();
+            tt.MaTT(generateMaTT());
             session.save(tt);
             transaction.commit();
         } catch (HibernateException e) {

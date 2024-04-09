@@ -1,9 +1,11 @@
 package BLL;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import DAL.ThanhVien;
 import DAL.ThietBi;
+import DAL.XuLy;
 
 public class test {
     public static void main(String[] args) {
@@ -38,7 +40,22 @@ public class test {
         // b.setNganh("CNTT");
         // b.setSDT(85233);
         // a.updateThanhVien(b);
-        
+            
+            // int maTV = thanhVienDAL.getMaTV(2147483647);
+            
+            // Khởi tạo đối tượng XuLyDAL
+            XuLyBLL bll = new XuLyBLL();
+            
+            // Tạo một đối tượng XuLy mới
+            XuLy xuLy = new XuLy();
+            xuLy.setMaTV(new ThanhVien(2147483647)); 
+            xuLy.setHinhThucXL("Bồi thường mất tài sản");
+            xuLy.setSoTien(500000);
+            xuLy.setNgayXL(LocalDateTime.now());
+            xuLy.setTrangThaiXL(0); 
+
+            // Thêm đối tượng XuLy vào cơ sở dữ liệu
+            bll.addXuLy(xuLy);
 
     }
 }

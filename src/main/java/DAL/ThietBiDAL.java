@@ -59,6 +59,44 @@ public class ThietBiDAL {
         return tb;
     }
 
+    //Tạo mã thiết bị theo mã quy định
+    public int generateMaTB(int loaiTB) {
+        String tbString = String.valueOf(loaiTB);
+        List<Integer> existTB = session.createQuery("SELECT MaTB FROM ThietBi WHERE SUBSTRING(MaTB,1,1)= : loaiTB", Integer.class)
+        .setParameter("loaiTB", tbString)
+        .list();
+        if(existTB.isEmpty())
+            return Integer.parseInt(tbString + "000001");
+        else {
+            int lastMaTB = existTB.get(existTB.size() - 1);
+            int lastNumber = lastMaTB % 1000000;
+            int newLastNumber = lastNumber + 1;
+            String newMaTB = String.format("%06d", newLastNumber);
+            return Integer.parseInt(tbString + newMaTB);
+        }
+    }
+
+    //Thêm thiết bị theo mã quy định
+    public void addThietBi(ThietBi tb, int loaiTB) {
+        Transaction transaction = null;
+        try {
+            openSession();
+            int maTB = generateMaTB(loaiTB);
+            tb.setMaTB(maTB);
+
+            transaction = session.beginTransaction();
+            session.save(tb);
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
     public void addThietBi(ThietBi tb) {
         Transaction transaction = null;
         try {
@@ -106,6 +144,30 @@ public class ThietBiDAL {
                 transaction.rollback();
             }
             e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
+    //Xóa nhiều thiết bị theo mã quy định
+    @SuppressWarnings("unchecked")
+    public void deleteByRegula(int MaQD) {
+        Transaction transaction = null;
+        try{
+            openSession();
+            transaction = session.beginTransaction();
+            List<ThietBi> thietBis = session.createQuery("FROM ThietBi WHERE SUBSTRING(MaTB,1,1)= : MaQD")
+            .setParameter("MaQD", String.valueOf(MaQD))
+            .list();
+            for(ThietBi tb : thietBis) {
+                session.delete(tb);
+            }
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (transaction != null) 
+                transaction.rollback();
+            e.printStackTrace();
+            
         } finally {
             session.close();
         }
