@@ -24,7 +24,7 @@ public class QLThanhVien extends javax.swing.JPanel {
     public QLThanhVien() {
         initComponents();
         LoadData();
-        button();
+        //button();
     }
 
     public void LoadData() {
