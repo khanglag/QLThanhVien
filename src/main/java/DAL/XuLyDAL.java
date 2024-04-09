@@ -25,6 +25,7 @@ public class XuLyDAL {
         List<XuLy> xuLyList = null;
         Transaction transaction = null;
         try {
+            openSession();
             transaction = session.beginTransaction();
             xuLyList = session.createQuery("FROM XuLy", XuLy.class).list();
             transaction.commit();
@@ -42,6 +43,7 @@ public class XuLyDAL {
         Transaction transaction = null;
         XuLy xuLy = null;
         try {
+            openSession();
             transaction = session.beginTransaction();
             xuLy = session.get(XuLy.class, MaXL);
             transaction.commit();
@@ -58,6 +60,7 @@ public class XuLyDAL {
     public void addXuLy(XuLy xuLy) {
         Transaction transaction = null;
         try {
+            openSession();
             transaction = session.beginTransaction();
             session.save(xuLy);
             transaction.commit();
@@ -73,6 +76,7 @@ public class XuLyDAL {
     public void updateXuLy(XuLy xuLy) {
         Transaction transaction = null;
         try {
+            openSession();
             transaction = session.beginTransaction();
             session.update(xuLy);
             transaction.commit();
@@ -88,6 +92,7 @@ public class XuLyDAL {
     public void deleteXuLy(int MaXL) {
         Transaction transaction = null;
         try {
+            openSession();
             transaction = session.beginTransaction();
             XuLy del = session.get(XuLy.class, MaXL);
             session.delete(del);
@@ -105,6 +110,7 @@ public class XuLyDAL {
         Transaction transaction = null;
         List<XuLy> list = null;
         try {
+            openSession();
             transaction = session.beginTransaction();
             String hql = "FROM XuLy WHERE MaTV = :MaTV";
             list = session.createQuery(hql, XuLy.class)
@@ -125,6 +131,7 @@ public class XuLyDAL {
         Transaction transaction = null;
         List<XuLy> list = null;
         try {
+            openSession();
             transaction = session.beginTransaction();
             String hql = "FROM XuLy WHERE HinhThucXL LIKE :HinhThucXL";
             list = session.createQuery(hql, XuLy.class)
@@ -141,24 +148,29 @@ public class XuLyDAL {
         return list;
     }
 
+    private void openSession() {
+        if (!session.isOpen())
+            session = HibernateUtils.getSessionFactory().openSession();
+    }
+
     // public List<XuLy> searchXuLy(LocalDateTime ngayXL) {
-    //     Transaction transaction = null;
-    //     List<XuLy> list = null;
-    //     try {
-    //         transaction = session.beginTransaction();
-    //         String hql = "FROM XuLy WHERE NgayXL LIKE :ngayXL";
-    //         list = session.createQuery(hql, XuLy.class)
-    //                 .setParameter("ngayXL", "%" + ngayXL + "%")
-    //                 .list();
-    //         transaction.commit();
-    //     } catch (HibernateException e) {
-    //         if (transaction != null)
-    //             transaction.rollback();
-    //         e.printStackTrace();
-    //     } finally {
-    //         session.close();
-    //     }
-    //     return list;
+    // Transaction transaction = null;
+    // List<XuLy> list = null;
+    // try {
+    // transaction = session.beginTransaction();
+    // String hql = "FROM XuLy WHERE NgayXL LIKE :ngayXL";
+    // list = session.createQuery(hql, XuLy.class)
+    // .setParameter("ngayXL", "%" + ngayXL + "%")
+    // .list();
+    // transaction.commit();
+    // } catch (HibernateException e) {
+    // if (transaction != null)
+    // transaction.rollback();
+    // e.printStackTrace();
+    // } finally {
+    // session.close();
+    // }
+    // return list;
     // }
 
 }

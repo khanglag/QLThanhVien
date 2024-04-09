@@ -25,6 +25,7 @@ public class ThietBiDAL {
         List<ThietBi> thietBiList = null;
         Transaction transaction = null;
         try {
+            openSession();
             transaction = session.beginTransaction();
             thietBiList = session.createQuery("FROM ThietBi", ThietBi.class).list();
             transaction.commit();
@@ -43,6 +44,7 @@ public class ThietBiDAL {
         Transaction transaction = null;
         ThietBi tb = null;
         try {
+            openSession();
             transaction = session.beginTransaction();
             tb = session.get(ThietBi.class, MaTB);
             transaction.commit();
@@ -60,6 +62,7 @@ public class ThietBiDAL {
     public void addThietBi(ThietBi tb) {
         Transaction transaction = null;
         try {
+            openSession();
             transaction = session.beginTransaction();
             session.save(tb);
             transaction.commit();
@@ -76,6 +79,7 @@ public class ThietBiDAL {
     public void updateThietBi(ThietBi tb) {
         Transaction transaction = null;
         try {
+            openSession();
             transaction = session.beginTransaction();
             session.update(tb);
             transaction.commit();
@@ -93,6 +97,7 @@ public class ThietBiDAL {
         Transaction transaction = null;
         ThietBi del = session.get(ThietBi.class, MaTB);
         try {
+            openSession();
             transaction = session.beginTransaction();
             session.delete(del);
             transaction.commit();
@@ -110,6 +115,7 @@ public class ThietBiDAL {
         Transaction transaction = null;
         List<ThietBi> list = null;
         try {
+            openSession();
             transaction = session.beginTransaction();
             String hql = "FROM ThietBi WHERE MaTB = :MaTB";
             list = session.createQuery(hql, ThietBi.class)
@@ -130,6 +136,7 @@ public class ThietBiDAL {
         Transaction transaction = null;
         List<ThietBi> list = null;
         try {
+            openSession();
             transaction = session.beginTransaction();
             String hql = "FROM ThietBi WHERE TenTB LIKE :TenTB";
             list = session.createQuery(hql, ThietBi.class)
@@ -144,5 +151,10 @@ public class ThietBiDAL {
             session.close();
         }
         return list;
+    }
+
+    private void openSession() {
+        if (!session.isOpen())
+            session = HibernateUtils.getSessionFactory().openSession();
     }
 }
