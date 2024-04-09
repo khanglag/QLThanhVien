@@ -233,10 +233,9 @@ public class AddTV extends javax.swing.JDialog {
         tv.setKhoa(jcbbKhoa.getSelectedItem().toString());
         tv.setNganh(jcbbNganh.getSelectedItem().toString());
         tv.setSDT(Integer.parseInt(jtfSDT.getText()));
-        if(tvBLL.addThanhVien(tv, khoa, Integer.parseInt(jtfKhoa.getText())))
-            this.dispose();
-        else
-            JOptionPane.showMessageDialog(rootPane, "Lỗi");
+        tvBLL.addThanhVien(tv, khoa, Integer.parseInt(jtfKhoa.getText()));
+        this.dispose();
+        
     }// GEN-LAST:event_btnAddActionPerformed
 
     /**
