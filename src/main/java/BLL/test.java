@@ -1,17 +1,18 @@
 package BLL;
 
+import DAL.ThanhVien;
 import java.util.List;
 
 import DAL.ThietBi;
 
 public class test {
     public static void main(String[] args) {
-        ThietBiBLL bll = new ThietBiBLL();
-        ThietBi tb = new ThietBi(1000009, "Máy tính bảng", "Đây là máy tính bảng");
-        bll.addThietBi(tb);
-        List<ThietBi> list= bll.search("micro");
-        for( ThietBi b : list)
-            System.out.println(b.toString());
+//        ThietBiBLL bll = new ThietBiBLL();
+//        ThietBi tb = new ThietBi(1000009, "Máy tính bảng", "Đây là máy tính bảng");
+//        bll.addThietBi(tb);
+//        List<ThietBi> list= bll.search("micro");
+//        for( ThietBi b : list)
+//            System.out.println(b.toString());
 
         // List<ThietBi> thietBiList = bll.loadThietbi();
         // Object[][] convertedData = bll.convertList(thietBiList);
@@ -21,5 +22,13 @@ public class test {
         //     }
         //     System.out.println();
         // }
+        ThanhVienBLL a =new ThanhVienBLL();
+        ThanhVien b = new ThanhVien();
+        b.setMaTV(1122410001);
+        b.setHoTen("A");
+        b.setKhoa("QTKD");
+        b.setNganh("CNTT");
+        b.setSDT(85233);
+        a.updateThanhVien(b);
     }
 }

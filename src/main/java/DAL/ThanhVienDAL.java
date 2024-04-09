@@ -43,7 +43,7 @@ public class ThanhVienDAL {
             e.printStackTrace();
 
         } finally {
-            session.close();
+            // session.close();
         }
         return l;
     }
@@ -61,7 +61,7 @@ public class ThanhVienDAL {
             }
             e.printStackTrace();
         } finally {
-            session.close();
+            // session.close();
         }
         return tv;
     }

@@ -233,7 +233,7 @@ public class AddTV extends javax.swing.JDialog {
         tv.setKhoa(jcbbKhoa.getSelectedItem().toString());
         tv.setNganh(jcbbNganh.getSelectedItem().toString());
         tv.setSDT(Integer.parseInt(jtfSDT.getText()));
-        tvBLL.addThanhVien(tv, khoa, Integer.parseInt(jtfKhoa.getText()));
+        tvBLL.addThanhVien(tv,Integer.parseInt(jtfKhoa.getText()), khoa);
         this.dispose();
         
     }// GEN-LAST:event_btnAddActionPerformed
