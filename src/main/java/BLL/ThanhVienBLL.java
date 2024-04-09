@@ -46,12 +46,21 @@ public class ThanhVienBLL {
         tvDAL.addThanhVien(tv);
     }
 
+    //Thêm thành viên theo năm và khóa
+    public void addThanhVien(ThanhVien tv, int nam, int khoa) {
+        tvDAL.addThanhVien(tv, nam, khoa);
+    }
     public void updateThanhVien(ThanhVien tv) {
         tvDAL.updateThanhVien(tv);
     }
 
     public void deleteThanhVien(int MaTV) {
         tvDAL.deleteThanhVien(MaTV);
+    }
+
+    //Xóa thành viên theo điều kiện
+    public void deleteByActiveYear(int Year) {
+        tvDAL.deleteByActiveYear(Year);
     }
 
     public List<ThanhVien> searchThanhVien(int MaTV) {

@@ -8,15 +8,21 @@ import org.hibernate.Session;
 public class Test {
     public static void main(String[] args) {
         try (Session session = HibernateUtils.getSessionFactory().openSession()) {
-            ThanhVienDAL thanhVienDAL = new ThanhVienDAL();
             session.beginTransaction();
+            ThanhVienDAL thanhVienDAL = new ThanhVienDAL();
+            ThanhVien newMember = new ThanhVien();
+            newMember.setHoTen("Nguyen Van A");
+            newMember.setKhoa("CNTT");
+            newMember.setNganh("Cong nghe thong tin");
+            newMember.setSDT(23456789);
+    
+           
+    
+           
+            thanhVienDAL.addThanhVien(newMember, 22,41);
+           
+            // thanhVienDAL.deleteByActiveYear(18,41);
 
-            ThanhVien tv = new ThanhVien(1120150187,"Trần Thị ","GDTH","GDTH",null);  
-            ThanhVien tv1 = new ThanhVien(1120150186,"Trần  ","GDTH","GDTH",null);
-
-            // thanhVienDAL.addThanhVien(tv); 
-            // thanhVienDAL.addThanhVien(tv1);  
-            thanhVienDAL.deleteByActiveYear(20);
 
             session.getTransaction().commit();
         } catch (Exception e) {

@@ -66,6 +66,29 @@ public class ThanhVienDAL {
         return tv;
     }
 
+    // Mã thành viên theo năm và khoa
+    public int generateMaTV(int nam, int khoa) {
+        String getYear = String.valueOf(nam);
+        String khoaString = String.valueOf(khoa);
+
+        List<Integer> existMaTV = session.createQuery(
+                "SELECT MaTV FROM ThanhVien WHERE SUBSTRING(MaTV, 3, 2) = :Year AND SUBSTRING(MaTV, 5, 2) = :Khoa",
+                Integer.class)
+                .setParameter("Year", getYear)
+                .setParameter("Khoa", khoaString)
+                .list();
+
+        if (existMaTV.isEmpty())
+            return Integer.parseInt("11" + getYear + khoaString + "0001");
+        else {
+            int lastMaTV = existMaTV.get(existMaTV.size() - 1);
+            int lastNumber = lastMaTV % 10000;
+            int newLastNumber = lastNumber + 1;
+            String newMaTV = String.format("%04d", newLastNumber);
+            return Integer.parseInt("11" + getYear + khoaString + newMaTV);
+        }
+    }
+
     public void addThanhVien(ThanhVien tv) {
         Transaction transaction = null;
         try {
@@ -78,6 +101,26 @@ public class ThanhVienDAL {
             }
             e.printStackTrace();
 
+        } finally {
+            session.close();
+        }
+    }
+
+    // Thêm thành viên với theo Khoa
+    public void addThanhVien(ThanhVien tv, int nam, int khoa) {
+        Transaction transaction = null;
+        try {
+            int maTV = generateMaTV(nam, khoa);
+            tv.setMaTV(maTV);
+
+            transaction = session.beginTransaction();
+            session.save(tv);
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
         } finally {
             session.close();
         }
@@ -123,13 +166,14 @@ public class ThanhVienDAL {
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
+            @SuppressWarnings("unchecked")
             List<ThanhVien> thanhViens = session.createQuery("FROM ThanhVien WHERE SUBSTRING(MaTV, 3, 2) = :Year")
                     .setParameter("Year", String.valueOf(Year))
                     .list();
-            for (ThanhVien tv : thanhViens) 
+            for (ThanhVien tv : thanhViens)
                 session.delete(tv);
             transaction.commit();
-    
+
         } catch (HibernateException e) {
             if (transaction != null)
                 transaction.rollback();
@@ -138,7 +182,6 @@ public class ThanhVienDAL {
             session.close();
         }
     }
-    
 
     public List<ThanhVien> searchThanhVien(int MaTV) {
         Transaction transaction = null;
