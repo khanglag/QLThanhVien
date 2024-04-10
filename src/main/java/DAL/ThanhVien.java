@@ -41,6 +41,9 @@ public class ThanhVien {
 
     public ThanhVien() {
     }
+    public ThanhVien(int MaTV) {
+        this.MaTV = MaTV;
+    }
     public ThanhVien(int MaTV, String HoTen, String Khoa, String Nganh, Integer SDT) {
         this.MaTV = MaTV;
         this.HoTen = HoTen;
