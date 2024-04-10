@@ -8,8 +8,6 @@ import java.util.List;
 
 import DAL.ThanhVien;
 import DAL.ThanhVienDAL;
-
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -17,9 +15,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 /**
  *
  * @author MSII
@@ -100,8 +101,7 @@ public class ThanhVienBLL {
         }
         return null;
     }
-
-    public List<ThanhVien> readDataFromExcel(String filePath) throws IOException {
+    public List<ThanhVien> readDataFromExcel(String filePath)throws IOException {
         List<ThanhVien> thanhVienList = new ArrayList<>();
         FileInputStream inputStream = new FileInputStream(new File(filePath));
 
@@ -131,5 +131,4 @@ public class ThanhVienBLL {
 
         return thanhVienList;
     }
-
 }

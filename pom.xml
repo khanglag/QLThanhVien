@@ -11,6 +11,16 @@
     <packaging>jar</packaging>
     
     <dependencies>
+         <dependency>
+        <groupId>com.google.zxing</groupId>
+        <artifactId>core</artifactId>
+        <version>3.4.1</version> <!-- Thay thế bằng phiên bản ZXing bạn muốn sử dụng -->
+    </dependency>
+    <dependency>
+        <groupId>com.google.zxing</groupId>
+        <artifactId>javase</artifactId>
+        <version>3.4.1</version>
+    </dependency>
         <!-- Dependency MySQL Connector -->
         <dependency>
             <groupId>mysql</groupId>
