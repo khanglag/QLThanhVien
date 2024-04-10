@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import GUI.MenberManager.MenberAccess;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
@@ -28,7 +29,12 @@ public class Controller {
         this.root = jpnRoot;
     }
     public void setView(JPanel jpnItem, JLabel jlbItem) throws SQLException{
-        
+        kindSelected = "MenberAccess";    
+        root.removeAll();
+        root.setLayout(new BorderLayout());
+        root.add(new MenberAccess());
+        root.validate();
+        root.repaint();
     }
     class LabelEvent implements MouseListener{
         private JPanel node;
@@ -104,12 +110,13 @@ public class Controller {
 //                default:
 //                    break;
 //           }
-           root.removeAll();
-           root.setLayout(new BorderLayout());
-           root.add(node);
-           root.validate();
-           root.repaint();
-           setChangeBackGround(kind);
+//           node=new MenberAccess();
+//           root.removeAll();
+//           root.setLayout(new BorderLayout());
+//           root.add(node);
+//           root.validate();
+//           root.repaint();
+//           setChangeBackGround(kind);
         }
 
 

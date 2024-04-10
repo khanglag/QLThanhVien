@@ -6,6 +6,7 @@ package DAL;
 
 import javax.persistence.*;
 import lombok.Data;
+import java.util.List;
 
 /**
  *
@@ -19,6 +20,12 @@ public class ThanhVien {
     @Id
     @Column(name = "MaTV")
     private int MaTV;
+
+    @OneToMany(mappedBy = "MaTV", cascade = CascadeType.ALL)
+    private List<ThongTinSD> thongTinSDs;
+
+    @OneToMany(mappedBy = "MaTV", cascade = CascadeType.ALL)
+    private List<XuLy> xulies;
 
     @Column(name = "HoTen")
     private String HoTen;
@@ -34,9 +41,18 @@ public class ThanhVien {
 
     public ThanhVien() {
     }
-
     public ThanhVien(int MaTV, String HoTen, String Khoa, String Nganh, Integer SDT) {
         this.MaTV = MaTV;
+        this.HoTen = HoTen;
+        this.Khoa = Khoa;
+        this.Nganh = Nganh;
+        this.SDT = SDT;
+    }
+
+    public ThanhVien(int MaTV, List<ThongTinSD> thongTinSDs, List<XuLy> xulies, String HoTen, String Khoa, String Nganh, Integer SDT) {
+        this.MaTV = MaTV;
+        this.thongTinSDs = thongTinSDs;
+        this.xulies = xulies;
         this.HoTen = HoTen;
         this.Khoa = Khoa;
         this.Nganh = Nganh;
@@ -49,6 +65,22 @@ public class ThanhVien {
 
     public void setMaTV(int MaTV) {
         this.MaTV = MaTV;
+    }
+
+    public List<ThongTinSD> getThongTinSDs() {
+        return this.thongTinSDs;
+    }
+
+    public void setThongTinSDs(List<ThongTinSD> thongTinSDs) {
+        this.thongTinSDs = thongTinSDs;
+    }
+
+    public List<XuLy> getXulies() {
+        return this.xulies;
+    }
+
+    public void setXulies(List<XuLy> xulies) {
+        this.xulies = xulies;
     }
 
     public String getHoTen() {
@@ -88,6 +120,16 @@ public class ThanhVien {
         return this;
     }
 
+    public ThanhVien thongTinSDs(List<ThongTinSD> thongTinSDs) {
+        setThongTinSDs(thongTinSDs);
+        return this;
+    }
+
+    public ThanhVien xulies(List<XuLy> xulies) {
+        setXulies(xulies);
+        return this;
+    }
+
     public ThanhVien HoTen(String HoTen) {
         setHoTen(HoTen);
         return this;
@@ -111,12 +153,16 @@ public class ThanhVien {
     @Override
     public String toString() {
         return "{" +
-                " MaTV='" + getMaTV() + "'" +
-                ", HoTen='" + getHoTen() + "'" +
-                ", Khoa='" + getKhoa() + "'" +
-                ", Nganh='" + getNganh() + "'" +
-                ", SDT='" + getSDT() + "'" +
-                "}";
+            " MaTV='" + getMaTV() + "'" +
+            ", thongTinSDs='" + getThongTinSDs() + "'" +
+            ", xulies='" + getXulies() + "'" +
+            ", HoTen='" + getHoTen() + "'" +
+            ", Khoa='" + getKhoa() + "'" +
+            ", Nganh='" + getNganh() + "'" +
+            ", SDT='" + getSDT() + "'" +
+            "}";
     }
+
+    
 
 }
