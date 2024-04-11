@@ -5,6 +5,7 @@ import java.util.List;
 
 import DAL.ThanhVien;
 import DAL.ThietBi;
+import DAL.ThongTinSD;
 import DAL.XuLy;
 
 public class test {
@@ -44,18 +45,22 @@ public class test {
             // int maTV = thanhVienDAL.getMaTV(2147483647);
             
             // Khởi tạo đối tượng XuLyDAL
-            XuLyBLL bll = new XuLyBLL();
+//            XuLyBLL bll = new XuLyBLL();
+//            
+//            // Tạo một đối tượng XuLy mới
+//            XuLy xuLy = new XuLy();
+//            xuLy.setMaTV(new ThanhVien(2147483647)); 
+//            xuLy.setHinhThucXL("Bồi thường mất tài sản");
+//            xuLy.setSoTien(500000);
+//            xuLy.setNgayXL(LocalDateTime.now());
+//            xuLy.setTrangThaiXL(0); 
+//
+//            // Thêm đối tượng XuLy vào cơ sở dữ liệu
+//            bll.addXuLy(xuLy);
+            ThongTinSDBLL ttBLL = new ThongTinSDBLL();
             
-            // Tạo một đối tượng XuLy mới
-            XuLy xuLy = new XuLy();
-            xuLy.setMaTV(new ThanhVien(2147483647)); 
-            xuLy.setHinhThucXL("Bồi thường mất tài sản");
-            xuLy.setSoTien(500000);
-            xuLy.setNgayXL(LocalDateTime.now());
-            xuLy.setTrangThaiXL(0); 
-
-            // Thêm đối tượng XuLy vào cơ sở dữ liệu
-            bll.addXuLy(xuLy);
-
+        System.out.println(ttBLL.geThongTinSD(2)  );
+        System.out.println("BLL.test.main()");
+        
     }
 }
