@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
  *
  * @author khang
  */
-public class AddTV extends javax.swing.JDialog {
+public class Edit extends javax.swing.JDialog {
 
     /**
      * Creates new form AddTV
@@ -22,10 +22,16 @@ public class AddTV extends javax.swing.JDialog {
 
     int khoa;
     ThanhVienBLL tvBLL = new ThanhVienBLL();
+    ThanhVien tv = new ThanhVien();
 
-    public AddTV(java.awt.Frame parent) {
+    public Edit(java.awt.Frame parent, ThanhVien tv) {
         super(parent, true);
         initComponents();
+        khoa = tv.getMaTV();
+        jtfName.setText(tv.getHoTen());
+        jtfSDT.setText(tv.getSDT().toString());
+        jcbbKhoa.setSelectedItem(tv.getKhoa());
+        jcbbNganh.setSelectedItem(tv.getNganh());
     }
 
     /**
@@ -50,15 +56,13 @@ public class AddTV extends javax.swing.JDialog {
         jcbbNganh = new javax.swing.JComboBox<>();
         btnClose = new javax.swing.JButton();
         btnAdd = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        jtfKhoa = new javax.swing.JTextField();
         SDT = new javax.swing.JLabel();
         jtfSDT = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("Thêm thành viên");
+        jLabel1.setText("Sửa thành viên");
         jPanel3.add(jLabel1);
 
         jPanel2.add(jPanel3);
@@ -90,14 +94,12 @@ public class AddTV extends javax.swing.JDialog {
             }
         });
 
-        btnAdd.setText("Thêm");
+        btnAdd.setText("Sửa");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddActionPerformed(evt);
             }
         });
-
-        jLabel5.setText("Khoá");
 
         SDT.setText("SĐT");
 
@@ -117,16 +119,13 @@ public class AddTV extends javax.swing.JDialog {
                         .addGap(49, 49, 49)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(SDT, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jtfName)
-                            .addComponent(jtfKhoa)
                             .addComponent(jcbbKhoa, 0, 156, Short.MAX_VALUE)
                             .addComponent(jcbbNganh, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jtfSDT, javax.swing.GroupLayout.Alignment.TRAILING))))
@@ -141,10 +140,6 @@ public class AddTV extends javax.swing.JDialog {
                     .addComponent(jLabel2)
                     .addComponent(jtfName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtfKhoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jcbbKhoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
@@ -153,14 +148,14 @@ public class AddTV extends javax.swing.JDialog {
                     .addComponent(jcbbNganh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(SDT)
                     .addComponent(jtfSDT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd)
                     .addComponent(btnClose))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -173,7 +168,9 @@ public class AddTV extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -212,11 +209,14 @@ public class AddTV extends javax.swing.JDialog {
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
         ThanhVien tv = new ThanhVien();
+        tv.setMaTV(khoa);
         tv.setHoTen(jtfName.getText());
         tv.setKhoa(jcbbKhoa.getSelectedItem().toString());
         tv.setNganh(jcbbNganh.getSelectedItem().toString());
         tv.setSDT(Integer.parseInt(jtfSDT.getText()));
-        tvBLL.addThanhVien(tv,Integer.parseInt(jtfKhoa.getText()), khoa);
+        System.out.println(tv);
+        tvBLL.updateThanhVien(tv);
+                
         this.dispose();
         
     }// GEN-LAST:event_btnAddActionPerformed
@@ -234,13 +234,11 @@ public class AddTV extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JComboBox<String> jcbbKhoa;
     private javax.swing.JComboBox<String> jcbbNganh;
-    private javax.swing.JTextField jtfKhoa;
     private javax.swing.JTextField jtfName;
     private javax.swing.JTextField jtfSDT;
     // End of variables declaration//GEN-END:variables

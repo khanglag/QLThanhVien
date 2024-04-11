@@ -42,15 +42,27 @@ public class QLThanhVien extends javax.swing.JPanel {
         }
 
     }
+    public void refresh() {
+        tvBLL = new ThanhVienBLL();
+        LoadData();
+    }
     public void button() {
         TableActionEvent event = new TableActionEvent() {
             @Override
-            public void onEdit(int i) {
+            public void onEdit(int row) {
+                int id = Integer.parseInt(jTable1.getModel().getValueAt(row, 0).toString());
+                String name = jTable1.getModel().getValueAt(row, 1).toString();
+                String khoa = jTable1.getModel().getValueAt(row, 2).toString();
+                String nganh = jTable1.getModel().getValueAt(row, 3).toString();
+                int phone = Integer.parseInt(jTable1.getModel().getValueAt(row, 4).toString());
+                ThanhVien tv = new ThanhVien(id,name,khoa,nganh,phone);
+                Edit edit = new Edit(new MainFrame(), tv);
+                edit.setVisible(true);
+                refresh();
             }
 
             @Override
             public void onDelete(int row) {
-                //này call ở BLL mà
                 int choice = JOptionPane.showConfirmDialog(new MainFrame(), "Bạn có chắc chắn muốn xoá?", "Xác nhận", JOptionPane.YES_NO_OPTION);
                 if (choice == JOptionPane.YES_OPTION) {
                 // Perform delete operation
@@ -58,8 +70,7 @@ public class QLThanhVien extends javax.swing.JPanel {
                     System.out.println(id);
                     tvBLL.deleteThanhVien(id);
                 }
-                //LoadData();
-                //này run thử đi =))))
+                refresh();
                 
             }
 
@@ -104,6 +115,11 @@ public class QLThanhVien extends javax.swing.JPanel {
         jScrollPane1.setViewportView(jTable1);
 
         btnAdd.setText("Thêm");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         btnExcel.setText("Nhập excel");
 
@@ -148,6 +164,13 @@ public class QLThanhVien extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        // TODO add your handling code here:
+        AddTV add = new AddTV(new MainFrame());
+        add.setVisible(true);
+        refresh();
+    }//GEN-LAST:event_btnAddActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
