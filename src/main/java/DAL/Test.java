@@ -10,18 +10,23 @@ public class Test {
         try (Session session = HibernateUtils.getSessionFactory().openSession()) {
             session.beginTransaction();
             ThanhVienDAL thanhVienDAL = new ThanhVienDAL();
-            ThanhVien newMember = new ThanhVien();
-            newMember.setHoTen("Nguyen Van A");
-            newMember.setKhoa("CNTT");
-            newMember.setNganh("Cong nghe thong tin");
-            newMember.setSDT(23456789);
-    
-           thanhVienDAL.addThanhVien(newMember, 20,41);
-    
-           
-           
-           
-            // thanhVienDAL.deleteByActiveYear(18,41);
+            
+            // int maTV = thanhVienDAL.getMaTV(2147483647);
+            
+            // Khởi tạo đối tượng XuLyDAL
+            XuLyDAL xuLyDAL = new XuLyDAL();
+            
+            // Tạo một đối tượng XuLy mới
+            XuLy xuLy = new XuLy();
+            xuLy.setMaTV(new ThanhVien(2147483647)); 
+            xuLy.setHinhThucXL("Bồi thường mất tài sản");
+            xuLy.setSoTien(500000);
+            xuLy.setNgayXL(LocalDateTime.now());
+            xuLy.setTrangThaiXL(0); 
+
+            // Thêm đối tượng XuLy vào cơ sở dữ liệu
+            xuLyDAL.addXuLy(xuLy);
+
 
 
             session.getTransaction().commit();
