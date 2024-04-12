@@ -5,6 +5,7 @@
 package GUI;
 
 import GUI.MenberManager.MenberAccess;
+import GUI.QLTV.QLThanhVien;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
@@ -52,26 +53,18 @@ public class Controller {
         @Override
         public void mouseClicked(MouseEvent e) {
             
-//            switch (kind) {
-//                case "Course":
-//                {
-//                    try {
-//                        node = new CourseManager();
-//                    } catch (SQLException ex) {
-//                        Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
-//                }
-//                    break;
-//
-//                case "Person":
-//                {
-//                    try {
-//                        node = new AddUser();
-//                    } catch (SQLException ex) {
-//                        Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
-//                }
-//                    break;
+            switch (kind) {
+                case "Checkin":
+                {
+                    node = new MenberAccess();
+                }
+                    break;
+
+                case "Menber":
+                {
+                    node = new QLThanhVien();
+                }
+                    break;
 //
 //                case "OfficeAssignment":
 //                {
@@ -105,18 +98,18 @@ public class Controller {
 //                    }
 //                }
 //                    break;
-//
-//                // more
-//                default:
-//                    break;
-//           }
-//           node=new MenberAccess();
-//           root.removeAll();
-//           root.setLayout(new BorderLayout());
-//           root.add(node);
-//           root.validate();
-//           root.repaint();
-//           setChangeBackGround(kind);
+
+                // more
+                default:
+                    break;
+           }
+           node=new MenberAccess();
+           root.removeAll();
+           root.setLayout(new BorderLayout());
+           root.add(node);
+           root.validate();
+           root.repaint();
+           setChangeBackGround(kind);
         }
 
 
