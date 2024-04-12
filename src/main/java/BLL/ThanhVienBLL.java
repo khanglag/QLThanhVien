@@ -90,6 +90,11 @@ public class ThanhVienBLL {
     public List<ThanhVien> searchByNganh(String nganh) {
         return tvDAL.searchByNganh(nganh);
     }
+    
+    public boolean kiemTraTVCheckin(String maTV){
+        return tvDAL.equals(maTV);
+    }
+    
     private static String chooseExcelFile() {
         JFileChooser fileChooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel files", "xlsx");
