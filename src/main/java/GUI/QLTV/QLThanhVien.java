@@ -92,6 +92,11 @@ public class QLThanhVien extends javax.swing.JPanel {
         jScrollPane1.setViewportView(jTable1);
 
         btnAdd.setText("Thêm");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         btnExcel.setText("Nhập excel");
 
@@ -136,6 +141,12 @@ public class QLThanhVien extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        // TODO add your handling code here:
+        list = (ArrayList<ThanhVien>) tvBLL.loadThanhVien();
+        System.out.println(list);
+    }//GEN-LAST:event_btnAddActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
