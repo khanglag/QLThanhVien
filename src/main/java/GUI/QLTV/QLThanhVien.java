@@ -6,8 +6,10 @@ package GUI.QLTV;
 
 import BLL.ThanhVienBLL;
 import DAL.ThanhVien;
+import GUI.Hander.Numeric;
 import GUI.MainFrame;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -99,6 +101,7 @@ public class QLThanhVien extends javax.swing.JPanel {
         btnExcel = new javax.swing.JButton();
         jtfTim = new javax.swing.JTextField();
         btnFind = new javax.swing.JButton();
+        btnDeleteKhoa = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -126,6 +129,18 @@ public class QLThanhVien extends javax.swing.JPanel {
         jtfTim.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm"));
 
         btnFind.setText("Tìm");
+        btnFind.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFindActionPerformed(evt);
+            }
+        });
+
+        btnDeleteKhoa.setText("Xoá theo khoá");
+        btnDeleteKhoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteKhoaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -135,12 +150,13 @@ public class QLThanhVien extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jtfTim, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnFind)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnDeleteKhoa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnExcel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
@@ -159,8 +175,10 @@ public class QLThanhVien extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jtfTim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnFind))))
-                .addGap(67, 67, 67)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnDeleteKhoa)
+                .addGap(42, 42, 42)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -172,9 +190,40 @@ public class QLThanhVien extends javax.swing.JPanel {
         refresh();
     }//GEN-LAST:event_btnAddActionPerformed
 
+    private void btnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindActionPerformed
+        // TODO add your handling code here:
+        model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        List<ThanhVien> tempList = new ArrayList<ThanhVien>();
+        if (Numeric.isNumeric(jtfTim.getText())) {
+            tempList = tvBLL.searchThanhVien(Integer.parseInt(jtfTim.getText()));
+        } else
+            tempList = tvBLL.searchByHoTen(jtfTim.getText());
+        if (tempList == null)
+            System.out.println(" tim course rỗng");
+
+        for (ThanhVien on : tempList) {
+            model.addRow(new Object[] {
+                    on.getMaTV(), on.getHoTen(), on.getKhoa(), on.getNganh(), on.getSDT()
+            });
+            jTable1.setModel(model);
+        }
+    }//GEN-LAST:event_btnFindActionPerformed
+
+    private void btnDeleteKhoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteKhoaActionPerformed
+        // TODO add your handling code here:
+        String khoa = JOptionPane.showInputDialog(new MainFrame(), "Nhập khoá muốn xoá");
+        if(Numeric.isNumeric(khoa))
+            tvBLL.deleteByActiveYear(Integer.parseInt(khoa));
+        else
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập khoá. Ví dụ: 22 ");
+        refresh();
+    }//GEN-LAST:event_btnDeleteKhoaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnDeleteKhoa;
     private javax.swing.JButton btnExcel;
     private javax.swing.JButton btnFind;
     private javax.swing.JScrollPane jScrollPane1;

@@ -8,6 +8,7 @@ import BLL.ThanhVienBLL;
 import DAL.ThanhVien;
 import GUI.Hander.CurrentYearLastTwoDigits;
 import GUI.Hander.IntToStringConverter;
+import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,13 +22,14 @@ public class Edit extends javax.swing.JDialog {
      */
 
     int khoa;
+    int id;
     ThanhVienBLL tvBLL = new ThanhVienBLL();
     ThanhVien tv = new ThanhVien();
 
     public Edit(java.awt.Frame parent, ThanhVien tv) {
         super(parent, true);
         initComponents();
-        khoa = tv.getMaTV();
+        id = tv.getMaTV();
         jtfName.setText(tv.getHoTen());
         jtfSDT.setText(tv.getSDT().toString());
         jcbbKhoa.setSelectedItem(tv.getKhoa());
@@ -55,7 +57,7 @@ public class Edit extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
         jcbbNganh = new javax.swing.JComboBox<>();
         btnClose = new javax.swing.JButton();
-        btnAdd = new javax.swing.JButton();
+        btnEdit = new javax.swing.JButton();
         SDT = new javax.swing.JLabel();
         jtfSDT = new javax.swing.JTextField();
 
@@ -94,10 +96,10 @@ public class Edit extends javax.swing.JDialog {
             }
         });
 
-        btnAdd.setText("Sửa");
-        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+        btnEdit.setText("Sửa");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddActionPerformed(evt);
+                btnEditActionPerformed(evt);
             }
         });
 
@@ -114,7 +116,7 @@ public class Edit extends javax.swing.JDialog {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnClose)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnAdd))
+                        .addComponent(btnEdit))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(49, 49, 49)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -153,7 +155,7 @@ public class Edit extends javax.swing.JDialog {
                     .addComponent(jtfSDT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAdd)
+                    .addComponent(btnEdit)
                     .addComponent(btnClose))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
@@ -206,10 +208,10 @@ public class Edit extends javax.swing.JDialog {
         this.dispose();
     }// GEN-LAST:event_btnCloseActionPerformed
 
-    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAddActionPerformed
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
         ThanhVien tv = new ThanhVien();
-        tv.setMaTV(khoa);
+        tv.setMaTV(id);
         tv.setHoTen(jtfName.getText());
         tv.setKhoa(jcbbKhoa.getSelectedItem().toString());
         tv.setNganh(jcbbNganh.getSelectedItem().toString());
@@ -228,8 +230,8 @@ public class Edit extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel SDT;
-    private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnClose;
+    private javax.swing.JButton btnEdit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
