@@ -5,7 +5,9 @@
 package GUI.Statistics;
 
 import BLL.ThanhVienBLL;
+import BLL.XuLyBLL;
 import DAL.ThanhVien;
+import DAL.XuLy;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
@@ -15,26 +17,45 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Statistics extends javax.swing.JPanel {
 
-     DefaultTableModel model;
-    ArrayList<ThanhVien> list = new ArrayList<ThanhVien>();
+    DefaultTableModel model;
+    ArrayList<ThanhVien> listTv = new ArrayList<ThanhVien>();
+    ArrayList<XuLy> listXl = new ArrayList<XuLy>();
     ThanhVienBLL tvBLL = new ThanhVienBLL();
+    XuLyBLL xlBLL = new XuLyBLL();
+
     public Statistics() {
         initComponents();
-        LoadData();
+        //LoadData();
+        LoadDataXyLy();
     }
-      public void LoadData() {
+
+    public void LoadData() {
         model = (DefaultTableModel) tbMembers.getModel();
         model.setRowCount(0);
-        list = (ArrayList<ThanhVien>) tvBLL.loadThanhVien();
+        listTv = (ArrayList<ThanhVien>) tvBLL.loadThanhVien();
 
-        for (ThanhVien on : list) {
-            model.addRow(new Object[] {
-                    on.getMaTV(), on.getHoTen(), on.getKhoa(), on.getNganh(), on.getSDT()
+        for (ThanhVien on : listTv) {
+            model.addRow(new Object[]{
+                on.getMaTV(), on.getHoTen(), on.getKhoa(), on.getNganh(), on.getSDT()
             });
             tbMembers.setModel(model);
         }
 
     }
+
+    public void LoadDataXyLy() {
+        model = (DefaultTableModel) tbXyly.getModel();
+        model.setRowCount(0);
+        listXl = (ArrayList<XuLy>) xlBLL.loadXuLy();
+
+        for (XuLy on : listXl) {
+            model.addRow(new Object[]{
+                on.getMaXL(), on.getMaTV(), on.getHinhThucXL(), on.getSoTien(), on.getNgayXL(), on.getTrangThaiXL()
+            });
+            tbMembers.setModel(model);
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -50,14 +71,14 @@ public class Statistics extends javax.swing.JPanel {
         jdcTime1 = new com.toedter.calendar.JDateChooser();
         btnOK1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tbMembers1 = new javax.swing.JTable();
+        tbThietBi = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         txtTotalMembers1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         cbbChoose2 = new javax.swing.JComboBox<>();
         btnOK2 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        tbMembers2 = new javax.swing.JTable();
+        tbXyly = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         txtTotalMembers2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -78,26 +99,33 @@ public class Statistics extends javax.swing.JPanel {
         btnOK1.setText("OK");
         btnOK1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        tbMembers1.setModel(new javax.swing.table.DefaultTableModel(
+        tbThietBi.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Mã thành viên", "Họ tên", "Mã thiết bị", "Tên thiết bị", "Thời gian vào", "Thời gian mượn", "Thời gian trả"
+                "Mã thông tin", "Mã thành viên", "Họ tên", "Mã thiết bị", "Tên thiết bị", "Thời gian vào", "Thời gian mượn", "Thời gian trả"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
-        jScrollPane2.setViewportView(tbMembers1);
+        jScrollPane2.setViewportView(tbThietBi);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Tổng số thiết bị:");
@@ -142,8 +170,6 @@ public class Statistics extends javax.swing.JPanel {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE))
         );
 
-        cbbChoose1.getAccessibleContext().setAccessibleName("Thiết bị được mượn theo:");
-
         jTabbedPane1.addTab("Thiết bị", jPanel2);
 
         cbbChoose2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đã được xử lý", "Đang xử lý" }));
@@ -158,7 +184,7 @@ public class Statistics extends javax.swing.JPanel {
             }
         });
 
-        tbMembers2.setModel(new javax.swing.table.DefaultTableModel(
+        tbXyly.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -172,12 +198,19 @@ public class Statistics extends javax.swing.JPanel {
             Class[] types = new Class [] {
                 java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true, true
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
-        jScrollPane3.setViewportView(tbMembers2);
+        jScrollPane3.setViewportView(tbXyly);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Tổng tiền bồi thường:");
@@ -222,17 +255,17 @@ public class Statistics extends javax.swing.JPanel {
 
         tbMembers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Mã thành viên", "Họ tên", "Khoa", "Ngành", "SĐT", "Thời gian vào"
+                "Mã thông tin", "Mã thành viên", "Họ tên", "Khoa", "Ngành", "SĐT", "Thời gian vào"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -330,8 +363,8 @@ public class Statistics extends javax.swing.JPanel {
     private com.toedter.calendar.JDateChooser jdcTime;
     private com.toedter.calendar.JDateChooser jdcTime1;
     private javax.swing.JTable tbMembers;
-    private javax.swing.JTable tbMembers1;
-    private javax.swing.JTable tbMembers2;
+    private javax.swing.JTable tbThietBi;
+    private javax.swing.JTable tbXyly;
     private javax.swing.JLabel txtTotalMembers;
     private javax.swing.JLabel txtTotalMembers1;
     private javax.swing.JLabel txtTotalMembers2;
