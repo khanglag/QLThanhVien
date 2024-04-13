@@ -113,7 +113,7 @@ public class ThongTinSdDAL {
     }
 
     // Muợn thiết bị
-    public void borrowedDevice(int MaTT, int MaTV, int MaTB) {
+    public void borrowedDevice(int MaTT, int MaTV, int MaTB, LocalDateTime TGMuon) {
         Transaction transaction = null;
         try {
             openSession();
@@ -134,7 +134,6 @@ public class ThongTinSdDAL {
 
             // Thiết bị chưa cho mượn
             thongTinSD = (ThongTinSD) session.createQuery("FROM ThongTinSD WHERE MaTB.id = :MaTB AND TGTra IS NULL")
-                    .setParameter("MaTV", MaTV)
                     .setParameter("MaTB", MaTB)
                     .uniqueResult();
             if (thongTinSD != null) {
@@ -151,6 +150,7 @@ public class ThongTinSdDAL {
             thongTinMuon.setMaTV(thanhVien);
             thongTinMuon.setMaTB(thietBi);
             thongTinMuon.setTGVao(LocalDateTime.now());
+            thongTinMuon.setTGMuon(TGMuon);
             session.save(thongTinMuon);
             transaction.commit();
 

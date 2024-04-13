@@ -28,7 +28,7 @@ public class testcuaXH {
         // listtt = (ArrayList<ThongTinSD>) ttBll.loadThongTinSD();
 
         // for (ThongTinSD on : listtt) {
-        //     System.out.println(on.getMaTT() +""+ on.getMaTV());
+        //     System.out.println(on.getMaTT() +"  "+ on.getMaTV() + " " + on.getMaTB());
         // }
         System.out.println("-------------------------------");
           ArrayList<XuLy> listXL = new ArrayList<XuLy>();

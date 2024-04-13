@@ -53,16 +53,23 @@ public class ThongTinSD {
         this.TGMuon = TGMuon;
         this.TGTra = TGTra;
     }
-
+    public int getMaTV() {
+        return MaTV != null ? MaTV.getMaTV() : -1; 
+    }
+    public int getMaTB() {
+        return MaTB != null ? MaTB.getMaTB() : -1; 
+    }
+    
     @Override
     public String toString() {
         return "{" +
                 " MaTT='" + getMaTT() + "'" +
-                ", MaTV='" + (getMaTV() != null ? getMaTV().getMaTV() : null) + "'" +
-                ", MaTB='" + (getMaTB() != null ? getMaTB().getMaTB() : null) + "'" +
+                ", MaTV='" + getMaTV() + "'" +
+                ", MaTB='" + getMaTB() + "'" +
                 ", TGVao='" + getTGVao() + "'" +
                 ", TGMuon='" + getTGMuon() + "'" +
                 ", TGTra='" + getTGTra() + "'" +
                 "}";
     }
+
 }

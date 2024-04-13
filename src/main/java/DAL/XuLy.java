@@ -52,12 +52,15 @@ public class XuLy {
         this.ngayXL = ngayXL;
         this.trangThaiXL = trangThaiXL;
     }
+    public int getMaTV() {
+        return MaTV != null ? MaTV.getMaTV() : -1; 
+    }
 
     @Override
     public String toString() {
         return "{" +
                 " MaXL='" + getMaXL() + "'" +
-                ", MaTV='" + (getMaTV() != null ? getMaTV().getMaTV() : null) + "'" +
+                ", MaTV='" + getMaTV() + "'" +
                 ", HinhThucXL='" + getHinhThucXL() + "'" +
                 ", SoTien='" + getSoTien() + "'" +
                 ", NgayXL='" + getNgayXL() + "'" +
