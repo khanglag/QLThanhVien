@@ -33,8 +33,6 @@ public class XuLyDAL {
             if (transaction != null)
                 transaction.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
         return xuLyList;
     }
@@ -51,8 +49,6 @@ public class XuLyDAL {
             if (transaction != null)
                 transaction.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
         return xuLy;
     }
@@ -80,8 +76,6 @@ public class XuLyDAL {
             if (transaction != null)
                 transaction.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
     }
 
@@ -96,8 +90,6 @@ public class XuLyDAL {
             if (transaction != null)
                 transaction.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
     }
 
@@ -113,8 +105,6 @@ public class XuLyDAL {
             if (transaction != null)
                 transaction.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
     }
 
@@ -136,6 +126,7 @@ public class XuLyDAL {
         }
         return list;
     }
+
     public List<XuLy> searchXuLy(String HinhThucXL) {
         Transaction transaction = null;
         List<XuLy> list = null;
@@ -151,8 +142,6 @@ public class XuLyDAL {
             if (transaction != null)
                 transaction.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
         return list;
     }

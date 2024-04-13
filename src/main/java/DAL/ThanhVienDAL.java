@@ -1,9 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAL;
-
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -47,8 +42,6 @@ public class ThanhVienDAL {
             }
             e.printStackTrace();
 
-        } finally {
-            session.close();
         }
         return l;
     }
@@ -57,7 +50,7 @@ public class ThanhVienDAL {
         Transaction transaction = null;
         ThanhVien tv = null;
         try {
-           openSession();
+            openSession();
             transaction = session.beginTransaction();
             tv = session.get(ThanhVien.class, MaTV);
             transaction.commit();
@@ -66,8 +59,6 @@ public class ThanhVienDAL {
                 transaction.rollback();
             }
             e.printStackTrace();
-        } finally {
-            session.close();
         }
         return tv;
     }
@@ -108,8 +99,6 @@ public class ThanhVienDAL {
             }
             e.printStackTrace();
 
-        } finally {
-            session.close();
         }
     }
 
@@ -129,8 +118,6 @@ public class ThanhVienDAL {
                 transaction.rollback();
             }
             e.printStackTrace();
-        } finally {
-            session.close();
         }
     }
 
@@ -147,8 +134,6 @@ public class ThanhVienDAL {
 
             }
             e.printStackTrace();
-        } finally {
-            session.close();
         }
     }
 
@@ -165,11 +150,8 @@ public class ThanhVienDAL {
                 transaction.rollback();
             }
             e.printStackTrace();
-        } finally {
-            session.close();
         }
     }
-    
 
     // Xóa thành viên theo điều kiện năm kích hoạt thành viên
     public void deleteByActiveYear(int Year) {
@@ -189,8 +171,6 @@ public class ThanhVienDAL {
             if (transaction != null)
                 transaction.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
     }
 
@@ -209,8 +189,6 @@ public class ThanhVienDAL {
             if (transaction != null)
                 transaction.rollback();
             e.printStackTrace();
-        }finally {
-            session.close();
         }
         return list;
     }
@@ -230,8 +208,6 @@ public class ThanhVienDAL {
             if (transaction != null)
                 transaction.rollback();
             e.printStackTrace();
-        } finally{
-            session.close();
         }
         return list;
     }
@@ -251,8 +227,6 @@ public class ThanhVienDAL {
             if (transaction != null)
                 transaction.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
         return list;
     }
@@ -272,17 +246,16 @@ public class ThanhVienDAL {
             if (transaction != null)
                 transaction.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
         return list;
     }
+
     private void openSession() {
         if (!session.isOpen())
             session = HibernateUtils.getSessionFactory().openSession();
     }
 
-    private static String chooseExcelFile() {
+    public static String chooseExcelFile() {
         JFileChooser fileChooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel files", "xlsx");
         fileChooser.setFileFilter(filter);
@@ -325,5 +298,4 @@ public class ThanhVienDAL {
         return thanhVienList;
     }
 
-   
 }
