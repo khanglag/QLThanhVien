@@ -91,6 +91,7 @@ public class ThanhVienBLL {
         return tvDAL.searchByNganh(nganh);
     }
     
+    @SuppressWarnings("unlikely-arg-type")
     public boolean kiemTraTVCheckin(String maTV){
         return tvDAL.equals(maTV);
     }
