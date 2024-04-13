@@ -57,16 +57,17 @@ public class XuLyDAL {
         return xuLy;
     }
 
-    //Tạo mã tự động
+    // Tạo mã tự động
     public int generateMaXXL() {
         int newMaXL = 0;
         Integer maXL = (Integer) session.createQuery("SELECT MAX(MaXL) FROM XuLy").uniqueResult();
-        if(maXL == null)
+        if (maXL == null)
             newMaXL = 1;
         else
-             newMaXL = maXL + 1;
+            newMaXL = maXL + 1;
         return newMaXL;
     }
+
     public void addXuLy(XuLy xuLy) {
         Transaction transaction = null;
         try {
@@ -163,7 +164,5 @@ public class XuLyDAL {
         if (!session.isOpen())
             session = HibernateUtils.getSessionFactory().openSession();
     }
-
-    
 
 }

@@ -150,8 +150,18 @@ public class ThongTinSdDAL {
             if (thongTinSD != null) {
                 thongTinSD.setTGMuon(LocalDateTime.now());
                 session.update(thongTinSD);
+                transaction.commit();
+                return;
             }
-    
+            
+            //Nếu thiết bị chưa có trong bảng ThongTinSD
+            ThietBi thietBi = session.get(ThietBi.class, MaTB);
+            ThongTinSD thongTinMuon = new ThongTinSD();
+            thongTinMuon.setMaTT(generateMaTT());
+            thongTinMuon.setMaTV(thanhVien);
+            thongTinMuon.setMaTB(thietBi);
+            thongTinMuon.setTGVao(LocalDateTime.now());
+            session.save(thongTinMuon);
             transaction.commit();
             
         } catch (HibernateException e) {
