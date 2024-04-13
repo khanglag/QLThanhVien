@@ -21,7 +21,7 @@ public class HibernateUtils {
 
     private static SessionFactory buildSessionFactory() {
     ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-            .configure("resources/hibernate.cfg.xml") // Adjusted file path
+            .configure("/resources/hibernate.cfg.xml") // Adjusted file path
             .build();
 
     Metadata metadata = new MetadataSources(serviceRegistry)
