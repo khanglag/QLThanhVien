@@ -8,6 +8,7 @@ import BLL.ThanhVienBLL;
 import BLL.XuLyBLL;
 import DAL.ThanhVien;
 import DAL.XuLy;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,7 +26,7 @@ public class Statistics extends javax.swing.JPanel {
 
     public Statistics() {
         initComponents();
-        //LoadData();
+        LoadData();
         LoadDataXyLy();
     }
 
@@ -47,13 +48,29 @@ public class Statistics extends javax.swing.JPanel {
         model = (DefaultTableModel) tbXyly.getModel();
         model.setRowCount(0);
         listXl = (ArrayList<XuLy>) xlBLL.loadXuLy();
-
+        int total = 0;
+        DecimalFormat decimalFormat = new DecimalFormat("#,###");
+        String ttXLDaXL = "Đã xử lý";
+        String ttXLChuaXL = "Chưa xử lý";
         for (XuLy on : listXl) {
-            model.addRow(new Object[]{
-                on.getMaXL(), on.getMaTV(), on.getHinhThucXL(), on.getSoTien(), on.getNgayXL(), on.getTrangThaiXL()
-            });
+            if (on.getTrangThaiXL().equals(1)) {
+                model.addRow(new Object[]{
+                    on.getMaXL(), on.getMaTV(), on.getHinhThucXL(), on.getSoTien(), on.getNgayXL(), ttXLDaXL
+                });
+            }else{
+               model.addRow(new Object[]{
+                    on.getMaXL(), on.getMaTV(), on.getHinhThucXL(), on.getSoTien(), on.getNgayXL(), ttXLChuaXL
+                }); 
+            }
+
+            if (on.getSoTien() != null) {
+                total += on.getSoTien();
+            }
+
             tbMembers.setModel(model);
         }
+        String formattedNum = decimalFormat.format(total);
+        txtTongSoTienBoiThuong.setText(String.valueOf(formattedNum));
     }
 
     /**
@@ -80,7 +97,7 @@ public class Statistics extends javax.swing.JPanel {
         jScrollPane3 = new javax.swing.JScrollPane();
         tbXyly = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
-        txtTotalMembers2 = new javax.swing.JLabel();
+        txtTongSoTienBoiThuong = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jdcTime = new com.toedter.calendar.JDateChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -215,8 +232,8 @@ public class Statistics extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Tổng tiền bồi thường:");
 
-        txtTotalMembers2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        txtTotalMembers2.setText("jLabel2");
+        txtTongSoTienBoiThuong.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtTongSoTienBoiThuong.setText("jLabel2");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -232,7 +249,7 @@ public class Statistics extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtTotalMembers2)
+                .addComponent(txtTongSoTienBoiThuong)
                 .addGap(127, 127, 127))
         );
         jPanel3Layout.setVerticalGroup(
@@ -244,7 +261,7 @@ public class Statistics extends javax.swing.JPanel {
                 .addGap(11, 11, 11)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtTotalMembers2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtTongSoTienBoiThuong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE))
         );
@@ -267,9 +284,16 @@ public class Statistics extends javax.swing.JPanel {
             Class[] types = new Class [] {
                 java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jScrollPane1.setViewportView(tbMembers);
@@ -365,8 +389,8 @@ public class Statistics extends javax.swing.JPanel {
     private javax.swing.JTable tbMembers;
     private javax.swing.JTable tbThietBi;
     private javax.swing.JTable tbXyly;
+    private javax.swing.JLabel txtTongSoTienBoiThuong;
     private javax.swing.JLabel txtTotalMembers;
     private javax.swing.JLabel txtTotalMembers1;
-    private javax.swing.JLabel txtTotalMembers2;
     // End of variables declaration//GEN-END:variables
 }
