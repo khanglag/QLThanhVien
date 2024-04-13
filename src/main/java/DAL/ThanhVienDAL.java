@@ -23,6 +23,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 /**
  *
@@ -309,5 +310,23 @@ public class ThanhVienDAL {
         inputStream.close();
 
         return thanhVienList;
+    }
+    public boolean checkThanhVienHopLe(int maTV){
+        Transaction transaction = null;
+        boolean check=false;
+        try {
+            String hql = "FROM Xuly WHERE MaTV = maTV ";
+            Query query = session.createQuery(hql);
+            query.setParameter("maTV", maTV);
+            List<ThanhVien> result = query.list();
+            
+        } catch (HibernateException e) {
+            if (transaction != null)
+                transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return list;
     }
 }
