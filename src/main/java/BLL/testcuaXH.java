@@ -6,6 +6,7 @@ package BLL;
 
 import DAL.ThanhVien;
 import DAL.ThongTinSD;
+import DAL.XuLy;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
@@ -29,5 +30,14 @@ public class testcuaXH {
         for (ThongTinSD on : listtt) {
             System.out.println(on.getMaTT() +""+ on.getMaTV());
         }
+        System.out.println("-------------------------------");
+          ArrayList<XuLy> listXL = new ArrayList<XuLy>();
+          XuLyBLL xlBLL = new XuLyBLL();
+           listXL = (ArrayList<XuLy>) xlBLL.loadXuLy();
+           for(XuLy on : listXL){
+                System.out.println(on.getMaTV());
+           }
+           
+
     }
 }

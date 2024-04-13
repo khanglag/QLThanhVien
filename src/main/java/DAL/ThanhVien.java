@@ -160,8 +160,6 @@ public class ThanhVien {
     public String toString() {
         return "{" +
             " MaTV='" + getMaTV() + "'" +
-            ", thongTinSDs='" + getThongTinSDs() + "'" +
-            ", xulies='" + getXulies() + "'" +
             ", HoTen='" + getHoTen() + "'" +
             ", Khoa='" + getKhoa() + "'" +
             ", Nganh='" + getNganh() + "'" +

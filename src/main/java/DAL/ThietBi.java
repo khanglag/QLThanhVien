@@ -106,7 +106,6 @@ public class ThietBi {
     public String toString() {
         return "{" +
             " MaTB='" + getMaTB() + "'" +
-            ", thongTinSDs='" + getThongTinSDs() + "'" +
             ", TenTB='" + getTenTB() + "'" +
             ", MoTaTB='" + getMoTaTB() + "'" +
             "}";
