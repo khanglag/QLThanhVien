@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import javax.persistence.*;
 
 import lombok.Data;
+import java.util.Objects;
 
 /**
  *
@@ -24,7 +25,7 @@ public class XuLy {
     @Column(name = "MaXL")
     private int MaXL;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MaTV")
     private ThanhVien MaTV;
 
@@ -106,7 +107,7 @@ public class XuLy {
         return this;
     }
 
-    public XuLy thanhVien(ThanhVien MaTV) {
+    public XuLy MaTV(ThanhVien MaTV) {
         setMaTV(MaTV);
         return this;
     }
@@ -135,11 +136,12 @@ public class XuLy {
     public String toString() {
         return "{" +
                 " MaXL='" + getMaXL() + "'" +
-                ", thanhVien='" + getMaTV() + "'" +
+                ", MaTV='" + (getMaTV() != null ? getMaTV().getMaTV() : null) + "'" +
                 ", hinhThucXL='" + getHinhThucXL() + "'" +
                 ", soTien='" + getSoTien() + "'" +
                 ", ngayXL='" + getNgayXL() + "'" +
                 ", trangThaiXL='" + getTrangThaiXL() + "'" +
                 "}";
     }
+
 }
