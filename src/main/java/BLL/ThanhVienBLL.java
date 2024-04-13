@@ -54,9 +54,9 @@ public class ThanhVienBLL {
         return tvDAL.getThanhVien(MaTV);
     }
 
-    public void addThanhVien(ThanhVien tv) {
-        tvDAL.addThanhVien(tv);
-    }
+//    public void addThanhVien(ThanhVien tv) {
+//        tvDAL.addThanhVien(tv);
+//    }
 
     //Thêm thành viên theo năm và khóa
     public void addThanhVien(ThanhVien tv, int nam, int khoa) {
