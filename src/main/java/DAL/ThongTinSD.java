@@ -24,11 +24,11 @@ public class ThongTinSD {
     @Column(name = "MaTT")
     private int MaTT;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MaTV")
     private ThanhVien MaTV;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MaTB")
     private ThietBi MaTB;
 
@@ -135,9 +135,9 @@ public class ThongTinSD {
     @Override
     public String toString() {
         return "{" +
-                " MaTT='" + getMaTT() + "'" +
-                ", MaTV='" + getMaTV() + "'" +
-                ", MaTB='" + getMaTB() + "'" +
+                " MaTT='" + (getMaTT()) + "'" +
+                ", MaTV='" + (getMaTV() != null ? getMaTV().getMaTV() : null) + "'" +
+                ", MaTB='" + (getMaTB() != null ? getMaTB().getMaTB() : null) + "'" +
                 ", TGVao='" + getTGVao() + "'" +
                 ", TGMuon='" + getTGMuon() + "'" +
                 ", TGTra='" + getTGTra() + "'" +
