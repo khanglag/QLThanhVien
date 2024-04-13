@@ -26,7 +26,7 @@ public class XuLy {
 
     @ManyToOne
     @JoinColumn(name = "MaTV")
-    private ThanhVien MaTV;
+    private int MaTV;
 
     @Column(name = "HinhThucXL")
     private String hinhThucXL;
@@ -43,7 +43,7 @@ public class XuLy {
     public XuLy() {
     }
 
-    public XuLy(int MaXL, ThanhVien MaTV, String hinhThucXL, Integer soTien, LocalDateTime ngayXL,
+    public XuLy(int MaXL, int MaTV, String hinhThucXL, Integer soTien, LocalDateTime ngayXL,
             Integer trangThaiXL) {
         this.MaXL = MaXL;
         this.MaTV = MaTV;
@@ -61,11 +61,11 @@ public class XuLy {
         this.MaXL = MaXL;
     }
 
-    public ThanhVien getMaTV() {
+    public int getMaTV() {
         return this.MaTV;
     }
 
-    public void setMaTV(ThanhVien MaTV) {
+    public void setMaTV(int MaTV) {
         this.MaTV = MaTV;
     }
 
