@@ -33,8 +33,6 @@ public class XuLyDAL {
             if (transaction != null)
                 transaction.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
         return xuLyList;
     }
@@ -51,8 +49,6 @@ public class XuLyDAL {
             if (transaction != null)
                 transaction.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
         return xuLy;
     }
@@ -80,8 +76,6 @@ public class XuLyDAL {
             if (transaction != null)
                 transaction.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
     }
 
@@ -96,8 +90,6 @@ public class XuLyDAL {
             if (transaction != null)
                 transaction.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
     }
 
@@ -113,18 +105,16 @@ public class XuLyDAL {
             if (transaction != null)
                 transaction.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
     }
 
-    public List<XuLy> searchXuLy(ThanhVien MaTV) {
+    public List<XuLy> searchXuLy(int MaTV) {
         Transaction transaction = null;
         List<XuLy> list = null;
         try {
             openSession();
             transaction = session.beginTransaction();
-            String hql = "FROM XuLy WHERE MaTV = :MaTV";
+            String hql = "FROM XuLy xl WHERE xl.MaTV.MaTV = :MaTV";
             list = session.createQuery(hql, XuLy.class)
                     .setParameter("MaTV", MaTV)
                     .list();
@@ -133,8 +123,6 @@ public class XuLyDAL {
             if (transaction != null)
                 transaction.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
         return list;
     }
@@ -154,8 +142,6 @@ public class XuLyDAL {
             if (transaction != null)
                 transaction.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
         return list;
     }

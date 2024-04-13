@@ -37,8 +37,6 @@ public class ThongTinSdDAL {
             if (transaction != null)
                 transaction.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
         return list;
     }
@@ -55,8 +53,6 @@ public class ThongTinSdDAL {
             if (transaction != null)
                 transaction.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
         return tt;
     }
@@ -77,15 +73,13 @@ public class ThongTinSdDAL {
         try {
             openSession();
             transaction = session.beginTransaction();
-            tt.MaTT(generateMaTT());
+            tt.setMaTT(generateMaTT());
             session.save(tt);
             transaction.commit();
         } catch (HibernateException e) {
             if (transaction != null)
                 transaction.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
     }
 
@@ -100,8 +94,6 @@ public class ThongTinSdDAL {
             if (transaction != null)
                 transaction.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
     }
 
@@ -117,8 +109,6 @@ public class ThongTinSdDAL {
             if (transaction != null)
                 transaction.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
     }
 
@@ -128,12 +118,12 @@ public class ThongTinSdDAL {
         try {
             openSession();
             transaction = session.beginTransaction();
-            
-            // Kiểm tra MaTV có trong bảng ThanhVien 
+
+            // Kiểm tra MaTV có trong bảng ThanhVien
             ThanhVien thanhVien = session.get(ThanhVien.class, MaTV);
             if (thanhVien == null)
                 throw new RuntimeException("Member does not exist");
-    
+
             // Kiểm tra thiết bị đã được cho mượn hay chưa
             ThongTinSD thongTinSD = (ThongTinSD) session
                     .createQuery("FROM ThongTinSD WHERE MaTB.id = :MaTB AND TGMuon IS NOT NULL AND TGTra IS NULL")
@@ -141,20 +131,20 @@ public class ThongTinSdDAL {
                     .uniqueResult();
             if (thongTinSD != null)
                 throw new RuntimeException("The device has been borrowed");
-            
-            //Thiết bị chưa cho mượn
+
+            // Thiết bị chưa cho mượn
             thongTinSD = (ThongTinSD) session.createQuery("FROM ThongTinSD WHERE MaTB.id = :MaTB AND TGTra IS NULL")
-                .setParameter("MaTV", MaTV)
-                .setParameter("MaTB", MaTB)
-                .uniqueResult();
+                    .setParameter("MaTV", MaTV)
+                    .setParameter("MaTB", MaTB)
+                    .uniqueResult();
             if (thongTinSD != null) {
                 thongTinSD.setTGMuon(LocalDateTime.now());
                 session.update(thongTinSD);
                 transaction.commit();
                 return;
             }
-            
-            //Nếu thiết bị chưa có trong bảng ThongTinSD
+
+            // Nếu thiết bị chưa có trong bảng ThongTinSD
             ThietBi thietBi = session.get(ThietBi.class, MaTB);
             ThongTinSD thongTinMuon = new ThongTinSD();
             thongTinMuon.setMaTT(generateMaTT());
@@ -163,16 +153,14 @@ public class ThongTinSdDAL {
             thongTinMuon.setTGVao(LocalDateTime.now());
             session.save(thongTinMuon);
             transaction.commit();
-            
+
         } catch (HibernateException e) {
             if (transaction != null)
                 transaction.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
     }
-    
+
     private void openSession() {
         if (!session.isOpen())
             session = HibernateUtils.getSessionFactory().openSession();

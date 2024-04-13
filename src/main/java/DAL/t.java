@@ -27,15 +27,18 @@ public class t {
            
             // thanhVienDAL.deleteByActiveYear(18,41);
 
-            // XuLyDAL dal = new XuLyDAL();
-            // List<XuLy> list= dal.loadXuLy();
-            // for(XuLy xuLy : list)
-            // System.out.println(xuLy);
+            XuLyDAL dal = new XuLyDAL();
+            List<XuLy> list= dal.loadXuLy();
+            for(XuLy xuLy : list)
+            System.out.println(xuLy);
 
             // ThongTinSdDAL dal = new ThongTinSdDAL();
             // List<ThongTinSD> list= dal.loadThongTinSD();
             // for(ThongTinSD sd : list) 
             //     System.out.println(sd);
+            // XuLyDAL dal = new XuLyDAL();
+            // for(XuLy xl : dal.searchXuLy(1121530087))
+            //     System.out.println(xl);
             session.getTransaction().commit();
         } catch (Exception e) {
             // Xử lý ngoại lệ nếu có
