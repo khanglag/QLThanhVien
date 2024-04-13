@@ -23,7 +23,7 @@ public class ThietBi {
     @Column(name = "MaTB")
     private int MaTB;
 
-    @OneToMany(mappedBy = "MaTB", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "MaTB", cascade = CascadeType.ALL)
     private List<ThongTinSD> thongTinSDs;
 
     @Column(name = "TenTB")
@@ -106,7 +106,6 @@ public class ThietBi {
     public String toString() {
         return "{" +
             " MaTB='" + getMaTB() + "'" +
-            ", thongTinSDs='" + getThongTinSDs() + "'" +
             ", TenTB='" + getTenTB() + "'" +
             ", MoTaTB='" + getMoTaTB() + "'" +
             "}";
