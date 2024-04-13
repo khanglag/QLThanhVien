@@ -54,9 +54,9 @@ public class ThanhVienBLL {
         return tvDAL.getThanhVien(MaTV);
     }
 
-    public void addThanhVien(ThanhVien tv) {
-        tvDAL.addThanhVien(tv);
-    }
+//    public void addThanhVien(ThanhVien tv) {
+//        tvDAL.addThanhVien(tv);
+//    }
 
     //Thêm thành viên theo năm và khóa
     public void addThanhVien(ThanhVien tv, int nam, int khoa) {
@@ -90,6 +90,11 @@ public class ThanhVienBLL {
     public List<ThanhVien> searchByNganh(String nganh) {
         return tvDAL.searchByNganh(nganh);
     }
+    
+    public boolean kiemTraTVCheckin(String maTV){
+        return tvDAL.equals(maTV);
+    }
+    
     private static String chooseExcelFile() {
         JFileChooser fileChooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel files", "xlsx");

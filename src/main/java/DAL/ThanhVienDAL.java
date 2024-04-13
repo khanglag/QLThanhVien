@@ -39,6 +39,9 @@ public class ThanhVienDAL {
         List<ThanhVien> l = null;
         Transaction transaction = null;
         try {
+            if (!session.isOpen()) {
+                session = HibernateUtils.getSessionFactory().openSession();
+            }
             transaction = session.beginTransaction();
             l = session.createQuery("FROM ThanhVien", ThanhVien.class).list();
         } catch (HibernateException e) {
@@ -57,6 +60,9 @@ public class ThanhVienDAL {
         Transaction transaction = null;
         ThanhVien tv = null;
         try {
+            if (!session.isOpen()) {
+                session = HibernateUtils.getSessionFactory().openSession();
+            }
             transaction = session.beginTransaction();
             tv = session.get(ThanhVien.class, MaTV);
             transaction.commit();
@@ -97,6 +103,9 @@ public class ThanhVienDAL {
     public void addThanhVien(ThanhVien tv) {
         Transaction transaction = null;
         try {
+            if (!session.isOpen()) {
+                session = HibernateUtils.getSessionFactory().openSession();
+            }
             transaction = session.beginTransaction();
             session.save(tv);
             transaction.commit();
@@ -115,6 +124,9 @@ public class ThanhVienDAL {
     public void addThanhVien(ThanhVien tv, int nam, int khoa) {
         Transaction transaction = null;
         try {
+            if (!session.isOpen()) {
+                session = HibernateUtils.getSessionFactory().openSession();
+            }
             int maTV = generateMaTV(nam, khoa);
             tv.setMaTV(maTV);
 
@@ -134,6 +146,9 @@ public class ThanhVienDAL {
     public void updateThanhVien(ThanhVien tv) {
         Transaction transaction = null;
         try {
+            if (!session.isOpen()) {
+                session = HibernateUtils.getSessionFactory().openSession();
+            }
             transaction = session.beginTransaction();
             session.update(tv);
             transaction.commit();
@@ -151,11 +166,13 @@ public class ThanhVienDAL {
     public void deleteThanhVien(int MaTV) {
         Transaction transaction = null;
         try {
+            if (!session.isOpen()) {
+                session = HibernateUtils.getSessionFactory().openSession();
+            }
             transaction = session.beginTransaction();
             ThanhVien del = session.get(ThanhVien.class, MaTV);
             session.delete(del);
             transaction.commit();
-
         } catch (HibernateException e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -165,11 +182,15 @@ public class ThanhVienDAL {
             session.close();
         }
     }
+    
 
     // Xóa thành viên theo điều kiện năm kích hoạt thành viên
     public void deleteByActiveYear(int Year) {
         Transaction transaction = null;
         try {
+            if (!session.isOpen()) {
+                session = HibernateUtils.getSessionFactory().openSession();
+            }
             transaction = session.beginTransaction();
             @SuppressWarnings("unchecked")
             List<ThanhVien> thanhViens = session.createQuery("FROM ThanhVien WHERE SUBSTRING(MaTV, 3, 2) = :Year")
@@ -192,6 +213,9 @@ public class ThanhVienDAL {
         Transaction transaction = null;
         List<ThanhVien> list = null;
         try {
+            if (!session.isOpen()) {
+                session = HibernateUtils.getSessionFactory().openSession();
+            }
             transaction = session.beginTransaction();
             String hql = "FROM ThanhVien WHERE MaTV = :MaTV";
             list = session.createQuery(hql, ThanhVien.class)
@@ -202,7 +226,7 @@ public class ThanhVienDAL {
             if (transaction != null)
                 transaction.rollback();
             e.printStackTrace();
-        } finally {
+        }finally {
             session.close();
         }
         return list;
@@ -212,6 +236,9 @@ public class ThanhVienDAL {
         Transaction transaction = null;
         List<ThanhVien> list = null;
         try {
+            if (!session.isOpen()) {
+                session = HibernateUtils.getSessionFactory().openSession();
+            }
             transaction = session.beginTransaction();
             String hql = "FROM ThanhVien WHERE HoTen LIKE:hoTen ";
             list = session.createQuery(hql, ThanhVien.class)
@@ -222,7 +249,7 @@ public class ThanhVienDAL {
             if (transaction != null)
                 transaction.rollback();
             e.printStackTrace();
-        } finally {
+        } finally{
             session.close();
         }
         return list;
@@ -232,6 +259,9 @@ public class ThanhVienDAL {
         Transaction transaction = null;
         List<ThanhVien> list = null;
         try {
+            if (!session.isOpen()) {
+                session = HibernateUtils.getSessionFactory().openSession();
+            }
             transaction = session.beginTransaction();
             String hql = "FROM ThanhVien WHERE Khoa LIKE:khoa ";
             list = session.createQuery(hql, ThanhVien.class)
@@ -252,6 +282,9 @@ public class ThanhVienDAL {
         Transaction transaction = null;
         List<ThanhVien> list = null;
         try {
+            if (!session.isOpen()) {
+                session = HibernateUtils.getSessionFactory().openSession();
+            }
             transaction = session.beginTransaction();
             String hql = "FROM ThanhVien WHERE Nganh LIKE:nganh ";
             list = session.createQuery(hql, ThanhVien.class)
@@ -310,4 +343,6 @@ public class ThanhVienDAL {
 
         return thanhVienList;
     }
+
+   
 }
