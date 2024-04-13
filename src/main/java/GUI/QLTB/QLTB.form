@@ -69,9 +69,6 @@
               <Dimension value="[300, 30]"/>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tx_timKiemActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_timKiem">
           <Properties>

@@ -11,22 +11,48 @@
     <packaging>jar</packaging>
     
     <dependencies>
-         <dependency>
-        <groupId>com.google.zxing</groupId>
-        <artifactId>core</artifactId>
-        <version>3.4.1</version> <!-- Thay thế bằng phiên bản ZXing bạn muốn sử dụng -->
-    </dependency>
-    <dependency>
-    <groupId>com.github.sarxos</groupId>
-    <artifactId>webcam-capture</artifactId>
-    <version>0.3.12</version>
-</dependency>
+        
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-to-slf4j</artifactId>
+            <version>2.20.0</version>
+        </dependency>
 
-    <dependency>
-        <groupId>com.google.zxing</groupId>
-        <artifactId>javase</artifactId>
-        <version>3.4.1</version>
-    </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.20.0</version>
+        </dependency>
+        
+        <!-- Apache POI for Excel -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>5.2.3</version> <!-- Phiên bản cụ thể của Apache POI -->
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.2.3</version> <!-- Phiên bản cụ thể của Apache POI -->
+        </dependency>
+        
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.4.1</version> <!-- Thay thế bằng phiên bản ZXing bạn muốn sử dụng -->
+        </dependency>
+        <dependency>
+            <groupId>com.github.sarxos</groupId>
+            <artifactId>webcam-capture</artifactId>
+            <version>0.3.12</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>javase</artifactId>
+            <version>3.4.1</version>
+        </dependency>
         <!-- Dependency MySQL Connector -->
         <dependency>
             <groupId>mysql</groupId>
@@ -49,12 +75,12 @@
         </dependency>
         
         <!-- Dependency Apache POI for Excel -->
-        <dependency>
+<!--        <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>5.2.3</version>
             <type>jar</type>
-        </dependency>
+        </dependency>-->
         
         <!-- Dependency Log4j Core -->
         <dependency>

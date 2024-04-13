@@ -49,6 +49,10 @@ public class ThietBiBLL {
     public ThietBi getThietBi(int MaTB) {
         return thietBiDAL.getThietBi(MaTB);
     }
+    
+    public int generateMaTB(int loaiTB) {
+        return thietBiDAL.generateMaTB(loaiTB);
+    }
 
     public void addThietBi(ThietBi tb) {
         thietBiDAL.addThietBi(tb);
