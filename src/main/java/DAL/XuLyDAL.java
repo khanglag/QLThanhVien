@@ -159,22 +159,22 @@ public class XuLyDAL {
         }
         return list;
     }
-    public boolean checkNgayXuPhat(int maTV){
-        boolean check=false;
-        List<XuLy> list=searchXuLy(maTV);
-        int maMax=list.get(0).getMaXL();
-        LocalDateTime ngayMax=list.get(0).getNgayXL();
-        for(XuLy temp: list){
-            if(temp.getNgayXL().compareTo(ngayMax)<1)
-                maMax=temp.getMaXL();
-        }
-        XuLy temp =getXuLy(maMax);
-        int index=10;
-        String newStr = temp.getHinhThucXL().substring(0, index) + temp.getHinhThucXL().substring(index + 1);
-        if (newStr.equals("Khóa thẻ tháng")) {
-            if 
-        }
-    }
+//    public boolean checkNgayXuPhat(int maTV){
+//        boolean check=false;
+//        List<XuLy> list=searchXuLy(maTV);
+//        int maMax=list.get(0).getMaXL();
+//        LocalDateTime ngayMax=list.get(0).getNgayXL();
+//        for(XuLy temp: list){
+//            if(temp.getNgayXL().compareTo(ngayMax)<1)
+//                maMax=temp.getMaXL();
+//        }
+//        XuLy temp =getXuLy(maMax);
+//        int index=10;
+//        String newStr = temp.getHinhThucXL().substring(0, index) + temp.getHinhThucXL().substring(index + 1);
+//        if (newStr.equals("Khóa thẻ tháng")) {
+//            if 
+//        }
+//    }
 
     private void openSession() {
         if (!session.isOpen())
