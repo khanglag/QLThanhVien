@@ -21,16 +21,16 @@ public class ThanhVien {
     @Column(name = "MaTV")
     private int MaTV;
 
-    @OneToMany(mappedBy = "MaTV", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "MaTV", cascade = CascadeType.ALL)
     private List<ThongTinSD> thongTinSDs;
 
-    @OneToMany(mappedBy = "MaTV", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "MaTV", cascade = CascadeType.ALL)
     private List<XuLy> xulies;
 
     @Column(name = "HoTen")
     private String HoTen;
 
-    @Column(name = " Khoa")
+    @Column(name = "Khoa")
     private String Khoa;
 
     @Column(name = "Nganh")
