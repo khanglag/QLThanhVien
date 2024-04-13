@@ -7,6 +7,7 @@ package DAL;
 import javax.persistence.*;
 import lombok.Data;
 import java.util.List;
+import lombok.ToString;
 
 /**
  *
@@ -22,9 +23,11 @@ public class ThanhVien {
     private int MaTV;
 
     @OneToMany(mappedBy = "MaTV", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<ThongTinSD> thongTinSDs;
 
     @OneToMany(mappedBy = "MaTV", cascade = CascadeType.ALL)
+     @ToString.Exclude
     private List<XuLy> xulies;
 
     @Column(name = "HoTen")
