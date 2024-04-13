@@ -20,18 +20,17 @@ public class HibernateUtils {
     private static final SessionFactory sessionFactory = buildSessionFactory();
 
     private static SessionFactory buildSessionFactory() {
+    ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+            .configure("resources/hibernate.cfg.xml") // Adjusted file path
+            .build();
 
-        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-                .configure("/resources/hibernate.cfg.xml") 
-                .build();
+    Metadata metadata = new MetadataSources(serviceRegistry)
+            .getMetadataBuilder()
+            .build();
 
-        Metadata metadata = new MetadataSources(serviceRegistry)
-                .getMetadataBuilder()
-                .build();
+    return metadata.getSessionFactoryBuilder().build();
+}
 
-        return metadata.getSessionFactoryBuilder().build();
-
-    }
 
     public static SessionFactory getSessionFactory() {
         return sessionFactory;
