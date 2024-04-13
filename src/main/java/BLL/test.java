@@ -45,17 +45,20 @@ public class test {
             
             // Khởi tạo đối tượng XuLyDAL
             XuLyBLL bll = new XuLyBLL();
+            ThongTinSDBLL ttBLL = new ThongTinSDBLL();
             
+        System.out.println(ttBLL.geThongTinSD(2)  );
+        System.out.println("BLL.test.main()");
             // Tạo một đối tượng XuLy mới
-            XuLy xuLy = new XuLy();
-            xuLy.setMaTV(new ThanhVien(2147483647)); 
-            xuLy.setHinhThucXL("Bồi thường mất tài sản");
-            xuLy.setSoTien(500000);
-            xuLy.setNgayXL(LocalDateTime.now());
-            xuLy.setTrangThaiXL(0); 
-
-            // Thêm đối tượng XuLy vào cơ sở dữ liệu
-            bll.addXuLy(xuLy);
+//            XuLy xuLy = new XuLy();
+//            xuLy.setMaTV(new ThanhVien(2147483647)); 
+//            xuLy.setHinhThucXL("Bồi thường mất tài sản");
+//            xuLy.setSoTien(500000);
+//            xuLy.setNgayXL(LocalDateTime.now());
+//            xuLy.setTrangThaiXL(0); 
+//
+//            // Thêm đối tượng XuLy vào cơ sở dữ liệu
+//            bll.addXuLy(xuLy);
 
     }
 }

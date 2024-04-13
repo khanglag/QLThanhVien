@@ -5,6 +5,7 @@
 package DAL;
 
 import java.util.List;
+import javax.transaction.Transactional;
 
 import org.hibernate.Transaction;
 import org.hibernate.HibernateException;
@@ -14,6 +15,7 @@ import org.hibernate.Session;
  *
  * @author MSII
  */
+@Transactional
 public class ThongTinSdDAL {
     private Session session;
 
