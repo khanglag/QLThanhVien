@@ -23,32 +23,32 @@ public class testcuaXH {
     //    for (ThanhVien on : listtv) {
     //        System.out.println(on.getMaTV() + on.getHoTen() + on.getKhoa() + on.getNganh() + on.getSDT());
     //    }
-        // ArrayList<ThongTinSD> listtt = new ArrayList<ThongTinSD>();
-        // ThongTinSDBLL ttBll = new ThongTinSDBLL();
-        // listtt = (ArrayList<ThongTinSD>) ttBll.loadThongTinSD();
-
-        // for (ThongTinSD on : listtt) {
-        //     System.out.println(on.getMaTT() +"  "+ on.getMaTV() + " " + on.getMaTB());
-        // }
-        System.out.println("-------------------------------");
-          ArrayList<XuLy> listXL = new ArrayList<XuLy>();
-          XuLyBLL xlBLL = new XuLyBLL();
-           listXL = (ArrayList<XuLy>) xlBLL.loadXuLy();
-           for(XuLy on : listXL){
-                System.out.println(on.getMaTV());
-           }
-           
+        ArrayList<ThongTinSD> listtt = new ArrayList<ThongTinSD>();
+        ThongTinSDBLL ttBll = new ThongTinSDBLL();
+        listtt = (ArrayList<ThongTinSD>) ttBll.loadThongTinSD();
 
         for (ThongTinSD on : listtt) {
-            System.out.println(on.getMaTT() +""+ on.getMaTV());
+            System.out.println(on.getMaTT() +"  "+ on.getMaTV() + " " + on.getMaTB());
         }
-        System.out.println("-------------------------------");
-          ArrayList<XuLy> listXL = new ArrayList<XuLy>();
-          XuLyBLL xlBLL = new XuLyBLL();
-           listXL = (ArrayList<XuLy>) xlBLL.loadXuLy();
-           for(XuLy on : listXL){
-                System.out.println(on.getMaTV());
-           }
+        // System.out.println("-------------------------------");
+        //   ArrayList<XuLy> listXL = new ArrayList<XuLy>();
+        //   XuLyBLL xlBLL = new XuLyBLL();
+        //    listXL = (ArrayList<XuLy>) xlBLL.loadXuLy();
+        //    for(XuLy on : listXL){
+        //         System.out.println(on.getMaTV());
+        //    }
+           
+
+        // for (ThongTinSD on : listtt) {
+        //     System.out.println(on.getMaTT() +""+ on.getMaTV());
+        // }
+        // System.out.println("-------------------------------");
+        //   ArrayList<XuLy> listXL = new ArrayList<XuLy>();
+        //   XuLyBLL xlBLL = new XuLyBLL();
+        //    listXL = (ArrayList<XuLy>) xlBLL.loadXuLy();
+        //    for(XuLy on : listXL){
+        //         System.out.println(on.getMaTV());
+        //    }
            
 
     }
