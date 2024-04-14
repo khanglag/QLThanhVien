@@ -17,7 +17,7 @@ public class Main {
             // Tạo một đối tượng ThongTinSD mới
             ThongTinSD thongTinSD = new ThongTinSD();
             thongTinSD.setMaTV(new ThanhVien(2147483647));
-            thongTinSD.setMaTB(new ThietBi(2000003));
+            // thongTinSD.setMaTB(new ThietBi(2000003));
             thongTinSD.setTGVao(LocalDateTime.now());
             thongTinSD.setTGMuon(LocalDateTime.now());
             thongTinSD.setTGTra(LocalDateTime.now().plusDays(7)); 

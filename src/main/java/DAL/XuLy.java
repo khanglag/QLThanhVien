@@ -24,7 +24,7 @@ public class XuLy {
     @Column(name = "MaXL")
     private int MaXL;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MaTV")
     private ThanhVien MaTV;
 
@@ -52,94 +52,19 @@ public class XuLy {
         this.ngayXL = ngayXL;
         this.trangThaiXL = trangThaiXL;
     }
-
-    public int getMaXL() {
-        return this.MaXL;
-    }
-
-    public void setMaXL(int MaXL) {
-        this.MaXL = MaXL;
-    }
-
-    public ThanhVien getMaTV() {
-        return this.MaTV;
-    }
-
-    public void setMaTV(ThanhVien MaTV) {
-        this.MaTV = MaTV;
-    }
-
-    public String getHinhThucXL() {
-        return this.hinhThucXL;
-    }
-
-    public void setHinhThucXL(String hinhThucXL) {
-        this.hinhThucXL = hinhThucXL;
-    }
-
-    public Integer getSoTien() {
-        return this.soTien;
-    }
-
-    public void setSoTien(Integer soTien) {
-        this.soTien = soTien;
-    }
-
-    public LocalDateTime getNgayXL() {
-        return this.ngayXL;
-    }
-
-    public void setNgayXL(LocalDateTime ngayXL) {
-        this.ngayXL = ngayXL;
-    }
-
-    public Integer getTrangThaiXL() {
-        return this.trangThaiXL;
-    }
-
-    public void setTrangThaiXL(Integer trangThaiXL) {
-        this.trangThaiXL = trangThaiXL;
-    }
-
-    public XuLy MaXL(int MaXL) {
-        setMaXL(MaXL);
-        return this;
-    }
-
-    public XuLy thanhVien(ThanhVien MaTV) {
-        setMaTV(MaTV);
-        return this;
-    }
-
-    public XuLy hinhThucXL(String hinhThucXL) {
-        setHinhThucXL(hinhThucXL);
-        return this;
-    }
-
-    public XuLy soTien(Integer soTien) {
-        setSoTien(soTien);
-        return this;
-    }
-
-    public XuLy ngayXL(LocalDateTime ngayXL) {
-        setNgayXL(ngayXL);
-        return this;
-    }
-
-    public XuLy trangThaiXL(Integer trangThaiXL) {
-        setTrangThaiXL(trangThaiXL);
-        return this;
+    public int getMaTV() {
+        return MaTV != null ? MaTV.getMaTV() : -1; 
     }
 
     @Override
     public String toString() {
         return "{" +
                 " MaXL='" + getMaXL() + "'" +
-                ", thanhVien='" + getMaTV() + "'" +
-                ", hinhThucXL='" + getHinhThucXL() + "'" +
-                ", soTien='" + getSoTien() + "'" +
-                ", ngayXL='" + getNgayXL() + "'" +
-                ", trangThaiXL='" + getTrangThaiXL() + "'" +
+                ", MaTV='" + getMaTV() + "'" +
+                ", HinhThucXL='" + getHinhThucXL() + "'" +
+                ", SoTien='" + getSoTien() + "'" +
+                ", NgayXL='" + getNgayXL() + "'" +
+                ", TrangThaiXL='" + getTrangThaiXL() + "'" +
                 "}";
     }
 }

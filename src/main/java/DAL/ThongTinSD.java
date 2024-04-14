@@ -24,11 +24,11 @@ public class ThongTinSD {
     @Column(name = "MaTT")
     private int MaTT;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MaTV")
     private ThanhVien MaTV;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MaTB")
     private ThietBi MaTB;
 
@@ -53,85 +53,13 @@ public class ThongTinSD {
         this.TGMuon = TGMuon;
         this.TGTra = TGTra;
     }
-
-    public int getMaTT() {
-        return this.MaTT;
+    public int getMaTV() {
+        return MaTV != null ? MaTV.getMaTV() : -1; 
     }
-
-    public void setMaTT(int MaTT) {
-        this.MaTT = MaTT;
+    public int getMaTB() {
+        return MaTB != null ? MaTB.getMaTB() : -1; 
     }
-
-    public ThanhVien getMaTV() {
-        return this.MaTV;
-    }
-
-    public void setMaTV(ThanhVien MaTV) {
-        this.MaTV = MaTV;
-    }
-
-    public ThietBi getMaTB() {
-        return this.MaTB;
-    }
-
-    public void setMaTB(ThietBi MaTB) {
-        this.MaTB = MaTB;
-    }
-
-    public LocalDateTime getTGVao() {
-        return this.TGVao;
-    }
-
-    public void setTGVao(LocalDateTime TGVao) {
-        this.TGVao = TGVao;
-    }
-
-    public LocalDateTime getTGMuon() {
-        return this.TGMuon;
-    }
-
-    public void setTGMuon(LocalDateTime TGMuon) {
-        this.TGMuon = TGMuon;
-    }
-
-    public LocalDateTime getTGTra() {
-        return this.TGTra;
-    }
-
-    public void setTGTra(LocalDateTime TGTra) {
-        this.TGTra = TGTra;
-    }
-
-    public ThongTinSD MaTT(int MaTT) {
-        setMaTT(MaTT);
-        return this;
-    }
-
-    public ThongTinSD MaTV(ThanhVien MaTV) {
-        setMaTV(MaTV);
-        return this;
-    }
-
-    public ThongTinSD MaTB(ThietBi MaTB) {
-        setMaTB(MaTB);
-        return this;
-    }
-
-    public ThongTinSD TGVao(LocalDateTime TGVao) {
-        setTGVao(TGVao);
-        return this;
-    }
-
-    public ThongTinSD TGMuon(LocalDateTime TGMuon) {
-        setTGMuon(TGMuon);
-        return this;
-    }
-
-    public ThongTinSD TGTra(LocalDateTime TGTra) {
-        setTGTra(TGTra);
-        return this;
-    }
-
+    
     @Override
     public String toString() {
         return "{" +
@@ -143,4 +71,5 @@ public class ThongTinSD {
                 ", TGTra='" + getTGTra() + "'" +
                 "}";
     }
+
 }
