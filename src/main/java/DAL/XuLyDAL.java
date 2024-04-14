@@ -119,7 +119,7 @@ public class XuLyDAL {
         }
     }
 
-    public List<XuLy> searchXuLy(int MaTV) {
+    public List<XuLy> searchXuLy(ThanhVien MaTV) {
         Transaction transaction = null;
         List<XuLy> list = null;
         try {
@@ -160,22 +160,36 @@ public class XuLyDAL {
         }
         return list;
     }
-//    public boolean checkNgayXuPhat(int maTV){
-//        boolean check=false;
-//        List<XuLy> list=searchXuLy(maTV);
-//        int maMax=list.get(0).getMaXL();
-//        LocalDateTime ngayMax=list.get(0).getNgayXL();
-//        for(XuLy temp: list){
-//            if(temp.getNgayXL().compareTo(ngayMax)<1)
-//                maMax=temp.getMaXL();
-//        }
-//        XuLy temp =getXuLy(maMax);
-//        int index=10;
-//        String newStr = temp.getHinhThucXL().substring(0, index) + temp.getHinhThucXL().substring(index + 1);
-//        if (newStr.equals("Khóa thẻ tháng")) {
-//            if 
-//        }
-//    }
+    public int getHTXuLyLasted(int maTV){
+        XuLyDAL dal =new XuLyDAL();
+        ThanhVienDAL dala = new ThanhVienDAL();
+        ThanhVien tv = dala.getThanhVien(maTV);
+        List<XuLy> list=dal.searchXuLy(tv);
+        int maMax=list.get(0).getMaXL();
+        LocalDateTime ngayMax=list.get(0).getNgayXL();
+        for(XuLy temp: list){
+            if(temp.getNgayXL().isAfter(ngayMax))
+            {
+                ngayMax=temp.getNgayXL();
+                maMax=temp.getMaXL();
+            }
+        }
+        return maMax;
+    }
+    public boolean isProcessingDeadline(int maTV){
+        XuLyDAL dal =new XuLyDAL();
+        XuLy temp =dal.getXuLy(getHTXuLyLasted(maTV));
+        int index=9;
+        String newStr = temp.getHinhThucXL().substring(0, index) + temp.getHinhThucXL().substring(index + 2);
+        if (newStr.equals("Khóa thẻ tháng")) {
+            int thang = (int) temp.getHinhThucXL().charAt(index) - '0';
+            int ngay=thang*30;
+            if (temp.getNgayXL().plusDays(30).isAfter(LocalDateTime.now())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     private void openSession() {
         if (!session.isOpen())

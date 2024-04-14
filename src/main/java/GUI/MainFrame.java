@@ -57,6 +57,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
+        setSize(new java.awt.Dimension(1000, 632));
 
         Main.setBackground(new java.awt.Color(223, 223, 223));
         Main.setForeground(new java.awt.Color(36, 140, 190));

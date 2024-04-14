@@ -56,11 +56,14 @@ public class XuLyBLL {
         dal.deleteXuLy(MaXL);
     }
 
-    public List<XuLy> searchXuLy(int MaTV) {
+    public List<XuLy> searchXuLy(ThanhVien MaTV) {
         return dal.searchXuLy(MaTV);
     }
 
     public List<XuLy> searchXuLy(String HinhThucXL) {
         return dal.searchXuLy(HinhThucXL);
+    }
+    public XuLy getXuLyLasted(int maTV){
+        return dal.getXuLy(dal.getHTXuLyLasted(maTV));
     }
 }

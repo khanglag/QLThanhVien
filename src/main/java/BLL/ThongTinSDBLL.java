@@ -7,6 +7,7 @@ package BLL;
 import DAL.ThongTinSD;
 import DAL.ThongTinSdDAL;
 import java.util.List;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -54,5 +55,7 @@ public class ThongTinSDBLL {
     public void deleteThongTIn(int MaTT) {
         dal.deleteThongTIn(MaTT);
     }
-
+    public Object[][] getObjectses(TableModel model,int maTV){
+        return dal.dataTableCheckin(model, maTV);
+    }
 }

@@ -6,11 +6,13 @@ package DAL;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import javax.swing.table.TableModel;
 import javax.transaction.Transactional;
 
 import org.hibernate.Transaction;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 /**
  *
@@ -177,5 +179,60 @@ public class ThongTinSdDAL {
         if (!session.isOpen())
             session = HibernateUtils.getSessionFactory().openSession();
     }
-
+    public Object[][] dataTableCheckin(TableModel model,int maTV){
+        Transaction transaction = null;
+        int rowCount = model.getRowCount();
+        int columnCount = model.getColumnCount();
+        Object[][] data = new Object[rowCount][columnCount];
+        try {
+            openSession();
+            transaction = session.beginTransaction();
+            String hql = "SELECT tv.MaTV, tv.HoTen, tsd.TGVao, tsd.MaTB " +
+             "FROM ThanhVien tv " +
+             "JOIN ThongTinSD tsd ON tv.MaTV = tsd.MaTV " +
+             "WHERE tv.MaTV = :maTV";
+            Query query = session.createQuery(hql);
+            query.setParameter("maTV", maTV); 
+            data=convertListToObjectArray(query.list());
+        } catch (HibernateException e) {
+//            if (transaction != null)
+//                transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return data;
+    }
+    public static Object[][] convertListToObjectArray(List<Object> list) {
+        int rowCount = list.size();
+        int columnCount = 0;
+        
+        // Xác định số lượng cột bằng cách tìm cột lớn nhất trong danh sách
+        for (Object obj : list) {
+            if (obj instanceof Object[]) {
+                int currentRowColumnCount = ((Object[]) obj).length;
+                if (currentRowColumnCount > columnCount) {
+                    columnCount = currentRowColumnCount;
+                }
+            }
+        }
+        
+        // Tạo mảng hai chiều mới
+        Object[][] array2D = new Object[rowCount][columnCount];
+        
+        // Lặp qua danh sách và chuyển đổi từng phần tử thành hàng của mảng hai chiều mới
+        for (int i = 0; i < rowCount; i++) {
+            Object obj = list.get(i);
+            if (obj instanceof Object[]) {
+                Object[] row = (Object[]) obj;
+                for (int j = 0; j < row.length; j++) {
+                    array2D[i][j] = row[j];
+                }
+            } else {
+                array2D[i][0] = obj;
+            }
+        }
+        
+        return array2D;
+    }
 }

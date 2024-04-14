@@ -92,7 +92,7 @@ public class ThanhVienBLL {
     }
     
     @SuppressWarnings("unlikely-arg-type")
-    public boolean kiemTraTVCheckin(String maTV){
+    public boolean kiemTraTVCheckin(int maTV){
         return tvDAL.equals(maTV);
     }
     
@@ -136,5 +136,11 @@ public class ThanhVienBLL {
         inputStream.close();
 
         return thanhVienList;
+    }
+    public boolean isCheckIn(int maTV){
+        return tvDAL.isCheckIn(maTV);
+    }
+    public boolean isMenber(int maTV){
+        return tvDAL.isMenber(maTV);
     }
 }
