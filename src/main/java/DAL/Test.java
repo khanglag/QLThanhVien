@@ -11,10 +11,10 @@ public class Test {
             session.beginTransaction();
             ThongTinSdDAL dal = new ThongTinSdDAL();
             int MaTT = 1;
-            int MaTV =1120150184;
+            int MaTV =2147483647;
             int MaTB =2000005;
 
-            dal.borrowedDevice(MaTT, MaTV, MaTB);
+            // dal.borrowedDevice(MaTT, MaTV, MaTB);
 
             session.getTransaction().commit();
         } catch (Exception e) {

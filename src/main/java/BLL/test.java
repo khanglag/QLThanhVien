@@ -61,13 +61,13 @@ public class test {
         //
         // // Thêm đối tượng XuLy vào cơ sở dữ liệu
         // bll.addXuLy(xuLy);
-        ThanhVienDAL dal = new ThanhVienDAL();
-        ThanhVien tv = dal.getThanhVien(1123330257);
-        XuLyDAL da = new XuLyDAL();
+        // ThanhVienDAL dal = new ThanhVienDAL();
+        // ThanhVien tv = dal.getThanhVien(1123330257);
+        // XuLyDAL da = new XuLyDAL();
         
-        for(XuLy xl : da.searchXuLy(tv))
-        {
-            System.out.println(xl.toString());
-        }
+        // for(XuLy xl : da.searchXuLy(tv))
+        // {
+        //     System.out.println(xl.toString());
+        // }
     }
 }
