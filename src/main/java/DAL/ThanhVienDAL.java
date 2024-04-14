@@ -297,5 +297,29 @@ public class ThanhVienDAL {
 
         return thanhVienList;
     }
-
+    public boolean isMenber(int maTV){
+        Transaction transaction = null;
+        ThanhVien tv = null;
+        try {
+           openSession();
+            transaction = session.beginTransaction();
+            tv = session.get(ThanhVien.class, maTV);
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return(tv!=null);
+    }
+    public boolean isCheckIn(int maTV){
+        XuLyDAL dAL=new XuLyDAL();
+        if (isMenber(maTV)&& !dAL.isProcessingDeadline(maTV)) {
+            return true;
+        }
+        return false;
+    }
 }

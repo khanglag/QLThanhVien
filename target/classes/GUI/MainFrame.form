@@ -7,7 +7,7 @@
       <Color blue="ff" green="ff" red="ff" type="rgb"/>
     </Property>
     <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[951, 632]"/>
+      <Dimension value="[1000, 632]"/>
     </Property>
   </Properties>
   <SyntheticProperties>
