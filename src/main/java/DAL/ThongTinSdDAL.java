@@ -161,6 +161,45 @@ public class ThongTinSdDAL {
         }
     }
 
+    public void suaThongTinSD(int maTB, int maTV) {
+        // Bắt đầu một transaction
+        Transaction transaction = null;
+        try {
+            openSession();
+            transaction = session.beginTransaction();
+
+            // Lấy thông tin của Thiết bị từ cơ sở dữ liệu
+            ThietBi thietBi = session.get(ThietBi.class, maTB);
+
+            // Tìm Thông tin sử dụng cần sửa dựa trên maTV và maTB
+            ThongTinSD thongTinSD = (ThongTinSD) session
+                    .createQuery("FROM ThongTinSD WHERE maTV = :maTV ORDER BY maTT DESC")
+                    .setParameter("maTV", maTV)
+                    .setMaxResults(1) // Chỉ lấy 1 kết quả (nếu có)
+                    .uniqueResult();
+
+            System.out.println(thongTinSD);
+            if (thongTinSD != null) {
+                // Cập nhật mã thiết bị
+                thongTinSD.setMaTB(thietBi);
+                // Sửa thời gian mượn
+                thongTinSD.setTGMuon(LocalDateTime.now());
+
+                // Lưu thay đổi vào cơ sở dữ liệu
+                session.update(thongTinSD);
+                transaction.commit();
+                System.out.println("Đã sửa thông tin sử dụng thành công.");
+            } else {
+                System.out.println("Không tìm thấy thông tin sử dụng để sửa.");
+            }
+        } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+    }
+
     private void openSession() {
         if (!session.isOpen())
             session = HibernateUtils.getSessionFactory().openSession();
