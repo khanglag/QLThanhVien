@@ -46,6 +46,7 @@ public class t {
         // e.printStackTrace();
         // }
         ThongTinSdDAL dal = new ThongTinSdDAL();
-        dal.suaThongTinSD(1000003, 1123330257);
+        //dal.suaThongTinSD(1000003, 1121530087);
+        dal.borrowedDevice(1121530087, 1000003);
     }
 }

@@ -113,7 +113,8 @@ public class ThongTinSdDAL {
     }
 
     // Muợn thiết bị
-    public void borrowedDevice(int MaTT, int MaTV, int MaTB, LocalDateTime TGMuon) {
+    public void borrowedDevice(int MaTV, int MaTB) {
+        int maTV = MaTV;
         Transaction transaction = null;
         try {
             openSession();
@@ -145,14 +146,34 @@ public class ThongTinSdDAL {
 
             // Nếu thiết bị chưa có trong bảng ThongTinSD
             ThietBi thietBi = session.get(ThietBi.class, MaTB);
-            ThongTinSD thongTinMuon = new ThongTinSD();
-            thongTinMuon.setMaTT(generateMaTT());
-            thongTinMuon.setMaTV(thanhVien);
-            thongTinMuon.setMaTB(thietBi);
-            thongTinMuon.setTGVao(LocalDateTime.now());
-            thongTinMuon.setTGMuon(TGMuon);
-            session.save(thongTinMuon);
-            transaction.commit();
+            // ThongTinSD thongTinMuon = new ThongTinSD();
+            // thongTinMuon.setMaTT(generateMaTT());
+            // thongTinMuon.setMaTV(thanhVien);
+            // thongTinMuon.setMaTB(thietBi);
+            // thongTinMuon.setTGVao(LocalDateTime.now());
+            // thongTinMuon.setTGMuon(LocalDateTime.now());
+            // session.save(thongTinMuon);
+            // transaction.commit();
+            thongTinSD = (ThongTinSD) session
+                    .createQuery("FROM ThongTinSD WHERE maTV = :maTV ORDER BY MaTT DESC")
+                    .setParameter("maTV", maTV)
+                    .setMaxResults(1) // Chỉ lấy 1 kết quả (nếu có)
+                    .uniqueResult();
+
+            System.out.println(thongTinSD);
+            if (thongTinSD != null) {
+                // Cập nhật mã thiết bị
+                thongTinSD.setMaTB(thietBi);
+                // Sửa thời gian mượn
+                thongTinSD.setTGMuon(LocalDateTime.now());
+
+                // Lưu thay đổi vào cơ sở dữ liệu
+                session.update(thongTinSD);
+                transaction.commit();
+                System.out.println("Đã sửa thông tin sử dụng thành công.");
+            } else {
+                System.out.println("Không tìm thấy thông tin sử dụng để sửa.");
+            }
 
         } catch (HibernateException e) {
             if (transaction != null)
