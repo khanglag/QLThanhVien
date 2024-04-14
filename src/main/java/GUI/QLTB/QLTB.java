@@ -66,12 +66,18 @@ public class QLTB extends javax.swing.JPanel {
     private void xoaThietBi() {
         int selectedRow = jTable1.getSelectedRow();
         if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn một thiết bị để xóa.");
+            //JOptionPane.showMessageDialog(this, "Vui lòng chọn một thiết bị để xóa.");
+            xoaTB_DieuKien a = new xoaTB_DieuKien();
+            a.setVisible(true);
             return;
         }
-        int maTB = (int) jTable1.getValueAt(selectedRow, 0);
-        thietBiBLL.deleteThietBi(maTB);
-        JOptionPane.showMessageDialog(this, "Xóa thiết bị thành công.");
+
+        int option = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa thiết bị này?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
+        if (option == JOptionPane.YES_OPTION) {
+            int maTB = (int) jTable1.getValueAt(selectedRow, 0);
+            thietBiBLL.deleteThietBi(maTB);
+            JOptionPane.showMessageDialog(this, "Xóa thiết bị " + maTB + " thành công.");
+        }
         LoadData();
     }
 
@@ -83,7 +89,7 @@ public class QLTB extends javax.swing.JPanel {
         jTable1 = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         tx_timKiem = new javax.swing.JTextField();
-        btn_timKiem = new javax.swing.JButton();
+        reloadTable = new javax.swing.JButton();
         btn_them = new javax.swing.JButton();
         btn_xoa = new javax.swing.JButton();
         btn_sua = new javax.swing.JButton();
@@ -101,17 +107,22 @@ public class QLTB extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        tx_timKiem.setPreferredSize(new java.awt.Dimension(300, 30));
-        jPanel1.add(tx_timKiem);
-
-        btn_timKiem.setText("Tìm");
-        btn_timKiem.setPreferredSize(new java.awt.Dimension(75, 30));
-        btn_timKiem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_timKiemActionPerformed(evt);
+        tx_timKiem.setPreferredSize(new java.awt.Dimension(250, 30));
+        tx_timKiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tx_timKiemKeyPressed(evt);
             }
         });
-        jPanel1.add(btn_timKiem);
+        jPanel1.add(tx_timKiem);
+
+        reloadTable.setText("Làm mới");
+        reloadTable.setPreferredSize(new java.awt.Dimension(85, 30));
+        reloadTable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reloadTableActionPerformed(evt);
+            }
+        });
+        jPanel1.add(reloadTable);
 
         btn_them.setText("Thêm");
         btn_them.setPreferredSize(new java.awt.Dimension(75, 30));
@@ -149,7 +160,7 @@ public class QLTB extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,14 +173,14 @@ public class QLTB extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_timKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timKiemActionPerformed
-        timKiem();
-    }//GEN-LAST:event_btn_timKiemActionPerformed
+    private void reloadTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reloadTableActionPerformed
+        LoadData();
+        jTable1.repaint();
+    }//GEN-LAST:event_reloadTableActionPerformed
 
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
         ThemTB a = new ThemTB();
         a.setVisible(true);
-        
     }//GEN-LAST:event_btn_themActionPerformed
 
     private void btn_xoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoaActionPerformed
@@ -177,18 +188,34 @@ public class QLTB extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_xoaActionPerformed
 
     private void btn_suaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_suaActionPerformed
-        // TODO add your handling code here:
+        int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow != -1) {
+            int maTB = Integer.parseInt(jTable1.getValueAt(selectedRow, 0).toString());
+            String tenTB = jTable1.getValueAt(selectedRow, 1).toString();
+            String moTaTB = jTable1.getValueAt(selectedRow, 2).toString();
+            
+            suaThongtin a = new suaThongtin(maTB, tenTB, moTaTB);
+            a.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn thiết bị để sửa thông tin", "Thông báo", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btn_suaActionPerformed
+
+    private void tx_timKiemKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tx_timKiemKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            timKiem();
+        }
+    }//GEN-LAST:event_tx_timKiemKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_sua;
     private javax.swing.JButton btn_them;
-    private javax.swing.JButton btn_timKiem;
     private javax.swing.JButton btn_xoa;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JButton reloadTable;
     private javax.swing.JTextField tx_timKiem;
     // End of variables declaration//GEN-END:variables
 }

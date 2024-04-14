@@ -11,7 +11,7 @@ public class testQLTB {
     public static void main(String[] args) {
         JFrame a = new JFrame();
         a.add(new QLTB());
-        a.setSize(800, 500);
+        a.setSize(700, 500);
         a.setVisible(true);
     }
 }

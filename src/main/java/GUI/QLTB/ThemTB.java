@@ -47,7 +47,20 @@ public class ThemTB extends javax.swing.JFrame {
         tx_moTa.setText("");
     }
 
-    
+    private void themTB_excel(String filePath) {
+        try {
+            List<ThietBi> thietBiList = thietBiBLL.readDataFromExcel(filePath);
+
+            for (ThietBi tb : thietBiList) {
+                thietBiBLL.addThietBi(tb);
+            }
+
+            JOptionPane.showMessageDialog(null, "Nhập excel thành công.");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Đã xảy ra lỗi khi đọc từ tệp Excel: " + ex.getMessage());
+        }
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -157,11 +170,20 @@ public class ThemTB extends javax.swing.JFrame {
 
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
         themThietBi();
-        dispose();
+        chon_loaiTB.setSelectedIndex(0);
+        tx_tenTB.setText(null);
+        tx_moTa.setText(null);
     }//GEN-LAST:event_btn_themActionPerformed
 
     private void btn_excelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_excelActionPerformed
-        
+        JFileChooser fileChooser = new JFileChooser();
+        int returnValue = fileChooser.showOpenDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            String filePath = selectedFile.getAbsolutePath();
+            themTB_excel(filePath);
+        }
+        dispose();
     }//GEN-LAST:event_btn_excelActionPerformed
 
     /**

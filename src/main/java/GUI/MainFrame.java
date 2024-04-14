@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import GUI.QLTB.QLTB;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -381,6 +382,7 @@ public class MainFrame extends javax.swing.JFrame {
         controller.setEvent(listItem);
         try {
             controller.setView(panelCheckin, jLabelCheckin);
+            
         } catch (SQLException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
