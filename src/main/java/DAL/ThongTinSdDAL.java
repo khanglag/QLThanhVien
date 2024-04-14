@@ -119,7 +119,7 @@ public class ThongTinSdDAL {
     }
 
     // Muợn thiết bị
-    public void borrowedDevice(int MaTV, int MaTB) {
+    public void borrowedDevice(int MaTV, int MaTB, LocalDateTime TGMuon) {
         Transaction transaction = null;
         try {
             openSession();
