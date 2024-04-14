@@ -17,8 +17,7 @@ public class suaThongtin extends javax.swing.JFrame {
         tx_moTa.setText(moTaTB);        
     }
 
-    
-    
+       
     private void suaTB() {
         int maTB1 = Integer.parseInt(tx_maTB.getText());
         String tenTB1 = tx_tenTB.getText();

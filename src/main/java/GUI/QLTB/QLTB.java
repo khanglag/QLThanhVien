@@ -175,7 +175,6 @@ public class QLTB extends javax.swing.JPanel {
 
     private void reloadTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reloadTableActionPerformed
         LoadData();
-        jTable1.repaint();
     }//GEN-LAST:event_reloadTableActionPerformed
 
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed

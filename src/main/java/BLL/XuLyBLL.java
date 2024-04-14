@@ -25,6 +25,10 @@ public class XuLyBLL {
         return dal.loadXuLy();
     }
 
+    public int generateMaXL() {
+        return dal.generateMaXXL();
+    }
+    
     public XuLy getXuLy(int MaXL) {
         return dal.getXuLy(MaXL);
     }
