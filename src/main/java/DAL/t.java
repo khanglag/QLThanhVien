@@ -47,6 +47,7 @@ public class t {
         // }
         ThongTinSdDAL dal = new ThongTinSdDAL();
         //dal.suaThongTinSD(1000003, 1121530087);
-        dal.borrowedDevice(1121530087, 1000003);
+        //dal.borrowedDevice(1122410007, 1000003);
+        dal.returnDevice(1000003);
     }
 }
