@@ -115,7 +115,8 @@ public class ThongTinSdDAL {
     }
 
     // Muợn thiết bị
-    public void borrowedDevice(int MaTT, int MaTV, int MaTB, LocalDateTime TGMuon) {
+    public void borrowedDevice(int MaTV, int MaTB) {
+        int maTV = MaTV;
         Transaction transaction = null;
         try {
             openSession();
@@ -147,35 +148,16 @@ public class ThongTinSdDAL {
 
             // Nếu thiết bị chưa có trong bảng ThongTinSD
             ThietBi thietBi = session.get(ThietBi.class, MaTB);
-            ThongTinSD thongTinMuon = new ThongTinSD();
-            thongTinMuon.setMaTT(generateMaTT());
-            thongTinMuon.setMaTV(thanhVien);
-            thongTinMuon.setMaTB(thietBi);
-            thongTinMuon.setTGVao(LocalDateTime.now());
-            thongTinMuon.setTGMuon(TGMuon);
-            session.save(thongTinMuon);
-            transaction.commit();
-
-        } catch (HibernateException e) {
-            if (transaction != null)
-                transaction.rollback();
-            e.printStackTrace();
-        }
-    }
-
-    public void suaThongTinSD(int maTB, int maTV) {
-        // Bắt đầu một transaction
-        Transaction transaction = null;
-        try {
-            openSession();
-            transaction = session.beginTransaction();
-
-            // Lấy thông tin của Thiết bị từ cơ sở dữ liệu
-            ThietBi thietBi = session.get(ThietBi.class, maTB);
-
-            // Tìm Thông tin sử dụng cần sửa dựa trên maTV và maTB
-            ThongTinSD thongTinSD = (ThongTinSD) session
-                    .createQuery("FROM ThongTinSD WHERE maTV = :maTV ORDER BY maTT DESC")
+            // ThongTinSD thongTinMuon = new ThongTinSD();
+            // thongTinMuon.setMaTT(generateMaTT());
+            // thongTinMuon.setMaTV(thanhVien);
+            // thongTinMuon.setMaTB(thietBi);
+            // thongTinMuon.setTGVao(LocalDateTime.now());
+            // thongTinMuon.setTGMuon(LocalDateTime.now());
+            // session.save(thongTinMuon);
+            // transaction.commit();
+            thongTinSD = (ThongTinSD) session
+                    .createQuery("FROM ThongTinSD WHERE maTV = :maTV ORDER BY MaTT DESC")
                     .setParameter("maTV", maTV)
                     .setMaxResults(1) // Chỉ lấy 1 kết quả (nếu có)
                     .uniqueResult();
@@ -194,10 +176,10 @@ public class ThongTinSdDAL {
             } else {
                 System.out.println("Không tìm thấy thông tin sử dụng để sửa.");
             }
+
         } catch (HibernateException e) {
-            if (transaction != null) {
+            if (transaction != null)
                 transaction.rollback();
-            }
             e.printStackTrace();
         }
     }
