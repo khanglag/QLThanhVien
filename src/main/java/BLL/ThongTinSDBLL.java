@@ -1,12 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package BLL;
 
 import DAL.ThongTinSD;
 import DAL.ThongTinSdDAL;
 import java.util.List;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -19,11 +16,11 @@ public class ThongTinSDBLL {
         dal = new ThongTinSdDAL();
     }
 
-    public List<ThongTinSD> loadThongTin() {
+    public List<ThongTinSD> loadThongTinSD() {
         return dal.loadThongTinSD();
     }
 
-    public ThongTinSD geThongTinSD(int MaTT) {
+    public ThongTinSD getThongTinSD(int MaTT) {
         return dal.getThongTinSD(MaTT);
     }
 
@@ -38,7 +35,6 @@ public class ThongTinSDBLL {
             data[i][3] = list.get(i).getTGVao();
             data[i][4] = list.get(i).getTGMuon();
             data[i][5] = list.get(i).getTGTra();
-
         }
         return data;
     }
@@ -54,5 +50,7 @@ public class ThongTinSDBLL {
     public void deleteThongTIn(int MaTT) {
         dal.deleteThongTIn(MaTT);
     }
-
+    public Object[][] getObjectses(TableModel model,int maTV){
+        return dal.dataTableCheckin(model, maTV);
+    }
 }

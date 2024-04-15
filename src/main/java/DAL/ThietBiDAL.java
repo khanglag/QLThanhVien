@@ -34,8 +34,6 @@ public class ThietBiDAL {
                 transaction.rollback();
             }
             e.printStackTrace();
-        } finally {
-            session.close();
         }
         return thietBiList;
     }
@@ -53,19 +51,18 @@ public class ThietBiDAL {
                 transaction.rollback();
             }
             e.printStackTrace();
-        } finally {
-            session.close();
         }
         return tb;
     }
 
-    //Tạo mã thiết bị theo mã quy định
+    // Tạo mã thiết bị theo mã quy định
     public int generateMaTB(int loaiTB) {
         String tbString = String.valueOf(loaiTB);
-        List<Integer> existTB = session.createQuery("SELECT MaTB FROM ThietBi WHERE SUBSTRING(MaTB,1,1)= : loaiTB", Integer.class)
-        .setParameter("loaiTB", tbString)
-        .list();
-        if(existTB.isEmpty())
+        List<Integer> existTB = session
+                .createQuery("SELECT MaTB FROM ThietBi WHERE SUBSTRING(MaTB,1,1)= : loaiTB", Integer.class)
+                .setParameter("loaiTB", tbString)
+                .list();
+        if (existTB.isEmpty())
             return Integer.parseInt(tbString + "000001");
         else {
             int lastMaTB = existTB.get(existTB.size() - 1);
@@ -76,7 +73,7 @@ public class ThietBiDAL {
         }
     }
 
-    //Thêm thiết bị theo mã quy định
+    // Thêm thiết bị theo mã quy định
     public void addThietBi(ThietBi tb, int loaiTB) {
         Transaction transaction = null;
         try {
@@ -92,8 +89,6 @@ public class ThietBiDAL {
                 transaction.rollback();
             }
             e.printStackTrace();
-        } finally {
-            session.close();
         }
     }
 
@@ -109,8 +104,6 @@ public class ThietBiDAL {
                 transaction.rollback();
             }
             e.printStackTrace();
-        } finally {
-            session.close();
         }
     }
 
@@ -126,8 +119,6 @@ public class ThietBiDAL {
                 transaction.rollback();
             }
             e.printStackTrace();
-        } finally {
-            session.close();
         }
     }
 
@@ -144,32 +135,28 @@ public class ThietBiDAL {
                 transaction.rollback();
             }
             e.printStackTrace();
-        } finally {
-            session.close();
         }
     }
 
-    //Xóa nhiều thiết bị theo mã quy định
+    // Xóa nhiều thiết bị theo mã quy định
     @SuppressWarnings("unchecked")
     public void deleteByRegula(int MaQD) {
         Transaction transaction = null;
-        try{
+        try {
             openSession();
             transaction = session.beginTransaction();
             List<ThietBi> thietBis = session.createQuery("FROM ThietBi WHERE SUBSTRING(MaTB,1,1)= : MaQD")
-            .setParameter("MaQD", String.valueOf(MaQD))
-            .list();
-            for(ThietBi tb : thietBis) {
+                    .setParameter("MaQD", String.valueOf(MaQD))
+                    .list();
+            for (ThietBi tb : thietBis) {
                 session.delete(tb);
             }
             transaction.commit();
         } catch (HibernateException e) {
-            if (transaction != null) 
+            if (transaction != null)
                 transaction.rollback();
             e.printStackTrace();
-            
-        } finally {
-            session.close();
+
         }
     }
 
@@ -188,8 +175,6 @@ public class ThietBiDAL {
             if (transaction != null)
                 transaction.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
         return list;
     }
@@ -209,8 +194,6 @@ public class ThietBiDAL {
             if (transaction != null)
                 transaction.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
         return list;
     }
