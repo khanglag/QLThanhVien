@@ -54,7 +54,16 @@ public class ThongTinSDBLL {
     public Object[][] getObjectses(TableModel model,int maTV){
         return dal.dataTableCheckin(model, maTV);
     }
+<<<<<<< HEAD
     public boolean borrowedDevice(int maTV,int maTB){
         return dal.borrowedDevice(0, maTV, maTB, LocalDateTime.now());
+=======
+    
+    public void borrowedDevice(int maTV, int maTB){
+        dal.borrowedDevice(maTV, maTB);
+    }
+    public void retủnDevice(int maTB){
+        dal.returnDevice(maTB);
+>>>>>>> main
     }
 }

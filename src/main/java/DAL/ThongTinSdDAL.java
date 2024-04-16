@@ -14,6 +14,8 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
+import BLL.ThietBiBLL;
+
 /**
  *
  * @author MSII
@@ -115,7 +117,11 @@ public class ThongTinSdDAL {
     }
 
     // Muợn thiết bị
+<<<<<<< HEAD
     public boolean borrowedDevice(int MaTT, int MaTV, int MaTB, LocalDateTime TGMuon) {
+=======
+    public void borrowedDevice(int MaTV, int MaTB) {
+>>>>>>> main
         Transaction transaction = null;
         try {
             openSession();
@@ -145,6 +151,7 @@ public class ThongTinSdDAL {
 
             // Nếu thiết bị chưa có trong bảng ThongTinSD
             ThietBi thietBi = session.get(ThietBi.class, MaTB);
+<<<<<<< HEAD
             ThongTinSD thongTinMuon = new ThongTinSD();
             thongTinMuon.setMaTT(generateMaTT());
             thongTinMuon.setMaTV(thanhVien);
@@ -176,6 +183,19 @@ public class ThongTinSdDAL {
             ThongTinSD thongTinSD = (ThongTinSD) session
                     .createQuery("FROM ThongTinSD WHERE maTV = :maTV ORDER BY maTT DESC")
                     .setParameter("maTV", maTV)
+=======
+            // ThongTinSD thongTinMuon = new ThongTinSD();
+            // thongTinMuon.setMaTT(generateMaTT());
+            // thongTinMuon.setMaTV(thanhVien);
+            // thongTinMuon.setMaTB(thietBi);
+            // thongTinMuon.setTGVao(LocalDateTime.now());
+            // thongTinMuon.setTGMuon(LocalDateTime.now());
+            // session.save(thongTinMuon);
+            // transaction.commit();
+            thongTinSD = (ThongTinSD) session
+                    .createQuery("FROM ThongTinSD WHERE MaTV.id = :MaTV ORDER BY MaTT DESC")
+                    .setParameter("MaTV", MaTV)
+>>>>>>> main
                     .setMaxResults(1) // Chỉ lấy 1 kết quả (nếu có)
                     .uniqueResult();
 
@@ -193,10 +213,39 @@ public class ThongTinSdDAL {
             } else {
                 System.out.println("Không tìm thấy thông tin sử dụng để sửa.");
             }
+
         } catch (HibernateException e) {
-            if (transaction != null) {
+            if (transaction != null)
                 transaction.rollback();
+            e.printStackTrace();
+        }
+    }
+
+    public void returnDevice(int MaTB) {
+        // Mở session và bắt đầu transaction
+        Transaction transaction = null;
+
+        try {
+            openSession();
+            transaction = session.beginTransaction();
+
+            ThongTinSD thongTinSD = (ThongTinSD) session
+                    // .createQuery("FROM ThongTinSD WHERE MaTB = :MaTB AND TGTra IS NULL")
+                    .createQuery("FROM ThongTinSD WHERE MaTB.id = :MaTB AND TGTra IS NULL")
+                    .setParameter("MaTB", MaTB)
+                    .uniqueResult();
+            System.out.println(thongTinSD);
+            if (thongTinSD != null) {
+                thongTinSD.setTGTra(LocalDateTime.now());
+                session.update(thongTinSD);
+                transaction.commit();
+            } else {
+                System.out.println("Không tìm thấy thông tin sử dụng để sửa.");
             }
+
+        } catch (HibernateException e) {
+            if (transaction != null)
+                transaction.rollback();
             e.printStackTrace();
         }
     }
@@ -205,7 +254,8 @@ public class ThongTinSdDAL {
         if (!session.isOpen())
             session = HibernateUtils.getSessionFactory().openSession();
     }
-    public Object[][] dataTableCheckin(TableModel model,int maTV){
+
+    public Object[][] dataTableCheckin(TableModel model, int maTV) {
         Transaction transaction = null;
         int rowCount = model.getRowCount();
         int columnCount = model.getColumnCount();
@@ -214,25 +264,26 @@ public class ThongTinSdDAL {
             openSession();
             transaction = session.beginTransaction();
             String hql = "SELECT tv.MaTV, tv.HoTen, tsd.TGVao, tsd.MaTB " +
-             "FROM ThanhVien tv " +
-             "JOIN ThongTinSD tsd ON tv.MaTV = tsd.MaTV " +
-             "WHERE tv.MaTV = :maTV";
+                    "FROM ThanhVien tv " +
+                    "JOIN ThongTinSD tsd ON tv.MaTV = tsd.MaTV " +
+                    "WHERE tv.MaTV = :maTV";
             Query query = session.createQuery(hql);
-            query.setParameter("maTV", maTV); 
-            data=convertListToObjectArray(query.list());
+            query.setParameter("maTV", maTV);
+            data = convertListToObjectArray(query.list());
         } catch (HibernateException e) {
-//            if (transaction != null)
-//                transaction.rollback();
+            // if (transaction != null)
+            // transaction.rollback();
             e.printStackTrace();
         } finally {
             session.close();
         }
         return data;
     }
+
     public static Object[][] convertListToObjectArray(List<Object> list) {
         int rowCount = list.size();
         int columnCount = 0;
-        
+
         // Xác định số lượng cột bằng cách tìm cột lớn nhất trong danh sách
         for (Object obj : list) {
             if (obj instanceof Object[]) {
@@ -242,11 +293,12 @@ public class ThongTinSdDAL {
                 }
             }
         }
-        
+
         // Tạo mảng hai chiều mới
         Object[][] array2D = new Object[rowCount][columnCount];
-        
-        // Lặp qua danh sách và chuyển đổi từng phần tử thành hàng của mảng hai chiều mới
+
+        // Lặp qua danh sách và chuyển đổi từng phần tử thành hàng của mảng hai chiều
+        // mới
         for (int i = 0; i < rowCount; i++) {
             Object obj = list.get(i);
             if (obj instanceof Object[]) {
@@ -258,7 +310,7 @@ public class ThongTinSdDAL {
                 array2D[i][0] = obj;
             }
         }
-        
+
         return array2D;
     }
 }
