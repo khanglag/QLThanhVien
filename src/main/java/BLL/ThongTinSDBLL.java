@@ -2,6 +2,7 @@ package BLL;
 
 import DAL.ThongTinSD;
 import DAL.ThongTinSdDAL;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.swing.table.TableModel;
 
@@ -52,5 +53,8 @@ public class ThongTinSDBLL {
     }
     public Object[][] getObjectses(TableModel model,int maTV){
         return dal.dataTableCheckin(model, maTV);
+    }
+    public boolean borrowedDevice(int maTV,int maTB){
+        return dal.borrowedDevice(0, maTV, maTB, LocalDateTime.now());
     }
 }

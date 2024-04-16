@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package GUI.MenberManager;
+package GUI.Home;
 
 import BLL.ThanhVienBLL;
 import BLL.ThietBiBLL;
@@ -52,13 +52,13 @@ public class MenberAccess extends javax.swing.JPanel {
         jTfTT = new javax.swing.JTextField();
         btnCheckIn4 = new javax.swing.JButton();
         btnCheckIn5 = new javax.swing.JButton();
-        jTfTTTB = new javax.swing.JPanel();
+        Hehe = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jTfMaTB = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTfMaTb = new javax.swing.JTextField();
+        jTfTenTb = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        setTTinhTrang1 = new javax.swing.JTextField();
+        jTfTTTB = new javax.swing.JTextField();
         jPanelResuil = new javax.swing.JPanel();
         jPanelGanDay = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -200,8 +200,8 @@ public class MenberAccess extends javax.swing.JPanel {
             }
         });
 
-        jTfTTTB.setBackground(new java.awt.Color(255, 255, 255));
-        jTfTTTB.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        Hehe.setBackground(new java.awt.Color(255, 255, 255));
+        Hehe.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Mã thiết bị");
@@ -217,40 +217,40 @@ public class MenberAccess extends javax.swing.JPanel {
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Tên thiết bị");
 
-        jTfMaTb.setEditable(false);
-        jTfMaTb.setBackground(new java.awt.Color(255, 255, 255));
+        jTfTenTb.setEditable(false);
+        jTfTenTb.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Tình trạng thiết bị");
 
-        setTTinhTrang1.setEditable(false);
-        setTTinhTrang1.setBackground(new java.awt.Color(255, 255, 255));
-        setTTinhTrang1.addActionListener(new java.awt.event.ActionListener() {
+        jTfTTTB.setEditable(false);
+        jTfTTTB.setBackground(new java.awt.Color(255, 255, 255));
+        jTfTTTB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                setTTinhTrang1ActionPerformed(evt);
+                jTfTTTBActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jTfTTTBLayout = new javax.swing.GroupLayout(jTfTTTB);
-        jTfTTTB.setLayout(jTfTTTBLayout);
-        jTfTTTBLayout.setHorizontalGroup(
-            jTfTTTBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jTfTTTBLayout.createSequentialGroup()
+        javax.swing.GroupLayout HeheLayout = new javax.swing.GroupLayout(Hehe);
+        Hehe.setLayout(HeheLayout);
+        HeheLayout.setHorizontalGroup(
+            HeheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, HeheLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(jTfTTTBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(setTTinhTrang1)
+                .addGroup(HeheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTfTTTB)
                     .addComponent(jLabel8)
                     .addComponent(jTfMaTB)
-                    .addGroup(jTfTTTBLayout.createSequentialGroup()
-                        .addComponent(jTfMaTb)
+                    .addGroup(HeheLayout.createSequentialGroup()
+                        .addComponent(jTfTenTb)
                         .addGap(1, 1, 1))
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20))
         );
-        jTfTTTBLayout.setVerticalGroup(
-            jTfTTTBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jTfTTTBLayout.createSequentialGroup()
+        HeheLayout.setVerticalGroup(
+            HeheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(HeheLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -258,11 +258,11 @@ public class MenberAccess extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTfMaTb, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTfTenTb, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(setTTinhTrang1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTfTTTB, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -285,7 +285,7 @@ public class MenberAccess extends javax.swing.JPanel {
                         .addGap(9, 9, 9)
                         .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(50, 50, 50)
-                        .addComponent(jTfTTTB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(Hehe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(50, 50, 50))
         );
         jPanel3Layout.setVerticalGroup(
@@ -294,7 +294,7 @@ public class MenberAccess extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTfTTTB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(Hehe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(20, 20, 20)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -314,10 +314,7 @@ public class MenberAccess extends javax.swing.JPanel {
         jTableGanDay.setBackground(new java.awt.Color(255, 255, 255));
         jTableGanDay.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "Mã thành viên", "Tên thành viên", "Thời gian vào", "Thiết bị mượn", "Thời gian mượn", "Thời gian trả"
@@ -453,12 +450,6 @@ public class MenberAccess extends javax.swing.JPanel {
         int maTV=Integer.parseInt(jTfMaTV.getText());
         XuLyBLL xlbll =new XuLyBLL();
         if(!bLL.isCheckIn(maTV)){
-            JPanel nmJPanel=new NotMenber();
-            jPanelResuil.removeAll();
-            jPanelResuil.setLayout(new BorderLayout());
-            jPanelResuil.add(nmJPanel);
-            jPanelResuil.revalidate();
-            jPanelResuil.repaint();
             if(bLL.isMenber(maTV)){
                 jTfMaTV.setText(bLL.getThanhVien(maTV).getMaTV()+"");
                 jTfHoTen.setText(bLL.getThanhVien(maTV).getHoTen());
@@ -469,12 +460,23 @@ public class MenberAccess extends javax.swing.JPanel {
             jTfMaTV.setText(bLL.getThanhVien(maTV).getMaTV()+"");
             jTfHoTen.setText(bLL.getThanhVien(maTV).getHoTen());
             jTfTT.setText("Hoạt động");
-            ThongTinSD tt=new ThongTinSD();
-            tt.setMaTV(bLL.getThanhVien(maTV));
-            tt.setTGVao(LocalDateTime.now());
+            jTfMaTB.getText();
+            jTfTenTb.setText(tbbll.getThietBi(Integer.parseInt(jTfMaTB.getText())).getTenTB());
             //kiểm tra thiết bị còn không
+            if (ttsdbll.borrowedDevice(maTV, Integer.parseInt(jTfMaTB.getText()))) {
+               jTfTTTB.setText("Còn");
+                DefaultTableModel model=(DefaultTableModel) jTableGanDay.getModel();
+                model.setRowCount(0);
+               for (Object[] row : tvbll.getDataForMaTV(31214102)) {
+               // Duyệt qua từng phần tử của hàng
+               
+                model.addRow(row);
+                }
+               jTableGanDay.repaint();
+            }else{
+                jTfTTTB.setText("Hết");
+            }
             
-            ttsdbll.addThongTin(tt);
         }
     }//GEN-LAST:event_btnCheckIn4ActionPerformed
 
@@ -486,12 +488,13 @@ public class MenberAccess extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTfMaTBActionPerformed
 
-    private void setTTinhTrang1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setTTinhTrang1ActionPerformed
+    private void jTfTTTBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTfTTTBActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_setTTinhTrang1ActionPerformed
+    }//GEN-LAST:event_jTfTTTBActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Hehe;
     private javax.swing.JButton btnCheckIn;
     private javax.swing.JButton btnCheckIn4;
     private javax.swing.JButton btnCheckIn5;
@@ -514,9 +517,8 @@ public class MenberAccess extends javax.swing.JPanel {
     private javax.swing.JTextField jTfHoTen;
     private javax.swing.JTextField jTfMaTB;
     private javax.swing.JTextField jTfMaTV;
-    private javax.swing.JTextField jTfMaTb;
     private javax.swing.JTextField jTfTT;
-    private javax.swing.JPanel jTfTTTB;
-    private javax.swing.JTextField setTTinhTrang1;
+    private javax.swing.JTextField jTfTTTB;
+    private javax.swing.JTextField jTfTenTb;
     // End of variables declaration//GEN-END:variables
 }

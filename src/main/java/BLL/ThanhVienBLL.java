@@ -143,4 +143,7 @@ public class ThanhVienBLL {
     public boolean isMenber(int maTV){
         return tvDAL.isMenber(maTV);
     }
+    public Object[][] getDataForMaTV(int maTV){
+       return tvDAL.getDataForMaTV(maTV);
+    }
 }

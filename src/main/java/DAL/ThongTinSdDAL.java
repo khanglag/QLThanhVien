@@ -115,7 +115,7 @@ public class ThongTinSdDAL {
     }
 
     // Muợn thiết bị
-    public void borrowedDevice(int MaTT, int MaTV, int MaTB, LocalDateTime TGMuon) {
+    public boolean borrowedDevice(int MaTT, int MaTV, int MaTB, LocalDateTime TGMuon) {
         Transaction transaction = null;
         try {
             openSession();
@@ -124,16 +124,14 @@ public class ThongTinSdDAL {
             // Kiểm tra MaTV có trong bảng ThanhVien
             ThanhVien thanhVien = session.get(ThanhVien.class, MaTV);
             if (thanhVien == null)
-                throw new RuntimeException("Member does not exist");
+                return false;
 
             // Kiểm tra thiết bị đã được cho mượn hay chưa
             ThongTinSD thongTinSD = (ThongTinSD) session
                     .createQuery("FROM ThongTinSD WHERE MaTB.id = :MaTB AND TGMuon IS NOT NULL AND TGTra IS NULL")
                     .setParameter("MaTB", MaTB)
                     .uniqueResult();
-            if (thongTinSD != null)
-                throw new RuntimeException("The device has been borrowed");
-
+            if (thongTinSD != null) return false;
             // Thiết bị chưa cho mượn
             thongTinSD = (ThongTinSD) session.createQuery("FROM ThongTinSD WHERE MaTB.id = :MaTB AND TGTra IS NULL")
                     .setParameter("MaTB", MaTB)
@@ -142,7 +140,7 @@ public class ThongTinSdDAL {
                 thongTinSD.setTGMuon(LocalDateTime.now());
                 session.update(thongTinSD);
                 transaction.commit();
-                return;
+                return false;
             }
 
             // Nếu thiết bị chưa có trong bảng ThongTinSD
@@ -161,6 +159,7 @@ public class ThongTinSdDAL {
                 transaction.rollback();
             e.printStackTrace();
         }
+        return true;
     }
 
     public void suaThongTinSD(int maTB, int maTV) {

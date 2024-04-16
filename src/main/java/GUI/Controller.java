@@ -4,7 +4,7 @@
  */
 package GUI;
 
-import GUI.MenberManager.MenberAccess;
+import GUI.Home.MenberAccess;
 import GUI.QLTV.QLThanhVien;
 import java.awt.BorderLayout;
 import java.awt.Color;
