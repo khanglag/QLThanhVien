@@ -6,11 +6,15 @@ package DAL;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import javax.swing.table.TableModel;
 import javax.transaction.Transactional;
 
 import org.hibernate.Transaction;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
+
+import BLL.ThietBiBLL;
 
 /**
  *
@@ -55,6 +59,30 @@ public class ThongTinSdDAL {
             e.printStackTrace();
         }
         return tt;
+    }
+    public List<ThongTinSD> loadThongTinSDByMaTV(int maTV) {
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        List<ThongTinSD> thongTinSDList = null;
+
+        try {
+            session.beginTransaction();
+            String hql = "FROM ThongTinSD WHERE MaTV.id = :maTV";
+            Query<ThongTinSD> query = session.createQuery(hql, ThongTinSD.class);
+            query.setParameter("maTV", maTV);
+
+            thongTinSDList = query.getResultList();
+
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return thongTinSDList;
     }
 
     // Tạo mã thông tin tự động
@@ -113,7 +141,7 @@ public class ThongTinSdDAL {
     }
 
     // Muợn thiết bị
-    public void borrowedDevice(int MaTT, int MaTV, int MaTB, LocalDateTime TGMuon) {
+    public boolean borrowedDevice(int MaTV, int MaTB) {
         Transaction transaction = null;
         try {
             openSession();
@@ -122,16 +150,14 @@ public class ThongTinSdDAL {
             // Kiểm tra MaTV có trong bảng ThanhVien
             ThanhVien thanhVien = session.get(ThanhVien.class, MaTV);
             if (thanhVien == null)
-                throw new RuntimeException("Member does not exist");
+                return false;
 
             // Kiểm tra thiết bị đã được cho mượn hay chưa
             ThongTinSD thongTinSD = (ThongTinSD) session
                     .createQuery("FROM ThongTinSD WHERE MaTB.id = :MaTB AND TGMuon IS NOT NULL AND TGTra IS NULL")
                     .setParameter("MaTB", MaTB)
                     .uniqueResult();
-            if (thongTinSD != null)
-                throw new RuntimeException("The device has been borrowed");
-
+            if (thongTinSD != null) return false;
             // Thiết bị chưa cho mượn
             thongTinSD = (ThongTinSD) session.createQuery("FROM ThongTinSD WHERE MaTB.id = :MaTB AND TGTra IS NULL")
                     .setParameter("MaTB", MaTB)
@@ -140,41 +166,22 @@ public class ThongTinSdDAL {
                 thongTinSD.setTGMuon(LocalDateTime.now());
                 session.update(thongTinSD);
                 transaction.commit();
-                return;
+                return false;
             }
 
             // Nếu thiết bị chưa có trong bảng ThongTinSD
             ThietBi thietBi = session.get(ThietBi.class, MaTB);
-            ThongTinSD thongTinMuon = new ThongTinSD();
-            thongTinMuon.setMaTT(generateMaTT());
-            thongTinMuon.setMaTV(thanhVien);
-            thongTinMuon.setMaTB(thietBi);
-            thongTinMuon.setTGVao(LocalDateTime.now());
-            thongTinMuon.setTGMuon(TGMuon);
-            session.save(thongTinMuon);
-            transaction.commit();
-
-        } catch (HibernateException e) {
-            if (transaction != null)
-                transaction.rollback();
-            e.printStackTrace();
-        }
-    }
-
-    public void suaThongTinSD(int maTB, int maTV) {
-        // Bắt đầu một transaction
-        Transaction transaction = null;
-        try {
-            openSession();
-            transaction = session.beginTransaction();
-
-            // Lấy thông tin của Thiết bị từ cơ sở dữ liệu
-            ThietBi thietBi = session.get(ThietBi.class, maTB);
-
-            // Tìm Thông tin sử dụng cần sửa dựa trên maTV và maTB
-            ThongTinSD thongTinSD = (ThongTinSD) session
-                    .createQuery("FROM ThongTinSD WHERE maTV = :maTV ORDER BY maTT DESC")
-                    .setParameter("maTV", maTV)
+            // ThongTinSD thongTinMuon = new ThongTinSD();
+            // thongTinMuon.setMaTT(generateMaTT());
+            // thongTinMuon.setMaTV(thanhVien);
+            // thongTinMuon.setMaTB(thietBi);
+            // thongTinMuon.setTGVao(LocalDateTime.now());
+            // thongTinMuon.setTGMuon(LocalDateTime.now());
+            // session.save(thongTinMuon);
+            // transaction.commit();
+            thongTinSD = (ThongTinSD) session
+                    .createQuery("FROM ThongTinSD WHERE MaTV.id = :MaTV ORDER BY MaTT DESC")
+                    .setParameter("MaTV", MaTV)
                     .setMaxResults(1) // Chỉ lấy 1 kết quả (nếu có)
                     .uniqueResult();
 
@@ -192,10 +199,40 @@ public class ThongTinSdDAL {
             } else {
                 System.out.println("Không tìm thấy thông tin sử dụng để sửa.");
             }
+
         } catch (HibernateException e) {
-            if (transaction != null) {
+            if (transaction != null)
                 transaction.rollback();
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    public void returnDevice(int MaTB) {
+        // Mở session và bắt đầu transaction
+        Transaction transaction = null;
+
+        try {
+            openSession();
+            transaction = session.beginTransaction();
+
+            ThongTinSD thongTinSD = (ThongTinSD) session
+                    // .createQuery("FROM ThongTinSD WHERE MaTB = :MaTB AND TGTra IS NULL")
+                    .createQuery("FROM ThongTinSD WHERE MaTB.id = :MaTB AND TGTra IS NULL")
+                    .setParameter("MaTB", MaTB)
+                    .uniqueResult();
+            System.out.println(thongTinSD);
+            if (thongTinSD != null) {
+                thongTinSD.setTGTra(LocalDateTime.now());
+                session.update(thongTinSD);
+                transaction.commit();
+            } else {
+                System.out.println("Không tìm thấy thông tin sử dụng để sửa.");
             }
+
+        } catch (HibernateException e) {
+            if (transaction != null)
+                transaction.rollback();
             e.printStackTrace();
         }
     }
@@ -205,4 +242,62 @@ public class ThongTinSdDAL {
             session = HibernateUtils.getSessionFactory().openSession();
     }
 
+    public Object[][] dataTableCheckin(TableModel model, int maTV) {
+        Transaction transaction = null;
+        int rowCount = model.getRowCount();
+        int columnCount = model.getColumnCount();
+        Object[][] data = new Object[rowCount][columnCount];
+        try {
+            openSession();
+            transaction = session.beginTransaction();
+            String hql = "SELECT tv.MaTV, tv.HoTen, tsd.TGVao, tsd.MaTB " +
+                    "FROM ThanhVien tv " +
+                    "JOIN ThongTinSD tsd ON tv.MaTV = tsd.MaTV " +
+                    "WHERE tv.MaTV = :maTV";
+            Query query = session.createQuery(hql);
+            query.setParameter("maTV", maTV);
+            data = convertListToObjectArray(query.list());
+        } catch (HibernateException e) {
+            // if (transaction != null)
+            // transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return data;
+    }
+
+    public static Object[][] convertListToObjectArray(List<Object> list) {
+        int rowCount = list.size();
+        int columnCount = 0;
+
+        // Xác định số lượng cột bằng cách tìm cột lớn nhất trong danh sách
+        for (Object obj : list) {
+            if (obj instanceof Object[]) {
+                int currentRowColumnCount = ((Object[]) obj).length;
+                if (currentRowColumnCount > columnCount) {
+                    columnCount = currentRowColumnCount;
+                }
+            }
+        }
+
+        // Tạo mảng hai chiều mới
+        Object[][] array2D = new Object[rowCount][columnCount];
+
+        // Lặp qua danh sách và chuyển đổi từng phần tử thành hàng của mảng hai chiều
+        // mới
+        for (int i = 0; i < rowCount; i++) {
+            Object obj = list.get(i);
+            if (obj instanceof Object[]) {
+                Object[] row = (Object[]) obj;
+                for (int j = 0; j < row.length; j++) {
+                    array2D[i][j] = row[j];
+                }
+            } else {
+                array2D[i][0] = obj;
+            }
+        }
+
+        return array2D;
+    }
 }

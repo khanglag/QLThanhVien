@@ -63,4 +63,7 @@ public class XuLyBLL {
     public List<XuLy> searchXuLy(String HinhThucXL) {
         return dal.searchXuLy(HinhThucXL);
     }
+    public XuLy getXuLyLasted(int maTV){
+        return dal.getXuLy(dal.getHTXuLyLasted(maTV));
+    }
 }

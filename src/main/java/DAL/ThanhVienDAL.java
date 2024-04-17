@@ -17,6 +17,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 /**
  *
@@ -297,5 +298,51 @@ public class ThanhVienDAL {
 
         return thanhVienList;
     }
+    public boolean isMenber(int maTV){
+        Transaction transaction = null;
+        ThanhVien tv = null;
+        try {
+           openSession();
+            transaction = session.beginTransaction();
+            tv = session.get(ThanhVien.class, maTV);
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return(tv!=null);
+    }
+    public boolean isCheckIn(int maTV){
+        XuLyDAL dAL=new XuLyDAL();
+        if (isMenber(maTV)&& !dAL.isProcessingDeadline(maTV)) {
+            return true;
+        }
+        return false;
+    }
+    public Object[][] getDataForMaTV(int maTV) {
+        String hql = "SELECT tv.MaTV, tv.HoTen, tsd.TGVao, tb.TenTB, tsd.TGTra " +
+                     "FROM ThanhVien tv " +
+                     "JOIN ThongTinSD tsd ON tv.MaTV = tsd.MaTV " +
+                     "JOIN ThietBi tb ON tsd.MaTB = tb.MaTB " +
+                     "WHERE tv.MaTV = :maTV";
 
+        Query query = session.createQuery(hql);
+        query.setParameter("maTV", maTV);
+
+        List<Object[]> resultList = query.getResultList();
+
+        // Chuyển danh sách kết quả thành mảng hai chiều
+        Object[][] resultArray = new Object[resultList.size()][5]; // Số cột là 5
+
+        for (int i = 0; i < resultList.size(); i++) {
+            Object[] row = resultList.get(i);
+            resultArray[i] = row;
+        }
+
+        return resultArray;
+    }
 }

@@ -5,10 +5,12 @@
 package DAL;
 
 import java.util.List;
+import javax.persistence.EntityManager;
 
 import org.hibernate.Transaction;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 /**
  *
@@ -197,7 +199,7 @@ public class ThietBiDAL {
         }
         return list;
     }
-
+    
     private void openSession() {
         if (!session.isOpen())
             session = HibernateUtils.getSessionFactory().openSession();
