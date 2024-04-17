@@ -24,7 +24,10 @@ public class ThongTinSDBLL {
     public ThongTinSD getThongTinSD(int MaTT) {
         return dal.getThongTinSD(MaTT);
     }
-
+    
+    public List<ThongTinSD> getThongTinSDbyID(int maTV){
+        return dal.loadThongTinSDByMaTV(maTV);
+    }
     public static Object[][] convertList(List<ThongTinSD> list) {
         int rows = list.size();
         int cols = 6;
@@ -54,16 +57,10 @@ public class ThongTinSDBLL {
     public Object[][] getObjectses(TableModel model,int maTV){
         return dal.dataTableCheckin(model, maTV);
     }
-<<<<<<< HEAD
-    public boolean borrowedDevice(int maTV,int maTB){
-        return dal.borrowedDevice(0, maTV, maTB, LocalDateTime.now());
-=======
-    
-    public void borrowedDevice(int maTV, int maTB){
-        dal.borrowedDevice(maTV, maTB);
+    public boolean borrowedDevice(int maTV, int maTB){
+        return dal.borrowedDevice(maTV, maTB);
     }
-    public void retủnDevice(int maTB){
+    public void returnnDevice(int maTB){
         dal.returnDevice(maTB);
->>>>>>> main
     }
 }

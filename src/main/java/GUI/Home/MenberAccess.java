@@ -11,6 +11,7 @@ import BLL.XuLyBLL;
 import DAL.ThongTinSD;
 import java.awt.BorderLayout;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -107,7 +108,7 @@ public class MenberAccess extends javax.swing.JPanel {
 
         jButton3.setBackground(new java.awt.Color(255, 255, 255));
         jButton3.setForeground(new java.awt.Color(102, 102, 102));
-        jButton3.setText("Quét QR");
+        jButton3.setText("Clear");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -329,7 +330,7 @@ public class MenberAccess extends javax.swing.JPanel {
             jPanelGanDayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelGanDayLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 651, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelGanDayLayout.setVerticalGroup(
@@ -365,9 +366,7 @@ public class MenberAccess extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanelResuil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(6, 6, 6)))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -406,6 +405,36 @@ public class MenberAccess extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTfMaTVActionPerformed
 
+    public void LoadDataBorrow() {
+        DefaultTableModel model;
+        ThongTinSDBLL thongTinSDBLL=new ThongTinSDBLL();
+        model = (DefaultTableModel) jTableGanDay.getModel();
+        model.setRowCount(0);
+        ArrayList<ThongTinSD> listBorrow = (ArrayList<ThongTinSD>) thongTinSDBLL.getThongTinSDbyID(Integer.parseInt(jTfMaTV.getText()));
+        for (ThongTinSD on : listBorrow) {
+                model.addRow(new Object[]{
+                    "312141252", "Lee Duy Khang", on.getTGVao(), on.getMaTB(), on.getTGMuon(), on.getTGTra()
+                });
+           
+
+            jTableGanDay.setModel(model);
+        }
+    }
+    public void LoadDataMenber() {
+        DefaultTableModel model;
+        ThongTinSDBLL thongTinSDBLL=new ThongTinSDBLL();
+        model = (DefaultTableModel) jTableGanDay.getModel();
+        model.setRowCount(0);
+        ArrayList<ThongTinSD> listBorrow = (ArrayList<ThongTinSD>) thongTinSDBLL.getThongTinSDbyID(Integer.parseInt(jTfMaTV.getText()));
+        for (ThongTinSD on : listBorrow) {
+                model.addRow(new Object[]{
+                    "312141252", "Lee Duy Khang", on.getTGVao(), on.getMaTB(), on.getTGMuon(), on.getTGTra()
+                });
+           
+
+            jTableGanDay.setModel(model);
+        }
+    }
     private void btnCheckInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckInActionPerformed
         int maTV=Integer.parseInt(jTfMaTV.getText());
         XuLyBLL xlbll =new XuLyBLL();
@@ -435,7 +464,13 @@ public class MenberAccess extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCheckInActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        jTfHoTen.setText("");
+        jTfMaTB.setText("");
+        jTfTTTB.setText("");
+        jTfTenTb.setText("");
+        jTfTT.setText("");
+        jTfMaTV.setText("");
+ 
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTfTTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTfTTActionPerformed
@@ -465,14 +500,7 @@ public class MenberAccess extends javax.swing.JPanel {
             //kiểm tra thiết bị còn không
             if (ttsdbll.borrowedDevice(maTV, Integer.parseInt(jTfMaTB.getText()))) {
                jTfTTTB.setText("Còn");
-                DefaultTableModel model=(DefaultTableModel) jTableGanDay.getModel();
-                model.setRowCount(0);
-               for (Object[] row : tvbll.getDataForMaTV(31214102)) {
-               // Duyệt qua từng phần tử của hàng
-               
-                model.addRow(row);
-                }
-               jTableGanDay.repaint();
+                LoadDataBorrow();
             }else{
                 jTfTTTB.setText("Hết");
             }
@@ -481,7 +509,8 @@ public class MenberAccess extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCheckIn4ActionPerformed
 
     private void btnCheckIn5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckIn5ActionPerformed
-        // TODO add your handling code here:
+        ThongTinSDBLL bLL=new ThongTinSDBLL();
+        bLL.returnnDevice(Integer.parseInt(jTfMaTB.getText()));
     }//GEN-LAST:event_btnCheckIn5ActionPerformed
 
     private void jTfMaTBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTfMaTBActionPerformed

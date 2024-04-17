@@ -8,6 +8,7 @@ import java.util.List;
 
 import DAL.ThanhVien;
 import DAL.ThanhVienDAL;
+import GUI.Hander.chooseExcelFile;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -96,21 +97,11 @@ public class ThanhVienBLL {
         return tvDAL.equals(maTV);
     }
     
-    private static String chooseExcelFile() {
-        JFileChooser fileChooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel files", "xlsx");
-        fileChooser.setFileFilter(filter);
-
-        int returnValue = fileChooser.showOpenDialog(null);
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            return fileChooser.getSelectedFile().getPath();
-        }
-        return null;
-    }
-    public List<ThanhVien> readDataFromExcel(String filePath)throws IOException {
+    public List<ThanhVien> readDataFromExcel() {
         List<ThanhVien> thanhVienList = new ArrayList<>();
-        FileInputStream inputStream = new FileInputStream(new File(filePath));
-
+        chooseExcelFile chooseExcelFile= new chooseExcelFile();
+        try{
+        FileInputStream inputStream = new FileInputStream(new File(chooseExcelFile.chooseExcelFile()));
         Workbook workbook = new XSSFWorkbook(inputStream);
         Sheet sheet = workbook.getSheetAt(0);
         Iterator<Row> iterator = sheet.iterator();
@@ -134,6 +125,9 @@ public class ThanhVienBLL {
 
         workbook.close();
         inputStream.close();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return thanhVienList;
     }

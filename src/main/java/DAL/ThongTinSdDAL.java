@@ -60,6 +60,30 @@ public class ThongTinSdDAL {
         }
         return tt;
     }
+    public List<ThongTinSD> loadThongTinSDByMaTV(int maTV) {
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        List<ThongTinSD> thongTinSDList = null;
+
+        try {
+            session.beginTransaction();
+            String hql = "FROM ThongTinSD WHERE MaTV.id = :maTV";
+            Query<ThongTinSD> query = session.createQuery(hql, ThongTinSD.class);
+            query.setParameter("maTV", maTV);
+
+            thongTinSDList = query.getResultList();
+
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return thongTinSDList;
+    }
 
     // Tạo mã thông tin tự động
     public int generateMaTT() {
@@ -117,11 +141,7 @@ public class ThongTinSdDAL {
     }
 
     // Muợn thiết bị
-<<<<<<< HEAD
-    public boolean borrowedDevice(int MaTT, int MaTV, int MaTB, LocalDateTime TGMuon) {
-=======
-    public void borrowedDevice(int MaTV, int MaTB) {
->>>>>>> main
+    public boolean borrowedDevice(int MaTV, int MaTB) {
         Transaction transaction = null;
         try {
             openSession();
@@ -151,39 +171,6 @@ public class ThongTinSdDAL {
 
             // Nếu thiết bị chưa có trong bảng ThongTinSD
             ThietBi thietBi = session.get(ThietBi.class, MaTB);
-<<<<<<< HEAD
-            ThongTinSD thongTinMuon = new ThongTinSD();
-            thongTinMuon.setMaTT(generateMaTT());
-            thongTinMuon.setMaTV(thanhVien);
-            thongTinMuon.setMaTB(thietBi);
-            thongTinMuon.setTGVao(LocalDateTime.now());
-            thongTinMuon.setTGMuon(TGMuon);
-            session.save(thongTinMuon);
-            transaction.commit();
-
-        } catch (HibernateException e) {
-            if (transaction != null)
-                transaction.rollback();
-            e.printStackTrace();
-        }
-        return true;
-    }
-
-    public void suaThongTinSD(int maTB, int maTV) {
-        // Bắt đầu một transaction
-        Transaction transaction = null;
-        try {
-            openSession();
-            transaction = session.beginTransaction();
-
-            // Lấy thông tin của Thiết bị từ cơ sở dữ liệu
-            ThietBi thietBi = session.get(ThietBi.class, maTB);
-
-            // Tìm Thông tin sử dụng cần sửa dựa trên maTV và maTB
-            ThongTinSD thongTinSD = (ThongTinSD) session
-                    .createQuery("FROM ThongTinSD WHERE maTV = :maTV ORDER BY maTT DESC")
-                    .setParameter("maTV", maTV)
-=======
             // ThongTinSD thongTinMuon = new ThongTinSD();
             // thongTinMuon.setMaTT(generateMaTT());
             // thongTinMuon.setMaTV(thanhVien);
@@ -195,7 +182,6 @@ public class ThongTinSdDAL {
             thongTinSD = (ThongTinSD) session
                     .createQuery("FROM ThongTinSD WHERE MaTV.id = :MaTV ORDER BY MaTT DESC")
                     .setParameter("MaTV", MaTV)
->>>>>>> main
                     .setMaxResults(1) // Chỉ lấy 1 kết quả (nếu có)
                     .uniqueResult();
 
@@ -219,6 +205,7 @@ public class ThongTinSdDAL {
                 transaction.rollback();
             e.printStackTrace();
         }
+        return true;
     }
 
     public void returnDevice(int MaTB) {
