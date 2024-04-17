@@ -97,11 +97,21 @@ public class ThanhVienBLL {
         return tvDAL.equals(maTV);
     }
     
-    public List<ThanhVien> readDataFromExcel() {
+
+    private static String chooseExcelFile() {
+        JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel files", "xlsx");
+        fileChooser.setFileFilter(filter);
+
+        int returnValue = fileChooser.showOpenDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            return fileChooser.getSelectedFile().getPath();
+        }
+        return null;
+    }
+    public List<ThanhVien> readDataFromExcel()throws IOException {
         List<ThanhVien> thanhVienList = new ArrayList<>();
-        chooseExcelFile chooseExcelFile= new chooseExcelFile();
-        try{
-        FileInputStream inputStream = new FileInputStream(new File(chooseExcelFile.chooseExcelFile()));
+        FileInputStream inputStream = new FileInputStream(new File(chooseExcelFile()));
         Workbook workbook = new XSSFWorkbook(inputStream);
         Sheet sheet = workbook.getSheetAt(0);
         Iterator<Row> iterator = sheet.iterator();
@@ -117,18 +127,13 @@ public class ThanhVienBLL {
             String hoTen = cellIterator.next().getStringCellValue();
             String khoa = cellIterator.next().getStringCellValue();
             String nganh = cellIterator.next().getStringCellValue();
-            int sdt = (int) cellIterator.next().getNumericCellValue();
-
+            int sdt = Integer.parseInt(cellIterator.next().getStringCellValue());
             ThanhVien thanhVien = new ThanhVien(maTV, hoTen, khoa, nganh, sdt);
             thanhVienList.add(thanhVien);
         }
 
         workbook.close();
         inputStream.close();
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
-
         return thanhVienList;
     }
     public boolean isCheckIn(int maTV){
