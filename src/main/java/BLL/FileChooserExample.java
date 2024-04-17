@@ -10,8 +10,6 @@ package BLL;
  */
 import org.apache.poi.ss.usermodel.*;
 
-import java.io.*;
-import java.util.Iterator;
 import javax.swing.JFileChooser;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -20,14 +18,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-/**
- *
- * @author pc
- */
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import javax.swing.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
