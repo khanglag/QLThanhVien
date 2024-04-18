@@ -4,6 +4,7 @@
  */
 package DAL;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.hibernate.Transaction;
@@ -145,10 +146,41 @@ public class XuLyDAL {
         }
         return list;
     }
+    public int getHTXuLyLasted(int maTV){
+        XuLyDAL dal =new XuLyDAL();
+        List<XuLy> list=dal.searchXuLy(maTV);
+        if (list.size()==0) return 0;
+        int maMax=list.get(0).getMaXL();
+        LocalDateTime ngayMax=list.get(0).getNgayXL();
+        for(XuLy temp: list){
+            if(temp.getNgayXL().isAfter(ngayMax))
+            {
+                ngayMax=temp.getNgayXL();
+                maMax=temp.getMaXL();
+            }
+        }
+        return maMax;
+    }
+    public boolean isProcessingDeadline(int maTV){
+        XuLyDAL dal =new XuLyDAL();
+        XuLy temp =dal.getXuLy(getHTXuLyLasted(maTV));
+        if (getHTXuLyLasted(maTV)==0) {
+           return false;
+        }
+        int index=9;
+        String newStr = temp.getHinhThucXL().substring(0, index) + temp.getHinhThucXL().substring(index + 2);
+        if (newStr.equals("Khóa thẻ tháng")) {
+            int thang = (int) temp.getHinhThucXL().charAt(index) - '0';
+            int ngay=thang*30;
+            if (temp.getNgayXL().plusDays(30).isAfter(LocalDateTime.now())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     private void openSession() {
         if (!session.isOpen())
             session = HibernateUtils.getSessionFactory().openSession();
     }
-
 }
