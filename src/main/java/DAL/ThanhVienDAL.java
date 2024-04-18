@@ -311,6 +311,7 @@ public class ThanhVienDAL {
                 transaction.rollback();
             }
             e.printStackTrace();
+            return false;
         } finally {
             session.close();
         }
@@ -323,26 +324,5 @@ public class ThanhVienDAL {
         }
         return false;
     }
-    public Object[][] getDataForMaTV(int maTV) {
-        String hql = "SELECT tv.MaTV, tv.HoTen, tsd.TGVao, tb.TenTB, tsd.TGTra " +
-                     "FROM ThanhVien tv " +
-                     "JOIN ThongTinSD tsd ON tv.MaTV = tsd.MaTV " +
-                     "JOIN ThietBi tb ON tsd.MaTB = tb.MaTB " +
-                     "WHERE tv.MaTV = :maTV";
-
-        Query query = session.createQuery(hql);
-        query.setParameter("maTV", maTV);
-
-        List<Object[]> resultList = query.getResultList();
-
-        // Chuyển danh sách kết quả thành mảng hai chiều
-        Object[][] resultArray = new Object[resultList.size()][5]; // Số cột là 5
-
-        for (int i = 0; i < resultList.size(); i++) {
-            Object[] row = resultList.get(i);
-            resultArray[i] = row;
-        }
-
-        return resultArray;
-    }
+    
 }

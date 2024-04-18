@@ -154,8 +154,8 @@ public class Controller {
                 item.getJpn().setBackground(new Color(38,84,108));
                 item.getJlb().setBackground(new Color(38,84,108));
             } else{
-                item.getJpn().setBackground(new Color(67,138,174));
-                item.getJlb().setBackground(new Color(67,138,174));
+                item.getJpn().setBackground(new Color(36,140,190));
+                item.getJlb().setBackground(new Color(36,140,190));
             }
             
         }
