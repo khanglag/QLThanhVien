@@ -183,11 +183,4 @@ public class XuLyDAL {
         if (!session.isOpen())
             session = HibernateUtils.getSessionFactory().openSession();
     }
-    public static void main(String[] args) {
-        int maTV = 2147483647; 
-        XuLyDAL dal = new XuLyDAL();
-        int maHTXuLyLasted = dal.getHTXuLyLasted(maTV);
-        System.out.println("Mã hoạt động xử lý cuối cùng của thành viên có mã " + maTV + " là: " + maHTXuLyLasted);
-    }
-
 }

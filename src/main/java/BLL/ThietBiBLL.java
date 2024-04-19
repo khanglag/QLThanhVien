@@ -14,6 +14,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -49,6 +51,10 @@ public class ThietBiBLL {
     public ThietBi getThietBi(int MaTB) {
         return thietBiDAL.getThietBi(MaTB);
     }
+    
+    public int generateMaTB(int loaiTB) {
+        return thietBiDAL.generateMaTB(loaiTB);
+    }
 
     public void addThietBi(ThietBi tb) {
         thietBiDAL.addThietBi(tb);
@@ -79,12 +85,23 @@ public class ThietBiBLL {
     public List<ThietBi> search(String TenTB) {
         return thietBiDAL.searchThietBi(TenTB);
     }
-    public List<ThietBi> readDataFromExcel(String filePath) throws IOException {
+    private static String chooseExcelFile() {
+        JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel files", "xlsx");
+        fileChooser.setFileFilter(filter);
+
+        int returnValue = fileChooser.showOpenDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            return fileChooser.getSelectedFile().getPath();
+        }
+        return null;
+    }
+    public List<ThietBi> readDataFromExcel() throws IOException {
         List<ThietBi> thietBiList = new ArrayList<>();
-        FileInputStream inputStream = new FileInputStream(new File(filePath));
+        FileInputStream inputStream = new FileInputStream(new File(chooseExcelFile()));
 
         Workbook workbook = new XSSFWorkbook(inputStream);
-        Sheet sheet = workbook.getSheetAt(0);
+        Sheet sheet = workbook.getSheetAt(1);
         Iterator<Row> iterator = sheet.iterator();
 
         // Skip header row
@@ -93,15 +110,21 @@ public class ThietBiBLL {
         while (iterator.hasNext()) {
             Row currentRow = iterator.next();
             Iterator<Cell> cellIterator = currentRow.iterator();
-
             int maTB = (int) cellIterator.next().getNumericCellValue();
+            if (maTB==0) {
+                break;
+            }
             String tenTB = cellIterator.next().getStringCellValue();
             String moTaTB = cellIterator.next().getStringCellValue();
+<<<<<<< HEAD
             // Đọc danh sách thông tin sử dụng từ cột thứ tư (index 3)
-            List<String> thongTinSDs = readThongTinSDsFromCell(cellIterator.next());
+            //List<String> thongTinSDs = readThongTinSDsFromCell(cellIterator.next());
 
+=======
+>>>>>>> Tàn-đời-rồi
             ThietBi thietBi = new ThietBi(maTB, tenTB, moTaTB);
             thietBiList.add(thietBi);
+            
         }
 
         workbook.close();

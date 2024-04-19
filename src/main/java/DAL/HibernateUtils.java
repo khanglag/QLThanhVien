@@ -40,19 +40,4 @@ public class HibernateUtils {
         getSessionFactory().close();
     }
 
-    public static void main(String[] args) {
-        try (Session session = HibernateUtils.getSessionFactory().openSession();) {
-            // Begin a unit of work
-            session.beginTransaction();
-            List<ThietBi> thietbi = session.createQuery("FROM ThietBi", ThietBi.class).list();
-
-            // xem danh sách
-            thietbi.forEach(System.out::println);
-
-            // thêm mới
-
-            session.getTransaction().commit();
-
-        }
-    }
 }

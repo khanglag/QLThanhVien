@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import GUI.QLTB.QLTB;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,11 +37,11 @@ public class MainFrame extends javax.swing.JFrame {
         Main = new javax.swing.JPanel();
         jpnView = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         panelMenu = new javax.swing.JPanel();
         panelCheckin = new javax.swing.JPanel();
@@ -81,11 +82,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         jPanel4.setBackground(new java.awt.Color(36, 140, 190));
 
-        jLabel5.setFont(new java.awt.Font("Hiragino Maru Gothic ProN", 0, 36)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Literature.png"))); // NOI18N
-        jLabel5.setText("  LibraSGU");
-
         jPanel1.setBackground(new java.awt.Color(36, 140, 190));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
 
@@ -122,12 +118,17 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
+        jLabel5.setFont(new java.awt.Font("Hiragino Maru Gothic ProN", 0, 36)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Literature.png"))); // NOI18N
+        jLabel5.setText("  LibraSGU");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(21, 21, 21)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -154,8 +155,8 @@ public class MainFrame extends javax.swing.JFrame {
         jLabelCheckin.setBackground(new java.awt.Color(36, 140, 190));
         jLabelCheckin.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabelCheckin.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelCheckin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Checkin.png"))); // NOI18N
-        jLabelCheckin.setText("   Check in");
+        jLabelCheckin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/house-24.png"))); // NOI18N
+        jLabelCheckin.setText("       Home");
 
         javax.swing.GroupLayout panelCheckinLayout = new javax.swing.GroupLayout(panelCheckin);
         panelCheckin.setLayout(panelCheckinLayout);
@@ -330,7 +331,6 @@ public class MainFrame extends javax.swing.JFrame {
         Main.setLayout(MainLayout);
         MainLayout.setHorizontalGroup(
             MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainLayout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -338,6 +338,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(jpnView, javax.swing.GroupLayout.DEFAULT_SIZE, 728, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         MainLayout.setVerticalGroup(
             MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -382,6 +383,7 @@ public class MainFrame extends javax.swing.JFrame {
         controller.setEvent(listItem);
         try {
             controller.setView(panelCheckin, jLabelCheckin);
+            
         } catch (SQLException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
