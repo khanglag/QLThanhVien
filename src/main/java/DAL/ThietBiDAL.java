@@ -15,6 +15,7 @@ import org.hibernate.Session;
  * @author MSII
  */
 public class ThietBiDAL {
+
     private Session session;
 
     public ThietBiDAL() {
@@ -62,9 +63,9 @@ public class ThietBiDAL {
                 .createQuery("SELECT MaTB FROM ThietBi WHERE SUBSTRING(MaTB,1,1)= : loaiTB", Integer.class)
                 .setParameter("loaiTB", tbString)
                 .list();
-        if (existTB.isEmpty())
+        if (existTB.isEmpty()) {
             return Integer.parseInt(tbString + "000001");
-        else {
+        } else {
             int lastMaTB = existTB.get(existTB.size() - 1);
             int lastNumber = lastMaTB % 1000000;
             int newLastNumber = lastNumber + 1;
@@ -153,13 +154,14 @@ public class ThietBiDAL {
             }
             transaction.commit();
         } catch (HibernateException e) {
-            if (transaction != null)
+            if (transaction != null) {
                 transaction.rollback();
+            }
             e.printStackTrace();
 
         }
     }
-
+    
     public List<ThietBi> searchThietBi(int MaTB) {
         Transaction transaction = null;
         List<ThietBi> list = null;
@@ -170,11 +172,14 @@ public class ThietBiDAL {
             list = session.createQuery(hql, ThietBi.class)
                     .setParameter("MaTB", MaTB)
                     .list();
-            transaction.commit();
+            transaction.commit(); // Commit transaction after query execution
         } catch (HibernateException e) {
-            if (transaction != null)
+            if (transaction != null) {
                 transaction.rollback();
+            }
             e.printStackTrace();
+        } finally {
+            session.close();// Ensure to close session after transaction
         }
         return list;
     }
@@ -191,15 +196,39 @@ public class ThietBiDAL {
                     .list();
             transaction.commit();
         } catch (HibernateException e) {
-            if (transaction != null)
+            if (transaction != null) {
                 transaction.rollback();
+            }
             e.printStackTrace();
+        }
+        return list;
+    }
+    public List<ThongTinSD> getThongTinSDWithDetails() {
+        Transaction transaction = null;
+        List<ThongTinSD> list = null;
+        try {
+            transaction = session.beginTransaction();
+            String hql = "SELECT tsd.MaTT, tv.HoTen AS HoTenThanhVien, tb.TenTB AS TenThietBi, tsd.TGVao, tsd.TGMuon, tsd.TGTra " +
+                         "FROM ThongTinSD tsd " +
+                         "LEFT JOIN ThanhVien tv ON tsd.MaTV = tv.MaTV " +
+                         "LEFT JOIN ThietBi tb ON tsd.MaTB = tb.MaTB";
+            list = session.createQuery(hql)
+                          .list();
+            transaction.commit(); // Commit transaction after query execution
+        } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();// Ensure to close session after transaction
         }
         return list;
     }
 
     private void openSession() {
-        if (!session.isOpen())
+        if (!session.isOpen()) {
             session = HibernateUtils.getSessionFactory().openSession();
+        }
     }
 }
