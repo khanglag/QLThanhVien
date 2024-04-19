@@ -541,6 +541,7 @@ public class MenberAccess extends javax.swing.JPanel {
     private void btnCheckIn5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckIn5ActionPerformed
         ThongTinSDBLL bLL=new ThongTinSDBLL();
         bLL.returnnDevice(Integer.parseInt(jTfMaTB.getText()));
+        LoadDataBorrow();
     }//GEN-LAST:event_btnCheckIn5ActionPerformed
 
     private void btnCheckIn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckIn4ActionPerformed
@@ -610,7 +611,8 @@ public class MenberAccess extends javax.swing.JPanel {
             ThongTinSD tt=new ThongTinSD();
             tt.setMaTV(bLL.getThanhVien(maTV));
             tt.setTGVao(LocalDateTime.now());
-            ttsdbll.addThongTin(tt);      
+            ttsdbll.addThongTin(tt);    
+            LoadDataMenber();
         }
     }//GEN-LAST:event_btnCheckInActionPerformed
 
