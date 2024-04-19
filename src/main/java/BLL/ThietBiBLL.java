@@ -116,12 +116,6 @@ public class ThietBiBLL {
             }
             String tenTB = cellIterator.next().getStringCellValue();
             String moTaTB = cellIterator.next().getStringCellValue();
-<<<<<<< HEAD
-            // Đọc danh sách thông tin sử dụng từ cột thứ tư (index 3)
-            //List<String> thongTinSDs = readThongTinSDsFromCell(cellIterator.next());
-
-=======
->>>>>>> Tàn-đời-rồi
             ThietBi thietBi = new ThietBi(maTB, tenTB, moTaTB);
             thietBiList.add(thietBi);
             

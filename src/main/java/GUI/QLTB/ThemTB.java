@@ -49,7 +49,7 @@ public class ThemTB extends javax.swing.JFrame {
 
     private void themTB_excel(String filePath) {
         try {
-            List<ThietBi> thietBiList = thietBiBLL.readDataFromExcel(filePath);
+            List<ThietBi> thietBiList = thietBiBLL.readDataFromExcel();
 
             for (ThietBi tb : thietBiList) {
                 thietBiBLL.addThietBi(tb);
