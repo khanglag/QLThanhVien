@@ -8,8 +8,11 @@ import BLL.ThanhVienBLL;
 import DAL.ThanhVien;
 import GUI.Hander.Numeric;
 import GUI.MainFrame;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -128,6 +131,11 @@ public class QLThanhVien extends javax.swing.JPanel {
         });
 
         btnExcel.setText("Nhập excel");
+        btnExcel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcelActionPerformed(evt);
+            }
+        });
 
         jtfTim.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm"));
 
@@ -209,6 +217,15 @@ public class QLThanhVien extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcelActionPerformed
+        BLL.ThanhVienBLL bLL=new ThanhVienBLL();
+        try {
+            bLL.readDataFromExcel();
+        } catch (IOException ex) {
+            Logger.getLogger(QLThanhVien.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnExcelActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:

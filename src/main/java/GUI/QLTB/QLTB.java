@@ -93,6 +93,7 @@ public class QLTB extends javax.swing.JPanel {
         btn_them = new javax.swing.JButton();
         btn_xoa = new javax.swing.JButton();
         btn_sua = new javax.swing.JButton();
+        btn_sua1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
 
@@ -110,6 +111,11 @@ public class QLTB extends javax.swing.JPanel {
         jScrollPane1.setViewportView(jTable1);
 
         tx_timKiem.setPreferredSize(new java.awt.Dimension(250, 30));
+        tx_timKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tx_timKiemActionPerformed(evt);
+            }
+        });
         tx_timKiem.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tx_timKiemKeyPressed(evt);
@@ -153,6 +159,15 @@ public class QLTB extends javax.swing.JPanel {
         });
         jPanel1.add(btn_sua);
 
+        btn_sua1.setText("Nhập excel");
+        btn_sua1.setPreferredSize(new java.awt.Dimension(75, 30));
+        btn_sua1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_sua1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_sua1);
+
         jPanel2.setBackground(new java.awt.Color(36, 140, 190));
 
         jLabel4.setBackground(new java.awt.Color(36, 140, 190));
@@ -182,9 +197,9 @@ public class QLTB extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 679, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(40, 40, 40))
+                .addGap(28, 28, 28))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -192,7 +207,7 @@ public class QLTB extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
                 .addGap(25, 25, 25))
@@ -232,9 +247,18 @@ public class QLTB extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_tx_timKiemKeyPressed
 
+    private void tx_timKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tx_timKiemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tx_timKiemActionPerformed
+
+    private void btn_sua1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sua1ActionPerformed
+        thietBiBLL.readDataFromExcel();
+    }//GEN-LAST:event_btn_sua1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_sua;
+    private javax.swing.JButton btn_sua1;
     private javax.swing.JButton btn_them;
     private javax.swing.JButton btn_xoa;
     private javax.swing.JLabel jLabel4;
