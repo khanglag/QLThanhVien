@@ -14,8 +14,6 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
-import BLL.ThietBiBLL;
-
 /**
  *
  * @author MSII
@@ -162,7 +160,7 @@ public class ThongTinSdDAL {
     }
 
     // Muợn thiết bị
-    public void borrowedDevice(int MaTV, int MaTB) {
+    public boolean borrowedDevice(int MaTV, int MaTB) {
         Transaction transaction = null;
         try {
             openSession();
@@ -191,7 +189,7 @@ public class ThongTinSdDAL {
                 thongTinSD.setTGMuon(LocalDateTime.now());
                 session.update(thongTinSD);
                 transaction.commit();
-                return;
+                return false;
             }
 
             // Nếu thiết bị chưa có trong bảng ThongTinSD
@@ -231,6 +229,7 @@ public class ThongTinSdDAL {
             }
             e.printStackTrace();
         }
+        return false;
     }
 
     public void returnDevice(int MaTB) {
@@ -326,5 +325,25 @@ public class ThongTinSdDAL {
         }
 
         return array2D;
+    }
+
+    public List<ThongTinSD> loadThongTinSDByMaTV(int maTV) {
+        Transaction transaction = null;
+        List<ThongTinSD> thongTinSDList = null;
+        try {
+            openSession();
+            transaction = session.beginTransaction();
+            String hql = "FROM ThongTinSD WHERE MaTV.MaTV = :maTV";
+            Query<ThongTinSD> query = session.createQuery(hql, ThongTinSD.class);
+            query.setParameter("maTV", maTV);
+            thongTinSDList = query.getResultList();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+        return thongTinSDList;
     }
 }

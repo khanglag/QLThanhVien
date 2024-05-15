@@ -5,7 +5,11 @@
 package GUI;
 
 import GUI.Home.MenberAccess;
+import GUI.QLTB.QLTB;
 import GUI.QLTV.QLThanhVien;
+import GUI.Statistics.Statistics;
+import GUI.XuLy.XuLyVP;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
@@ -65,45 +69,22 @@ public class Controller {
                     node = new QLThanhVien();
                 }
                     break;
-//
-//                case "OfficeAssignment":
-//                {
-//                    try {
-//                        node = new Assignment();
-//                    } catch (SQLException ex) {
-//                        Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
-//                }
-//                    break;
-//
-//                case "CourseInstructor":
-//                    //node =  new CourseInstructor();
-//                    break;
-//                case "StudentGrade":
-//                {
-//                    try {
-//                        node = new ManageGrade();
-//                    } catch (SQLException ex) {
-//                        Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
-//                }
-//                    break;
-//
-//                case "Department":
-//                {
-//                    try {
-//                        node = new DepartmentForm();
-//                    } catch (SQLException ex) {
-//                        Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
-//                }
-//                    break;
+                case "Device":
+                    node =new QLTB();
+                    break;
+
+                case "Violation":
+                    node= new XuLyVP();
+                    break;
+
+                case "Analytics":
+                   node =new Statistics();
+                    break;
 
                 // more
                 default:
                     break;
            }
-           node=new MenberAccess();
            root.removeAll();
            root.setLayout(new BorderLayout());
            root.add(node);
