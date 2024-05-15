@@ -34,18 +34,21 @@ public class ThanhVienBLL {
     }
 
     public static Object[][] convertList(List<ThanhVien> list) {
-        int rows = list.size();
-        int cols = 5;
-        Object[][] data = new Object[rows][cols];
-        for (int i = 0; i < rows; i++) {
-            data[i][0] = list.get(i).getMaTV();
-            data[i][1] = list.get(i).getHoTen();
-            data[i][2] = list.get(i).getNganh();
-            data[i][3] = list.get(i).getKhoa();
-            data[i][4] = list.get(i).getSDT();
+        int soDong = list.size();
+        int soCot = 7; // Cập nhật để bao gồm cả email và password
+        Object[][] duLieu = new Object[soDong][soCot];
+        for (int i = 0; i < soDong; i++) {
+            duLieu[i][0] = list.get(i).getMaTV();
+            duLieu[i][1] = list.get(i).getHoTen();
+            duLieu[i][2] = list.get(i).getNganh();
+            duLieu[i][3] = list.get(i).getKhoa();
+            duLieu[i][4] = list.get(i).getSDT();
+            duLieu[i][5] = list.get(i).getEmail(); // Thêm email
+            duLieu[i][6] = list.get(i).getPassword(); // Thêm password
         }
-        return data;
+        return duLieu;
     }
+
 
     public List<ThanhVien> loadThanhVien() {
         return tvDAL.loadThanhVien();
@@ -127,14 +130,22 @@ public class ThanhVienBLL {
             String hoTen = cellIterator.next().getStringCellValue();
             String khoa = cellIterator.next().getStringCellValue();
             String nganh = cellIterator.next().getStringCellValue();
-            int sdt = Integer.parseInt(cellIterator.next().getStringCellValue());
-            ThanhVien thanhVien = new ThanhVien(maTV, hoTen, khoa, nganh, sdt);
+            int sdt = (int) cellIterator.next().getNumericCellValue();
+            String password = cellIterator.next().getStringCellValue();
+            String email = cellIterator.next().getStringCellValue();
+            ThanhVien thanhVien = new ThanhVien(maTV, hoTen, khoa, nganh, sdt,email,password);
             thanhVienList.add(thanhVien);
         }
 
         workbook.close();
         inputStream.close();
         return thanhVienList;
+    }
+    public boolean addFromExcel() throws IOException {
+        for (ThanhVien temp:readDataFromExcel()){
+            tvDAL.addThanhVien(temp);
+        }
+        return true;
     }
     public boolean isCheckIn(int maTV){
         return tvDAL.isCheckIn(maTV);

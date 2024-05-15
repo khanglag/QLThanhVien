@@ -4,6 +4,8 @@
  */
 package GUI;
 
+import BLL.ThongTinSDBLL;
+import BLL.XuLyBLL;
 import GUI.QLTB.QLTB;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,6 +23,8 @@ public class MainFrame extends javax.swing.JFrame {
      * Creates new form MainFrame
      */
     public MainFrame() {
+        XuLyBLL bll= new XuLyBLL();
+        bll.kiemTraVaCapNhatHinhThucXuLy();
         initComponents();
         TrinhDieuKhien();
     }

@@ -62,6 +62,7 @@ public class MenberAccess extends javax.swing.JPanel {
         jLabel9 = new javax.swing.JLabel();
         btnCheckIn = new javax.swing.JButton();
         btnCheckIn1 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         Hehe = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jTfMaTB = new javax.swing.JTextField();
@@ -77,6 +78,7 @@ public class MenberAccess extends javax.swing.JPanel {
         jTfHoTen1 = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jTfTT1 = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(223, 223, 223));
         setPreferredSize(new java.awt.Dimension(703, 700));
@@ -235,39 +237,51 @@ public class MenberAccess extends javax.swing.JPanel {
             }
         });
 
+        jButton1.setText("Clear");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(52, 52, 52)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTfTT, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
+                    .addComponent(jTfHoTen)
+                    .addComponent(jTfMaTV1)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(151, 151, 151)
-                        .addComponent(btnCheckIn, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
-                        .addGap(32, 32, 32))
+                        .addComponent(btnCheckIn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(52, 52, 52)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTfTT, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
-                            .addComponent(jTfHoTen, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
                             .addComponent(jLabel7)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTfMaTV1, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE))))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(126, 126, 126)
-                        .addComponent(btnCheckIn1, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
-                        .addGap(182, 182, 182))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                         .addGap(111, 111, 111)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTfKhoa, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
-                            .addComponent(jTfNganh, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
+                            .addComponent(jTfKhoa, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
+                            .addComponent(jTfNganh, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
                             .addComponent(jLabel8)
-                            .addComponent(jLabel9))
-                        .addGap(88, 88, 88))))
+                            .addComponent(jLabel9)))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCheckIn1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addGap(16, 16, 16)))
+                .addGap(88, 88, 88))
         );
+
+        jPanel6Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnCheckIn, btnCheckIn1, jButton1});
+
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
@@ -296,11 +310,14 @@ public class MenberAccess extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCheckIn, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCheckIn1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnCheckIn1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addContainerGap())
         );
 
         jPanel6Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jTfHoTen, jTfKhoa, jTfMaTV1, jTfNganh, jTfTT});
+
+        jPanel6Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnCheckIn, btnCheckIn1, jButton1});
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -414,6 +431,13 @@ public class MenberAccess extends javax.swing.JPanel {
             }
         });
 
+        jButton2.setText("Clear");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout HeheLayout = new javax.swing.GroupLayout(Hehe);
         Hehe.setLayout(HeheLayout);
         HeheLayout.setHorizontalGroup(
@@ -429,7 +453,7 @@ public class MenberAccess extends javax.swing.JPanel {
                     .addComponent(jTfMaTV, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, HeheLayout.createSequentialGroup()
                         .addGap(83, 83, 83)
-                        .addComponent(btnCheckIn4, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
+                        .addComponent(btnCheckIn4, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
                         .addGap(79, 79, 79)))
                 .addGap(51, 51, 51)
                 .addGroup(HeheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -441,9 +465,13 @@ public class MenberAccess extends javax.swing.JPanel {
                     .addComponent(jTfMaTB)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, HeheLayout.createSequentialGroup()
                         .addGap(83, 83, 83)
-                        .addComponent(btnCheckIn5, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                        .addComponent(btnCheckIn5, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
                         .addGap(79, 79, 79)))
                 .addGap(31, 31, 31))
+            .addGroup(HeheLayout.createSequentialGroup()
+                .addGap(298, 298, 298)
+                .addComponent(jButton2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         HeheLayout.setVerticalGroup(
             HeheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -481,7 +509,9 @@ public class MenberAccess extends javax.swing.JPanel {
                     .addGroup(HeheLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(btnCheckIn5, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addContainerGap())
         );
 
         jTabbedPane.addTab("Mượn trả", Hehe);
@@ -544,6 +574,7 @@ public class MenberAccess extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCheckIn5ActionPerformed
 
     private void btnCheckIn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckIn4ActionPerformed
+        LoadDataBorrow();
         ThietBiBLL tbbll=new ThietBiBLL();
         ThongTinSDBLL ttsdbll=new ThongTinSDBLL();
         ThanhVienBLL tvbll=new ThanhVienBLL();
@@ -553,14 +584,15 @@ public class MenberAccess extends javax.swing.JPanel {
         if(!bLL.isCheckIn(maTV)){
             if(bLL.isMenber(maTV)){
                 jTfMaTV.setText(bLL.getThanhVien(maTV).getMaTV()+"");
-                jTfHoTen.setText(bLL.getThanhVien(maTV).getHoTen());
-                jTfTT.setText(xlbll.getXuLyLasted(maTV).getHinhThucXL());
+                jTfHoTen1.setText(bLL.getThanhVien(maTV).getHoTen());
+                jTfTT1.setText(xlbll.getXuLyLasted(maTV).getHinhThucXL());
             }
         }
         else{
+            System.out.println("Cái này");
             jTfMaTV.setText(bLL.getThanhVien(maTV).getMaTV()+"");
-            jTfHoTen.setText(bLL.getThanhVien(maTV).getHoTen());
-            jTfTT.setText("Hoạt động");
+            jTfHoTen1.setText(bLL.getThanhVien(maTV).getHoTen());
+            jTfTT1.setText("Hoạt động");
             jTfMaTB.getText();
             jTfTenTb.setText(tbbll.getThietBi(Integer.parseInt(jTfMaTB.getText())).getTenTB());
             //kiểm tra thiết bị còn không
@@ -587,6 +619,7 @@ public class MenberAccess extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCheckIn1ActionPerformed
 
     private void btnCheckInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckInActionPerformed
+        LoadDataMenber();
         int maTV=Integer.parseInt(jTfMaTV1.getText());
         XuLyBLL xlbll =new XuLyBLL();
         NotMenber temp=new NotMenber();
@@ -630,6 +663,23 @@ public class MenberAccess extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTfKhoaActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        jTfHoTen.setText("");
+        jTfTenTb.setText("");
+        jTfHoTen1.setText("");
+        jTfTT.setText("");
+        jTfKhoa.setText("");
+        jTfMaTB.setText("");
+        jTfMaTV1.setText("");
+        jTfNganh.setText("");
+        jTfTTTB.setText("");
+        jTfTT1.setText("");
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     public TableModel moTable(){
         return jTableGanDay.getModel();
     }
@@ -672,6 +722,8 @@ public class MenberAccess extends javax.swing.JPanel {
     private javax.swing.JButton btnCheckIn1;
     private javax.swing.JButton btnCheckIn4;
     private javax.swing.JButton btnCheckIn5;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

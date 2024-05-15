@@ -69,4 +69,10 @@ public class ThongTinSDBLL {
         public List<Object[]> getThongTinSDWithDetailsMember() {
         return dal.getThongTinSDWithDetailsMember();
     }
+    public long demThietBiDangMuon() {
+        return dal.demThietBiDangMuon();
+    }
+    public long demSoLanMuonThietBi() {
+        return dal.demSoLanMuonThietBi();
+    }
 }

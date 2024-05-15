@@ -279,7 +279,7 @@ public class ThanhVienDAL {
         Sheet sheet = workbook.getSheetAt(0);
         Iterator<Row> iterator = sheet.iterator();
 
-        // Skip header row
+        // Bỏ qua hàng tiêu đề
         iterator.next();
 
         while (iterator.hasNext()) {
@@ -291,8 +291,10 @@ public class ThanhVienDAL {
             String khoa = cellIterator.next().getStringCellValue();
             String nganh = cellIterator.next().getStringCellValue();
             int sdt = (int) cellIterator.next().getNumericCellValue();
+            String email = cellIterator.next().getStringCellValue();
+            String password = cellIterator.next().getStringCellValue();
 
-            ThanhVien thanhVien = new ThanhVien(maTV, hoTen, khoa, nganh, sdt);
+            ThanhVien thanhVien = new ThanhVien(maTV, hoTen, khoa, nganh, sdt, email, password);
             thanhVienList.add(thanhVien);
         }
 

@@ -73,6 +73,12 @@ public class ThongTinSdDAL {
         }
         return newMaXL;
     }
+    public long demThietBiDangMuon() {
+        return (long) session.createQuery("SELECT COUNT(*) FROM ThongTinSD WHERE TGTra IS NULL").uniqueResult();
+    }
+    public long demSoLanMuonThietBi() {
+        return (long) session.createQuery("SELECT COUNT(*) FROM ThongTinSD").uniqueResult();
+    }
 
     public void addThongTin(ThongTinSD tt) {
         Transaction transaction = null;
@@ -159,78 +165,62 @@ public class ThongTinSdDAL {
         return list;
     }
 
-    // Muợn thiết bị
     public boolean borrowedDevice(int MaTV, int MaTB) {
         Transaction transaction = null;
         try {
             openSession();
             transaction = session.beginTransaction();
 
-            // Kiểm tra MaTV có trong bảng ThanhVien
+            // Kiểm tra xem MaTV có trong bảng ThanhVien không
             ThanhVien thanhVien = session.get(ThanhVien.class, MaTV);
             if (thanhVien == null) {
-                throw new RuntimeException("Member does not exist");
+                throw new RuntimeException("Thành viên không tồn tại");
             }
 
-            // Kiểm tra thiết bị đã được cho mượn hay chưa
-            ThongTinSD thongTinSD = (ThongTinSD) session
-                    .createQuery("FROM ThongTinSD WHERE MaTB.id = :MaTB AND TGMuon IS NOT NULL AND TGTra IS NULL")
+            // Kiểm tra xem thiết bị đã được mượn hay chưa
+            ThongTinSD thongTinSD = (ThongTinSD) session.createQuery(
+                            "FROM ThongTinSD WHERE MaTB.id = :MaTB AND TGMuon IS NOT NULL AND TGTra IS NULL")
                     .setParameter("MaTB", MaTB)
                     .uniqueResult();
             if (thongTinSD != null) {
-                throw new RuntimeException("The device has been borrowed");
+                throw new RuntimeException("Thiết bị đã được mượn");
             }
 
-            // Thiết bị chưa cho mượn
-            thongTinSD = (ThongTinSD) session.createQuery("FROM ThongTinSD WHERE MaTB.id = :MaTB AND TGTra IS NULL")
+            // Lấy thông tin sử dụng của thiết bị chưa được mượn
+            thongTinSD = (ThongTinSD) session.createQuery(
+                            "FROM ThongTinSD WHERE MaTB.id = :MaTB AND TGTra IS NULL")
                     .setParameter("MaTB", MaTB)
                     .uniqueResult();
+
+            // Nếu thiết bị chưa được mượn, cập nhật thông tin mượn
             if (thongTinSD != null) {
                 thongTinSD.setTGMuon(LocalDateTime.now());
+                thongTinSD.setMaTV(thanhVien); // Cập nhật mã thành viên
                 session.update(thongTinSD);
                 transaction.commit();
-                return false;
+                return true;
             }
 
             // Nếu thiết bị chưa có trong bảng ThongTinSD
             ThietBi thietBi = session.get(ThietBi.class, MaTB);
-            // ThongTinSD thongTinMuon = new ThongTinSD();
-            // thongTinMuon.setMaTT(generateMaTT());
-            // thongTinMuon.setMaTV(thanhVien);
-            // thongTinMuon.setMaTB(thietBi);
-            // thongTinMuon.setTGVao(LocalDateTime.now());
-            // thongTinMuon.setTGMuon(LocalDateTime.now());
-            // session.save(thongTinMuon);
-            // transaction.commit();
-            thongTinSD = (ThongTinSD) session
-                    .createQuery("FROM ThongTinSD WHERE MaTV.id = :MaTV ORDER BY MaTT DESC")
-                    .setParameter("MaTV", MaTV)
-                    .setMaxResults(1) // Chỉ lấy 1 kết quả (nếu có)
-                    .uniqueResult();
-
-            System.out.println(thongTinSD);
-            if (thongTinSD != null) {
-                // Cập nhật mã thiết bị
-                thongTinSD.setMaTB(thietBi);
-                // Sửa thời gian mượn
-                thongTinSD.setTGMuon(LocalDateTime.now());
-
-                // Lưu thay đổi vào cơ sở dữ liệu
-                session.update(thongTinSD);
-                transaction.commit();
-                System.out.println("Đã sửa thông tin sử dụng thành công.");
-            } else {
-                System.out.println("Không tìm thấy thông tin sử dụng để sửa.");
-            }
+            thongTinSD = new ThongTinSD();
+            thongTinSD.setMaTV(thanhVien);
+            thongTinSD.setMaTB(thietBi);
+            thongTinSD.setTGVao(LocalDateTime.now());
+            thongTinSD.setTGMuon(LocalDateTime.now());
+            session.save(thongTinSD);
+            transaction.commit();
+            return true;
 
         } catch (HibernateException e) {
             if (transaction != null) {
                 transaction.rollback();
             }
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
+
 
     public void returnDevice(int MaTB) {
         // Mở session và bắt đầu transaction
@@ -346,4 +336,5 @@ public class ThongTinSdDAL {
         }
         return thongTinSDList;
     }
+
 }

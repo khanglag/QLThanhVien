@@ -70,4 +70,7 @@ public class XuLyBLL {
     public XuLy getXuLyLasted(int maTV){
         return dal.getXuLy(dal.getHTXuLyLasted(maTV));
     }
+    public void kiemTraVaCapNhatHinhThucXuLy(){
+        dal.kiemTraVaCapNhatHinhThucXuLy();
+    }
 }

@@ -183,4 +183,40 @@ public class XuLyDAL {
         if (!session.isOpen())
             session = HibernateUtils.getSessionFactory().openSession();
     }
+    public static int findNumberInString(String input) {
+        // Duyệt qua từng ký tự trong chuỗi
+        for (int i = 0; i < input.length(); i++) {
+            char c = input.charAt(i);
+            // Kiểm tra xem ký tự có phải là số không
+            if (Character.isDigit(c)) {
+                return Character.getNumericValue(c); // Trả về số nếu tìm thấy ký tự số đầu tiên trong chuỗi
+            }
+        }
+        return -1; // Trả về -1 nếu không tìm thấy ký tự số trong chuỗi
+    }
+
+    public static int tinhSoNgay(int soThang) {
+        return soThang * 30;
+    }
+    public void kiemTraVaCapNhatHinhThucXuLy() {
+        List<XuLy> danhSachXuLy = loadXuLy();
+        LocalDateTime ngayHomNay = LocalDateTime.now();
+        for (XuLy xuLy : danhSachXuLy) {
+            int ngay = tinhSoNgay(findNumberInString(xuLy.getHinhThucXL()));
+            LocalDateTime ngayXuLy = xuLy.getNgayXL().plusDays(ngay);
+            if (xuLy.getHinhThucXL().equals("Khóa thẻ vĩnh viễn")){
+                xuLy.setTrangThaiXL(1);}
+            // Nếu ngày xử lý đã qua ngày hôm nay, đặt hình thức xử lý là 0 (hết hạn)
+            else if (ngayXuLy != null && ngayXuLy.toLocalDate().isBefore(ngayHomNay.toLocalDate())) {
+                xuLy.setTrangThaiXL(0);
+            } else {
+                // Nếu ngày xử lý vẫn còn từ hôm nay trở đi, đặt hình thức xử lý là 1 (chưa hết hạn)
+                xuLy.setTrangThaiXL(1);
+            }
+            updateXuLy(xuLy);
+        }
+
+    }
+
+
 }

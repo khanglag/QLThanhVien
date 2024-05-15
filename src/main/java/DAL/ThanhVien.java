@@ -39,11 +39,27 @@ public class ThanhVien {
     @Column(name = "SDT")
     private Integer SDT;
 
+    @Column(name = "Email", length = 250)
+    private String email;
+
+    @Column(name = "Password", length = 20)
+    private String password;
+
     public ThanhVien() {
     }
 
     public ThanhVien(int MaTV) {
         this.MaTV = MaTV;
+    }
+
+    public ThanhVien(int maTV, String hoTen, String khoa, String nganh, Integer SDT, String email, String password) {
+        MaTV = maTV;
+        HoTen = hoTen;
+        Khoa = khoa;
+        Nganh = nganh;
+        this.SDT = SDT;
+        this.email = email;
+        this.password = password;
     }
 
     public ThanhVien(int MaTV, String HoTen, String Khoa, String Nganh, Integer SDT) {
@@ -54,7 +70,7 @@ public class ThanhVien {
         this.SDT = SDT;
     }
 
-    public ThanhVien(int MaTV, List<ThongTinSD> thongTinSDs, List<XuLy> xulies, String HoTen, String Khoa, String Nganh, Integer SDT) {
+    public ThanhVien(int MaTV, List<ThongTinSD> thongTinSDs, List<XuLy> xulies, String HoTen, String Khoa, String Nganh, Integer SDT, String email, String password) {
         this.MaTV = MaTV;
         this.thongTinSDs = thongTinSDs;
         this.xulies = xulies;
@@ -62,17 +78,20 @@ public class ThanhVien {
         this.Khoa = Khoa;
         this.Nganh = Nganh;
         this.SDT = SDT;
+        this.email = email;
+        this.password = password;
     }
+
     @Override
     public String toString() {
         return "{" +
-            " MaTV='" + getMaTV() + "'" +
-            ", HoTen='" + getHoTen() + "'" +
-            ", Khoa='" + getKhoa() + "'" +
-            ", Nganh='" + getNganh() + "'" +
-            ", SDT='" + getSDT() + "'" +
-            "}";
+                " MaTV='" + getMaTV() + "'" +
+                ", HoTen='" + getHoTen() + "'" +
+                ", Khoa='" + getKhoa() + "'" +
+                ", Nganh='" + getNganh() + "'" +
+                ", SDT='" + getSDT() + "'" +
+                ", Email='" + getEmail() + "'" +
+                ", Password='" + getPassword() + "'" +
+                "}";
     }
-    
-
 }
