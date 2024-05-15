@@ -34,7 +34,7 @@ public class ThanhVienBLL {
 
     public static Object[][] convertList(List<ThanhVien> list) {
         int rows = list.size();
-        int cols = 5;
+        int cols = 7; // Updated to include email and password
         Object[][] data = new Object[rows][cols];
         for (int i = 0; i < rows; i++) {
             data[i][0] = list.get(i).getMaTV();
@@ -42,9 +42,12 @@ public class ThanhVienBLL {
             data[i][2] = list.get(i).getNganh();
             data[i][3] = list.get(i).getKhoa();
             data[i][4] = list.get(i).getSDT();
+            data[i][5] = list.get(i).getEmail(); // Adding email
+            data[i][6] = list.get(i).getPassword(); // Adding password
         }
         return data;
     }
+
 
     public List<ThanhVien> loadThanhVien() {
         return tvDAL.loadThanhVien();
@@ -107,7 +110,7 @@ public class ThanhVienBLL {
         }
         return null;
     }
-    public List<ThanhVien> readDataFromExcel(String filePath)throws IOException {
+    public List<ThanhVien> readDataFromExcel(String filePath) throws IOException {
         List<ThanhVien> thanhVienList = new ArrayList<>();
         FileInputStream inputStream = new FileInputStream(new File(filePath));
 
@@ -115,7 +118,7 @@ public class ThanhVienBLL {
         Sheet sheet = workbook.getSheetAt(0);
         Iterator<Row> iterator = sheet.iterator();
 
-        // Skip header row
+        // Bỏ qua hàng tiêu đề
         iterator.next();
 
         while (iterator.hasNext()) {
@@ -127,8 +130,10 @@ public class ThanhVienBLL {
             String khoa = cellIterator.next().getStringCellValue();
             String nganh = cellIterator.next().getStringCellValue();
             int sdt = (int) cellIterator.next().getNumericCellValue();
+            String email = cellIterator.next().getStringCellValue();
+            String password = cellIterator.next().getStringCellValue();
 
-            ThanhVien thanhVien = new ThanhVien(maTV, hoTen, khoa, nganh, sdt);
+            ThanhVien thanhVien = new ThanhVien(maTV, hoTen, khoa, nganh, sdt, email, password);
             thanhVienList.add(thanhVien);
         }
 

@@ -15,8 +15,6 @@
         <!-- Enable Hibernate's automatic session context management -->
         <property name="current_session_context_class">thread</property>
         <!-- Disable the second-level cache -->
-        <property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property> 
-        <!-- Show all executed SQL to console -->
         <property name="show_sql">true</property>
         <mapping class="DAL.ThietBi" />
         <mapping class="DAL.ThanhVien" />
