@@ -63,4 +63,10 @@ public class ThongTinSDBLL {
     public void returnnDevice(int maTB){
         dal.returnDevice(maTB);
     }
+      public List<Object[]> getThongTinSDWithDetails() {
+        return dal.getThongTinSDWithDetails();
+    }
+        public List<Object[]> getThongTinSDWithDetailsMember() {
+        return dal.getThongTinSDWithDetailsMember();
+    }
 }

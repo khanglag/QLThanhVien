@@ -185,14 +185,17 @@ public class ThanhVienDAL {
             list = session.createQuery(hql, ThanhVien.class)
                     .setParameter("MaTV", MaTV)
                     .list();
-            transaction.commit();
+            transaction.commit(); // Commit transaction after query execution
         } catch (HibernateException e) {
             if (transaction != null)
                 transaction.rollback();
             e.printStackTrace();
+        } finally {
+            session.close();
         }
         return list;
     }
+    
 
     public List<ThanhVien> searchByHoTen(String hoTen) {
         Transaction transaction = null;

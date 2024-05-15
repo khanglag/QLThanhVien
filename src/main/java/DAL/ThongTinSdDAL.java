@@ -22,6 +22,7 @@ import BLL.ThietBiBLL;
  */
 @Transactional
 public class ThongTinSdDAL {
+
     private Session session;
 
     public ThongTinSdDAL() {
@@ -38,8 +39,9 @@ public class ThongTinSdDAL {
             transaction.commit();
 
         } catch (HibernateException e) {
-            if (transaction != null)
+            if (transaction != null) {
                 transaction.rollback();
+            }
             e.printStackTrace();
         }
         return list;
@@ -54,45 +56,23 @@ public class ThongTinSdDAL {
             tt = session.get(ThongTinSD.class, MaTT);
             transaction.commit();
         } catch (HibernateException e) {
-            if (transaction != null)
+            if (transaction != null) {
                 transaction.rollback();
+            }
             e.printStackTrace();
         }
         return tt;
-    }
-    public List<ThongTinSD> loadThongTinSDByMaTV(int maTV) {
-        Session session = HibernateUtils.getSessionFactory().openSession();
-        List<ThongTinSD> thongTinSDList = null;
-
-        try {
-            session.beginTransaction();
-            String hql = "FROM ThongTinSD WHERE MaTV.id = :maTV";
-            Query<ThongTinSD> query = session.createQuery(hql, ThongTinSD.class);
-            query.setParameter("maTV", maTV);
-
-            thongTinSDList = query.getResultList();
-
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            if (session.getTransaction() != null) {
-                session.getTransaction().rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-
-        return thongTinSDList;
     }
 
     // Tạo mã thông tin tự động
     public int generateMaTT() {
         int newMaXL = 0;
         Integer maXL = (Integer) session.createQuery("SELECT MAX(MaTT) FROM ThongTinSD").uniqueResult();
-        if (maXL == null)
+        if (maXL == null) {
             newMaXL = 1;
-        else
+        } else {
             newMaXL = maXL + 1;
+        }
         return newMaXL;
     }
 
@@ -105,8 +85,9 @@ public class ThongTinSdDAL {
             session.save(tt);
             transaction.commit();
         } catch (HibernateException e) {
-            if (transaction != null)
+            if (transaction != null) {
                 transaction.rollback();
+            }
             e.printStackTrace();
         }
     }
@@ -119,8 +100,9 @@ public class ThongTinSdDAL {
             session.update(tt);
             transaction.commit();
         } catch (HibernateException e) {
-            if (transaction != null)
+            if (transaction != null) {
                 transaction.rollback();
+            }
             e.printStackTrace();
         }
     }
@@ -134,14 +116,53 @@ public class ThongTinSdDAL {
             session.delete(del);
             transaction.commit();
         } catch (HibernateException e) {
-            if (transaction != null)
+            if (transaction != null) {
                 transaction.rollback();
+            }
             e.printStackTrace();
         }
     }
 
+    public List<Object[]> getThongTinSDWithDetails() {
+        Transaction transaction = null;
+        List<Object[]> list = null;
+        try {
+            transaction = session.beginTransaction();
+            String hql = "SELECT tsd.MaTT, tv.MaTV, tv.HoTen,tb.MaTB, tb.TenTB, tsd.TGVao, tsd.TGMuon, tsd.TGTra "
+                    + "FROM ThongTinSD tsd "
+                    + "LEFT JOIN ThanhVien tv ON tsd.MaTV = tv.MaTV "
+                    + "LEFT JOIN ThietBi tb ON tsd.MaTB = tb.MaTB";
+            list = session.createQuery(hql).list();
+            transaction.commit(); // Commit transaction after query execution
+        } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } 
+        return list;
+    }
+    public List<Object[]> getThongTinSDWithDetailsMember() {
+        Transaction transaction = null;
+        List<Object[]> list = null;
+        try {
+            transaction = session.beginTransaction();
+           String hql = "SELECT tsd.MaTT, tv.MaTV,  tv.HoTen, tv.Khoa, tv.Nganh, tv.SDT, tsd.TGVao "
+                    + "FROM ThongTinSD tsd "
+                    + "LEFT JOIN ThanhVien tv ON tsd.MaTV = tv.MaTV ";       
+            list = session.createQuery(hql).list();
+            transaction.commit(); // Commit transaction after query execution
+        } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } 
+        return list;
+    }
+
     // Muợn thiết bị
-    public boolean borrowedDevice(int MaTV, int MaTB) {
+    public void borrowedDevice(int MaTV, int MaTB) {
         Transaction transaction = null;
         try {
             openSession();
@@ -149,15 +170,19 @@ public class ThongTinSdDAL {
 
             // Kiểm tra MaTV có trong bảng ThanhVien
             ThanhVien thanhVien = session.get(ThanhVien.class, MaTV);
-            if (thanhVien == null)
-                return false;
+            if (thanhVien == null) {
+                throw new RuntimeException("Member does not exist");
+            }
 
             // Kiểm tra thiết bị đã được cho mượn hay chưa
             ThongTinSD thongTinSD = (ThongTinSD) session
                     .createQuery("FROM ThongTinSD WHERE MaTB.id = :MaTB AND TGMuon IS NOT NULL AND TGTra IS NULL")
                     .setParameter("MaTB", MaTB)
                     .uniqueResult();
-            if (thongTinSD != null) return false;
+            if (thongTinSD != null) {
+                throw new RuntimeException("The device has been borrowed");
+            }
+
             // Thiết bị chưa cho mượn
             thongTinSD = (ThongTinSD) session.createQuery("FROM ThongTinSD WHERE MaTB.id = :MaTB AND TGTra IS NULL")
                     .setParameter("MaTB", MaTB)
@@ -166,7 +191,7 @@ public class ThongTinSdDAL {
                 thongTinSD.setTGMuon(LocalDateTime.now());
                 session.update(thongTinSD);
                 transaction.commit();
-                return false;
+                return;
             }
 
             // Nếu thiết bị chưa có trong bảng ThongTinSD
@@ -201,11 +226,11 @@ public class ThongTinSdDAL {
             }
 
         } catch (HibernateException e) {
-            if (transaction != null)
+            if (transaction != null) {
                 transaction.rollback();
+            }
             e.printStackTrace();
         }
-        return true;
     }
 
     public void returnDevice(int MaTB) {
@@ -231,15 +256,17 @@ public class ThongTinSdDAL {
             }
 
         } catch (HibernateException e) {
-            if (transaction != null)
+            if (transaction != null) {
                 transaction.rollback();
+            }
             e.printStackTrace();
         }
     }
 
     private void openSession() {
-        if (!session.isOpen())
+        if (!session.isOpen()) {
             session = HibernateUtils.getSessionFactory().openSession();
+        }
     }
 
     public Object[][] dataTableCheckin(TableModel model, int maTV) {
@@ -250,10 +277,10 @@ public class ThongTinSdDAL {
         try {
             openSession();
             transaction = session.beginTransaction();
-            String hql = "SELECT tv.MaTV, tv.HoTen, tsd.TGVao, tsd.MaTB " +
-                    "FROM ThanhVien tv " +
-                    "JOIN ThongTinSD tsd ON tv.MaTV = tsd.MaTV " +
-                    "WHERE tv.MaTV = :maTV";
+            String hql = "SELECT tv.MaTV, tv.HoTen, tsd.TGVao, tsd.MaTB "
+                    + "FROM ThanhVien tv "
+                    + "JOIN ThongTinSD tsd ON tv.MaTV = tsd.MaTV "
+                    + "WHERE tv.MaTV = :maTV";
             Query query = session.createQuery(hql);
             query.setParameter("maTV", maTV);
             data = convertListToObjectArray(query.list());
